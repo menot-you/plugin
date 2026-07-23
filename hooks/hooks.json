@@ -1,0 +1,45 @@
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" SubagentStart"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" UserPromptSubmit"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" PostToolUse"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" Stop"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "nott",
+  "version": "2.0.0",
+  "description": "One intent into one proof-bound deliverable, with attention, observed verification, and rollback.",
+  "author": {
+    "name": "menot-you",
+    "url": "https://github.com/menot-you"
+  },
+  "homepage": "https://github.com/menot-you/n-soul#readme",
+  "repository": "https://github.com/menot-you/n-soul",
+  "license": "AGPL-3.0-only",
+  "keywords": [
+    "nsoul",
+    "engineering",
+    "attention",
+    "verification",
+    "review",
+    "delivery"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.codex-plugin/mcp.json",
+  "interface": {
+    "displayName": "nSOUL",
+    "shortDescription": "NOTT engineering methods bound to observed proof.",
+    "longDescription": "nSOUL packages NOTT as a proof-bound engineering peer: one active result, explicit authority, safe rollback, and claims limited to observed verification.",
+    "developerName": "menot-you",
+    "category": "Developer Tools",
+    "capabilities": [
+      "readback",
+      "brainstorm",
+      "ratify",
+      "plan",
+      "routine",
+      "design",
+      "debug",
+      "review",
+      "security",
+      "ship",
+      "handoff"
+    ],
+    "websiteURL": "https://github.com/menot-you/n-soul",
+    "brandColor": "#5B4BDB",
+    "defaultPrompt": [
+      "Turn this engineering intent into one proof-bound deliverable.",
+      "Review this candidate against its authority and observed checks.",
+      "Isolate this failure, remove its cause, and prove recovery."
+    ]
+  }
+}
