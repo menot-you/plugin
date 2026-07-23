@@ -35,6 +35,9 @@ if find "$root" -path "$root/.git" -prune -o ! -type d ! -type f -print -quit | 
   die TREE_NODE special
 fi
 while IFS= read -r -d '' file; do
+  # Curated public media lives under assets/; a binary there is expected. Any
+  # other binary in the tree is still rejected (the red test plants one at root).
+  case "${file#"$root"/}" in assets/*) continue ;; esac
   if LC_ALL=C od -An -tx1 "$file" | grep -Eq '(^|[[:space:]])00([[:space:]]|$)'; then
     die BINARY_FILE "${file#"$root"/}"
   fi
@@ -106,6 +109,7 @@ operational_id_hits() {
 }
 
 applicable=APPLI; applicable=${applicable}CABLE
+architecture=ARCHI; architecture=${architecture}TECTURE
 available=AVAIL; available=${available}ABLE
 changelog=CHANGE; changelog=${changelog}LOG
 checklist=CHECK; checklist=${checklist}LIST
@@ -133,7 +137,10 @@ is_fixed_public_vocabulary() {
     "content:LICENSE:$expressed"|"content:LICENSE:$servicing"|"content:LICENSE:$sustained"|\
     "content:LICENSE:$warranties"|\
     "content:.agents/plugins/marketplace.json:$available"|\
-    "content:README.md:$checklist"|"content:README.md:$contributing"|\
+    "content:README.md:$architecture"|"content:README.md:$checklist"|"content:README.md:$contributing"|\
+    "content:ARCHITECTURE.md:$architecture"|"path:ARCHITECTURE.md:$architecture"|\
+    "content:release/inventory.tsv:$architecture"|\
+    "path:assets/architecture.svg:$architecture"|"path:assets/architecture.png:$architecture"|\
     "content:release/inventory.tsv:$changelog"|"content:release/inventory.tsv:$checklist"|\
     "content:release/inventory.tsv:$contributing"|\
     "content:tests/docs-test.sh:$changelog"|"content:tests/docs-test.sh:$checklist"|\
@@ -141,7 +148,7 @@ is_fixed_public_vocabulary() {
     "content:tests/gates-red-test.sh:$committer"|"content:tests/gates-red-test.sh:$directory"|\
     "content:tests/manifest-test.sh:$changelog"|"content:tests/manifest-test.sh:$checklist"|\
     "content:tests/manifest-test.sh:$contributing"|\
-    "content:tools/hygiene-lint.sh:$applicable"|"content:tools/hygiene-lint.sh:$available"|\
+    "content:tools/hygiene-lint.sh:$applicable"|"content:tools/hygiene-lint.sh:$architecture"|"content:tools/hygiene-lint.sh:$available"|\
     "content:tools/hygiene-lint.sh:$changelog"|"content:tools/hygiene-lint.sh:$checklist"|\
     "content:tools/hygiene-lint.sh:$committer"|"content:tools/hygiene-lint.sh:$conditions"|\
     "content:tools/hygiene-lint.sh:$consequential"|"content:tools/hygiene-lint.sh:$contributing"|\
@@ -187,6 +194,9 @@ scan_path_rule HOST_NAME "${internal_one}|${internal_two}"
 scan_path_rule HOST_IP '(^|[^0-9])([0-9]{1,3}\.){3}[0-9]{1,3}([^0-9]|$)'
 while IFS= read -r -d '' file; do
   relative=${file#"$root"/}
+  # The operational-id token scan is text-only; binary assets (png/gif/mp4)
+  # produce false positives. Secrets in binaries are Gitleaks' lane, not this one.
+  grep -Iq . "$file" || continue
   operational_id_hits "$file" >"$scratch/id-hits" 2>"$scratch/awk.err" || die SCAN_IO OPERATIONAL_ID
   while IFS= read -r word; do
     [[ -n "$word" ]] || continue
