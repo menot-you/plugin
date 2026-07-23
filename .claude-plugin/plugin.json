@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "nott",
+  "version": "2.0.0",
+  "description": "One intent into one proof-bound deliverable, with attention, observed verification, and rollback.",
+  "author": {
+    "name": "menot-you"
+  },
+  "homepage": "https://github.com/menot-you/nsoul",
+  "repository": "https://github.com/menot-you/nsoul",
+  "license": "AGPL-3.0-only",
+  "keywords": [
+    "nsoul",
+    "engineering",
+    "attention",
+    "verification",
+    "review",
+    "delivery"
+  ]
+}

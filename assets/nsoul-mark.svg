@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="nSOUL mark">
+  <rect width="512" height="512" rx="112" fill="#11131a"/>
+  <path d="M104 152h96l64 104-64 104h-96" fill="none" stroke="#8f80ff" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="104" cy="152" r="24" fill="#f4f1ff"/>
+  <circle cx="104" cy="360" r="24" fill="#f4f1ff"/>
+  <path d="M264 256l72-104 72 104-72 104z" fill="#8f80ff"/>
+  <path d="m303 257 25 25 47-56" fill="none" stroke="#11131a" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
