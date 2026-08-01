@@ -23,9 +23,9 @@ Security-sensitive surfaces are:
 - authority and instruction documents;
 - release gates and their negative controls.
 
-nMEMORY and nBrowser server implementations are external dependencies. The
-adapter boundary is owned by `PRD.md` §7, and `SPEC.md` §2 states the controlled
-proof basis. Repository checks use controlled local fixtures and cover only
+The nMEMORY server implementation is an external dependency, and the adapter
+boundary is where that dependency stops being nSOUL's to vouch for.
+Repository checks use controlled local fixtures and cover only
 candidate-local launcher behavior; mutable digest literals are regression
 guards, not independent provenance. nSOUL does not attest to an external server
 or an arbitrary executable selected from the host `PATH`.

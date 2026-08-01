@@ -215,11 +215,14 @@ if bash "$copy/tests/manifest-test.sh" "$copy" >/dev/null 2>&1; then
 fi
 cp "$scratch/hooks-registration.original" "$copy/hooks/hooks.json"
 
-chmod 0664 "$copy/assets/nsoul-mark.svg"
+# Retargeted from the retired assets/nsoul-mark.svg to another release file;
+# the property is "a group-writable release file is refused", not the identity
+# of the file it is proven on.
+chmod 0664 "$copy/assets/logo.svg"
 if bash "$copy/tests/manifest-test.sh" "$copy" >/dev/null 2>&1; then
   die 'manifest gate accepted a group-writable release file'
 fi
-chmod 0644 "$copy/assets/nsoul-mark.svg"
+chmod 0644 "$copy/assets/logo.svg"
 
 awk '
   { print }
@@ -314,29 +317,11 @@ fi
 cp "$root/bin/nmemory-mcp" "$copy/bin/nmemory-mcp"
 chmod 0755 "$copy/bin/nmemory-mcp"
 
-cp "$copy/tests/mcp-launchers-test.sh" "$scratch/mcp-launchers-test.original"
-awk '
-  $0 == "exec \"$resolved\" \"$@\"" {
-    print "\"$resolved\" \"$@\" || true"
-    print "exit 0"
-    next
-  }
-  { print }
-' "$copy/bin/nbrowser-mcp" >"$copy/bin/nbrowser-mcp.red"
-mv "$copy/bin/nbrowser-mcp.red" "$copy/bin/nbrowser-mcp"
-chmod 0755 "$copy/bin/nbrowser-mcp"
-nbrowser_red_sha256=$(sha256_file "$copy/bin/nbrowser-mcp")
-sed "s/^expected_nbrowser_sha256=.*/expected_nbrowser_sha256=$nbrowser_red_sha256/" \
-  "$scratch/mcp-launchers-test.original" >"$copy/tests/mcp-launchers-test.sh"
-set +e
-nbrowser_status_output=$(bash "$copy/tests/mcp-launchers-test.sh" "$copy" 2>&1)
-nbrowser_status=$?
-set -e
-[[ "$nbrowser_status" -ne 0 && "$nbrowser_status_output" == *'nbrowser child exit status was not propagated'* ]] || \
-  die 'launcher behavior tests accepted an nBrowser mutation that swallowed child status after a matching digest update'
-cp "$root/bin/nbrowser-mcp" "$copy/bin/nbrowser-mcp"
-chmod 0755 "$copy/bin/nbrowser-mcp"
-cp "$scratch/mcp-launchers-test.original" "$copy/tests/mcp-launchers-test.sh"
+# The nBrowser launcher's own status-propagation red case retired with the
+# adapter itself in 0.3.0 (withdrawn by owner curation, declared in
+# tools/mirror-strip.d/n-soul.list). The equivalent property is still proven on
+# the surviving launcher by the nmemory mutation above, so no coverage of the
+# LAUNCHER CONTRACT is lost — only the second instance of it.
 
 printf '%s\n' "/no"'tt/private' >"$copy/red-path.txt"
 if bash "$copy/tools/hygiene-lint.sh" "$copy" >/dev/null 2>&1; then

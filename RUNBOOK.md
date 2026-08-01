@@ -46,7 +46,6 @@ binary instead, set:
 
 ```sh
 export NOTT_NMEMORY_BIN=/path/to/nmemory
-export NOTT_NBROWSER_BIN=/path/to/nbrowser-mcp
 ```
 
 The explicit path wins. It must be a regular executable file. The launchers do
@@ -56,7 +55,6 @@ Probe resolution without starting the server:
 
 ```sh
 bin/nmemory-mcp --probe
-bin/nbrowser-mcp --probe
 ```
 
 ## Voice lint

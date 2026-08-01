@@ -41,10 +41,10 @@ named gap, or a pre-computed next action — and NEVER in an unobserved success 
    every turn regardless of the chosen skill. The default set persists no prompt, response,
    or session identifier.
 
-5. **External adapters.** nMEMORY and nBrowser are declared MCP integrations, resolved by
-   plugin-local launchers. A launcher resolves a documented environment override first,
+5. **External adapter.** nMEMORY is a declared MCP integration, resolved by a
+   plugin-local launcher. The launcher resolves a documented environment override first,
    then one command on `PATH`, and rejects absence with a non-zero exit. **No MCP server
-   binary is bundled** — nSOUL depends on them, it does not contain them.
+   binary is bundled** — nSOUL depends on it, it does not contain it.
 
 ## Trust boundaries
 

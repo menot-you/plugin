@@ -34,6 +34,22 @@ verification. Do not turn the gate into ceremony.
 8. Recurse across the seams: a dispatched subagent reads back acceptance criteria and bounded
    scope before working; an issue a cold agent cannot execute without asking is not ready.
 
+## Orientation asks — answer with the story, not the ledger
+
+An orientation ask ("what's going on?", "where are we?", "what are we actually doing?",
+"why?") is a request for the STORY, and the reply MUST open with it in product language:
+name the feature and what it does for its user, its proven state, why the current work
+exists in the feature's service, the honest proportion (feature vs. debt vs. gate), and
+where it lands next. No ceremony, no section scaffolding, no artifact names or ids unless
+one is the next action to type. Technical mechanics appear only as consequence ("any machine
+rebuilds the same bytes without internet"), never as inventory.
+
+The numbered register is NOT the default reply to an orientation ask. It returns exactly
+when the reply carries decisions the owner must dispose of — story first, then only the
+numbered dispositions. Calibration source: owner 2026-07-22, after a numbered status
+readback to "o que ta rolando?" was re-asked as "qual a story? sem cerimonia, qual a
+feature" — the story answer is the one the owner wanted.
+
 ## Output
 
 The confirmed readback record — the executable form plus the confirmed numbered statements

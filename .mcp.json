@@ -4,11 +4,6 @@
       "type": "stdio",
       "command": "${CLAUDE_PLUGIN_ROOT}/bin/nmemory-mcp",
       "args": ["--project", "nott"]
-    },
-    "nbrowser": {
-      "type": "stdio",
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/nbrowser-mcp",
-      "args": []
     }
   }
 }

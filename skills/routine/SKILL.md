@@ -1,6 +1,6 @@
 ---
 name: routine
-description: Execute bounded engineering work through current-state checks, minimal changes, focused proof, and observed verification.
+description: Execute bounded engineering work through current-state checks, minimal changes, focused proof, and honest closure.
 ---
 
 # Routine

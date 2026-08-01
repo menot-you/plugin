@@ -34,30 +34,29 @@ HOME="$scratch/home" CLAUDE_CONFIG_DIR="$scratch/claude" claude plugin install n
 HOME="$scratch/home" CLAUDE_CONFIG_DIR="$scratch/claude" claude plugin list --json >"$scratch/claude-installed.json"
 jq -e '
   any(.[]; .id == "nott@nsoul" and .enabled == true)
-  and ([.[] | select(.id == "nott@nsoul") | .mcpServers | keys] | first | sort) == ["nbrowser", "nmemory"]
+  and ([.[] | select(.id == "nott@nsoul") | .mcpServers | keys] | first | sort) == ["nmemory"]
 ' "$scratch/claude-installed.json" >/dev/null || die 'Claude installed inventory or MCP discovery is wrong'
 HOME="$scratch/home" CLAUDE_CONFIG_DIR="$scratch/claude" claude plugin details nott@nsoul >"$scratch/claude-details.txt"
 grep -Eq 'Skills \(11\).*readback' "$scratch/claude-details.txt" || die 'Claude did not discover 11 skills'
 grep -Eq 'Agents \(6\)' "$scratch/claude-details.txt" || die 'Claude did not discover 6 agents'
 grep -Eq 'Hooks \(4\)' "$scratch/claude-details.txt" || die 'Claude did not discover 4 hooks'
-grep -Eq 'MCP servers \(2\).*nmemory.*nbrowser' "$scratch/claude-details.txt" || die 'Claude did not discover 2 MCP servers'
+grep -Eq 'MCP servers \(1\).*nmemory' "$scratch/claude-details.txt" || die 'Claude did not discover 1 MCP server'
 
 HOME="$scratch/home" CODEX_HOME="$scratch/codex" codex plugin marketplace add "$repo" --json >"$scratch/codex-marketplace.json"
 jq -e '.marketplaceName == "nsoul"' "$scratch/codex-marketplace.json" >/dev/null || die 'Codex marketplace id is wrong'
 HOME="$scratch/home" CODEX_HOME="$scratch/codex" codex plugin list --marketplace nsoul --available --json >"$scratch/codex-available.json"
 jq -e 'any(.available[]; .pluginId == "nott@nsoul")' "$scratch/codex-available.json" >/dev/null || die 'Codex marketplace inventory is wrong'
 HOME="$scratch/home" CODEX_HOME="$scratch/codex" codex plugin add nott@nsoul --json >"$scratch/codex-install.json"
-jq -e '.pluginId == "nott@nsoul" and .version == "2.0.0"' "$scratch/codex-install.json" >/dev/null || die 'Codex install result is wrong'
+jq -e '.pluginId == "nott@nsoul" and .version == "0.3.0"' "$scratch/codex-install.json" >/dev/null || die 'Codex install result is wrong'
 installed_path=$(jq -r '.installedPath // empty' "$scratch/codex-install.json")
 [[ -d "$installed_path" ]] || die 'Codex install path is missing'
 HOME="$scratch/home" CODEX_HOME="$scratch/codex" codex plugin list --marketplace nsoul --json >"$scratch/codex-installed.json"
 jq -e 'any(.installed[]; .pluginId == "nott@nsoul" and .installed == true and .enabled == true)' "$scratch/codex-installed.json" >/dev/null || die 'Codex plugin is not installed and enabled'
 HOME="$scratch/home" CODEX_HOME="$scratch/codex" codex mcp list --json >"$scratch/codex-mcp.json"
 jq -e '
-  ([.[].name] | sort) == ["nbrowser", "nmemory"]
+  ([.[].name] | sort) == ["nmemory"]
   and all(.[]; .enabled == true and .transport.type == "stdio")
   and any(.[]; .name == "nmemory" and .transport.command == "/bin/sh" and .transport.args == ["./bin/nmemory-mcp", "--project", "nott"] and .transport.env_vars == ["NOTT_NMEMORY_BIN"])
-  and any(.[]; .name == "nbrowser" and .transport.command == "/bin/sh" and .transport.args == ["./bin/nbrowser-mcp"] and .transport.env_vars == ["NOTT_NBROWSER_BIN"])
 ' "$scratch/codex-mcp.json" >/dev/null || die 'Codex MCP projection is wrong or duplicated'
 
 fake_mcp=$scratch/fake-mcp
@@ -127,10 +126,10 @@ $status_seen || { cat "$scratch/codex-app.err" >&2; die 'Codex MCP startup timed
 jq -s -e '
   any(.[]; .id == 2
     and ([.result.data[] | select(.serverInfo.name == "nsoul-env-probe") | .name] | sort)
-      == ["nbrowser", "nmemory"])
-' "$app_log" >/dev/null || die 'Codex did not start both plugin MCPs'
+      == ["nmemory"])
+' "$app_log" >/dev/null || die 'Codex did not start the plugin MCP'
 [[ -f "$scratch/nmemory.started" && $(<"$scratch/nmemory.started") == "$installed_path" ]] || die 'Codex did not forward NOTT_NMEMORY_BIN into the plugin cwd'
-[[ -f "$scratch/nbrowser.started" && $(<"$scratch/nbrowser.started") == "$installed_path" ]] || die 'Codex did not forward NOTT_NBROWSER_BIN into the plugin cwd'
+[[ ! -e "$scratch/nbrowser.started" ]] || die 'withdrawn nBrowser MCP was started by Codex'
 
 claude_state_empty() {
   jq -e 'all(.[]; .id != "nott@nsoul")' "$1" >/dev/null &&

@@ -27,7 +27,7 @@ Do not trust an older handoff when live state is cheap to verify.
 
 Use this order:
 
-1. **Result** — observable state sought.
+1. **Outcome** — observable state sought.
 2. **Current state** — exact branch, commit, worktree, candidate, and external artifacts.
 3. **Ownership** — allowed and forbidden surfaces.
 4. **Decisions** — locked choices and rationale.

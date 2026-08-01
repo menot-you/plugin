@@ -4,7 +4,7 @@
     "marketplaceName": "nsoul",
     "displayName": "nSOUL",
     "pluginName": "nott",
-    "version": "2.0.0",
+    "version": "0.3.0",
     "developer": "menot-you",
     "repository": "https://github.com/menot-you/n-soul",
     "license": "AGPL-3.0-only",
@@ -15,11 +15,6 @@
       "launcher": "bin/nmemory-mcp",
       "override": "NOTT_NMEMORY_BIN",
       "executable": "nmemory"
-    },
-    "nbrowser": {
-      "launcher": "bin/nbrowser-mcp",
-      "override": "NOTT_NBROWSER_BIN",
-      "executable": "nbrowser-mcp"
     }
   },
   "runtimeDependencies": {

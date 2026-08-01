@@ -81,8 +81,8 @@ it (watch Act 3).
   discipline, post-edit proof, and an opt-in local voice lint. A claim without
   observed verification is a protocol failure.
 - **Clone-and-own, nothing bundled.** Runs on Claude Code and Codex, no account, no
-  service. nMEMORY and nBrowser attach as **external** MCP adapters through
-  fail-closed launchers — the MCP servers are **not bundled**, no server binary ships
+  service. nMEMORY attaches as an **external** MCP adapter through a
+  fail-closed launcher — the MCP server is **not bundled**, no server binary ships
   inside nSOUL.
 
 ## Quickstart
@@ -132,7 +132,6 @@ voice lint. The default hooks persist no prompt, response, or session identifier
 | Server | Default executable | Override |
 |---|---|---|
 | nMEMORY | `nmemory` on `PATH` | `NOTT_NMEMORY_BIN` |
-| nBrowser | `nbrowser-mcp` on `PATH` | `NOTT_NBROWSER_BIN` |
 
 An override must name an executable file. An invalid override is rejected even when a
 fallback exists on `PATH` — a misconfigured explicit choice never silently reaches a
@@ -157,8 +156,8 @@ class, at most 200 local records. Exact boundary: [`PRIVACY.md`](PRIVACY.md).
 ## What it is NOT (yet)
 
 nSOUL ships methods, roles, hooks, adapters, and repository gates. It does **not**
-ship a sovereign trust spine, an independent witness kernel, an nMEMORY server, or
-an nBrowser server. A session reports *observed* verification; it cannot self-issue
+ship a sovereign trust spine, an independent witness kernel, or an nMEMORY
+server. A session reports *observed* verification; it cannot self-issue
 kernel closure. The private experimental lab is not part of nSOUL and never ships.
 
 ## Roadmap

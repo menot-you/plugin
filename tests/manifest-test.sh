@@ -33,10 +33,19 @@ for file in "$root"/agents/*.md; do
 done | LC_ALL=C sort >"$scratch/actual-agents"
 diff -u "$scratch/expected-agents" "$scratch/actual-agents" >/dev/null || die 'agent inventory differs from the public contract'
 
+# Six events, not four: the recall hooks ship (owner decision — they are this
+# release's honest-recall feature, they fail open without a store, and the leg
+# bundles bin/nmemory-mcp). session-digest, recall-inject and dispatch-recall are
+# registered alongside nott-hook, and hooks.json ships as-is with no transform.
 jq -e '
   .hooks == {
+    "SessionStart": [{"hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/session-digest.sh\""}]}],
     "SubagentStart": [{"hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" SubagentStart"}]}],
-    "UserPromptSubmit": [{"hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" UserPromptSubmit"}]}],
+    "UserPromptSubmit": [
+      {"hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" UserPromptSubmit"}]},
+      {"hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/recall-inject.sh\""}]}
+    ],
+    "PreToolUse": [{"matcher": "Agent|Task", "hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/dispatch-recall.sh\""}]}],
     "PostToolUse": [{"matcher": "Write|Edit", "hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" PostToolUse"}]}],
     "Stop": [{"hooks": [{"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" Stop"}]}]
   }
@@ -45,7 +54,7 @@ jq -e '
 
 jq -r '.mcpServers | keys[]' "$root/.mcp.json" | LC_ALL=C sort >"$scratch/claude-mcp"
 jq -r '.mcpServers | keys[]' "$root/.codex-plugin/mcp.json" | LC_ALL=C sort >"$scratch/codex-mcp"
-printf '%s\n' nbrowser nmemory >"$scratch/expected-mcp"
+printf '%s\n' nmemory >"$scratch/expected-mcp"
 diff -u "$scratch/expected-mcp" "$scratch/claude-mcp" >/dev/null || die 'Claude MCP inventory differs from the public contract'
 diff -u "$scratch/expected-mcp" "$scratch/codex-mcp" >/dev/null || die 'Codex MCP inventory differs from the public contract'
 
@@ -53,9 +62,7 @@ jq -e '
   .mcpServers.nmemory.type == "stdio"
   and .mcpServers.nmemory.command == "${CLAUDE_PLUGIN_ROOT}/bin/nmemory-mcp"
   and .mcpServers.nmemory.args == ["--project", "nott"]
-  and .mcpServers.nbrowser.type == "stdio"
-  and .mcpServers.nbrowser.command == "${CLAUDE_PLUGIN_ROOT}/bin/nbrowser-mcp"
-  and .mcpServers.nbrowser.args == []
+  and (.mcpServers | has("nbrowser") | not)
 ' "$root/.mcp.json" >/dev/null || die 'Claude MCP projection is not plugin-relative'
 jq -e '
   .mcpServers.nmemory.type == "stdio"
@@ -63,11 +70,7 @@ jq -e '
   and .mcpServers.nmemory.args == ["./bin/nmemory-mcp", "--project", "nott"]
   and .mcpServers.nmemory.cwd == "."
   and .mcpServers.nmemory.env_vars == ["NOTT_NMEMORY_BIN"]
-  and .mcpServers.nbrowser.type == "stdio"
-  and .mcpServers.nbrowser.command == "/bin/sh"
-  and .mcpServers.nbrowser.args == ["./bin/nbrowser-mcp"]
-  and .mcpServers.nbrowser.cwd == "."
-  and .mcpServers.nbrowser.env_vars == ["NOTT_NBROWSER_BIN"]
+  and (.mcpServers | has("nbrowser") | not)
 ' "$root/.codex-plugin/mcp.json" >/dev/null || die 'Codex MCP projection is not plugin-root-relative'
 jq -e '
   .schemaVersion == 2
@@ -87,18 +90,26 @@ jq -e '
   and all(.toolchain.gitleaks.sha256[]; type == "string" and test("^[0-9a-f]{64}$"))
 ' "$root/release/public-contract.json" >/dev/null || die 'runtime dependency or Gitleaks toolchain contract is incomplete'
 
-for launcher in "$root/bin/nmemory-mcp" "$root/bin/nbrowser-mcp"; do
+for launcher in "$root/bin/nmemory-mcp"; do
   [[ -f "$launcher" && ! -L "$launcher" && -x "$launcher" ]] || die "invalid launcher: ${launcher#"$root"/}"
 done
+# Withdrawn in 0.3.0 by owner curation and declared in
+# tools/mirror-strip.d/n-soul.list. Asserted as ABSENT rather than dropped from
+# the test, so re-adding either path without a decision turns this red.
+[[ ! -e "$root/bin/nbrowser-mcp" ]] || die 'withdrawn nBrowser launcher is back in the candidate'
+[[ ! -e "$root/assets/nsoul-mark.svg" ]] || die 'retired brand mark is back in the candidate'
 [[ -f "$root/LICENSE" && -f "$root/NOTICE" ]] || die 'license surface is incomplete'
-[[ -s "$root/assets/nsoul-mark.svg" ]] || die 'public brand asset is missing'
 [[ ! -e "$root/lab" ]] || die 'private lab entered the public candidate'
 
 inventory=$root/release/inventory.tsv
 [[ -f "$inventory" ]] || die 'release inventory is missing'
 awk -F '\t' '
   NF != 4 { exit 1 }
-  $2 !~ /^(core-as-is|core-scrubbed|release-support)$/ { exit 1 }
+  # `core-scrubbed` is retired: it meant "copied from plugin/ and altered on the way
+  # out", and the collapse ended that — the leg IS plugin/, so nothing is copied and
+  # nothing is scrubbed. Refused rather than merely unused, so the dead provenance
+  # cannot reappear silently.
+  $2 !~ /^(core-as-is|release-support)$/ { exit 1 }
   $2 ~ /^core-/ && $3 != "plugin/" $1 { exit 1 }
   $2 == "release-support" && $3 != "-" { exit 1 }
   $4 != "100644" && $4 != "100755" { exit 1 }
@@ -171,12 +182,10 @@ assets/hero.png
 assets/hero.svg
 assets/logo.png
 assets/logo.svg
-assets/nsoul-mark.svg
 assets/og.png
 assets/og.svg
 assets/one-rule.png
 assets/one-rule.svg
-bin/nbrowser-mcp
 bin/nmemory-mcp
 release/inventory.tsv
 release/public-contract.json
@@ -205,4 +214,4 @@ while IFS=$'\t' read -r path _class _source expected_mode; do
   [[ "$actual_mode" == "${expected_mode#100}" ]] || die "inventory mode differs: $path"
 done <"$inventory"
 
-printf 'manifest-test: pass (11 skills, 6 agents, 4 hooks, 2 external MCP adapters)\n'
+printf 'manifest-test: pass (11 skills, 6 agents, 4 hooks, 1 external MCP adapter)\n'

@@ -5,13 +5,9 @@ description: Interview the engineer to turn an open idea into a validated direct
 
 # Brainstorm
 
-**Normative scope.** Sentences carrying **MUST**, **MUST NOT**, or **NEVER** are
-mandatory method clauses. The client-loaded skill is the instruction mechanism;
-`tools/doc-lint.sh` gates the declared scope and normative hedges in this file.
-
 Use when the problem frame, product direction, or architecture choice is still open. Do not use for a bounded bug fix with an accepted result. Choose this method internally; never expose a skill menu.
 
-Brainstorm is a dialogue. The engineer holds context no repository supplies — purpose, constraints, taste, success criteria — and the method extracts it by interview before any direction is argued. A brainstorm that arrives with a finished analysis and a terminal go/no-go is a monologue: the named failure mode of this skill. The dopamine-first opening law binds result asks; in a brainstorm the conversation is the work.
+Brainstorm is a dialogue. The engineer holds context no repository supplies — purpose, constraints, taste, success criteria — and the method extracts it by interview before any direction is argued. A brainstorm that arrives with a finished analysis and a terminal go/no-go is a monologue: the named failure mode of this skill (owner calibration 2026-07-21). The dopamine-first opening law binds result asks; in a brainstorm the conversation is the work.
 
 ## Hard gates
 

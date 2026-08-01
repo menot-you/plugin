@@ -25,6 +25,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
+          # This workflow runs in a PUBLIC repository on GitHub-hosted runners, and
+          # nothing after this step needs a credential: the gates are local, the one
+          # download is a public release archive verified against its pinned digest,
+          # and tools/public-release-check.sh makes no network git call and reads no
+          # token. So the checkout credential would only ever sit in .git/config for
+          # a later step to leak. Dropping it costs this job nothing.
+          persist-credentials: false
       - name: Install pinned Gitleaks
         shell: bash
         run: |

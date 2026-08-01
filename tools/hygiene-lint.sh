@@ -219,7 +219,7 @@ scan_rule secret-suppression "${suppression_one}|${suppression_two}"
 scan_path_rule PRIVATE_HISTORY "cap-[0-9]+|${slice_marker}|wi-[0-9]+|owner (calibration|ratification|request) [0-9]{4}-|${campaign_one}|${campaign_two}|${campaign_three}|${constraint_marker}|${adr_marker}|${matrix_marker}|${lab_marker}"
 
 runtime_pattern='(^|[;&|[:space:]])(curl|wget|ssh|scp|rsync|nc|netcat)([;&|[:space:]]|$)|git[[:space:]]+(clone|fetch|pull)|cargo[[:space:]]+install|npm[[:space:]]+install|(^|[;&|[:space:]])eval([;&|[:space:]]|$)'
-for runtime in "$root/hooks/nott-hook.sh" "$root/bin/nmemory-mcp" "$root/bin/nbrowser-mcp"; do
+for runtime in "$root/hooks/nott-hook.sh" "$root/bin/nmemory-mcp"; do
   [[ -f "$runtime" && -x "$runtime" && ! -L "$runtime" ]] || die executable "${runtime#"$root"/}"
   if grep -E "$runtime_pattern" "$runtime" >/dev/null 2>&1; then
     die OFFLINE_EXEC "${runtime#"$root"/}"
@@ -246,15 +246,11 @@ jq -e '
   and .distribution.repository == "https://github.com/menot-you/n-soul"
   and .distribution.license == "AGPL-3.0-only"
   and .distribution.authorityDecision == "d25-public-distribution-boundary"
-  and (.integrations | keys | sort) == ["nbrowser", "nmemory"]
+  and (.integrations | keys | sort) == ["nmemory"]
   and (.integrations.nmemory | keys | sort) == ["executable", "launcher", "override"]
   and .integrations.nmemory.launcher == "bin/nmemory-mcp"
   and .integrations.nmemory.override == "NOTT_NMEMORY_BIN"
   and .integrations.nmemory.executable == "nmemory"
-  and (.integrations.nbrowser | keys | sort) == ["executable", "launcher", "override"]
-  and .integrations.nbrowser.launcher == "bin/nbrowser-mcp"
-  and .integrations.nbrowser.override == "NOTT_NBROWSER_BIN"
-  and .integrations.nbrowser.executable == "nbrowser-mcp"
 ' "$contract" >/dev/null || die PUBLIC_IDENTITY release/public-contract.json
 
 marketplace_name=$(jq -r '.distribution.marketplaceName' "$contract")

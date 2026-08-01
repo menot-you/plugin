@@ -1,6 +1,6 @@
 {
   "name": "nott",
-  "version": "2.0.0",
+  "version": "0.3.0",
   "description": "One intent into one proof-bound deliverable, with attention, observed verification, and rollback.",
   "author": {
     "name": "menot-you",

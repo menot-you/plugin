@@ -1,5 +1,15 @@
 {
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/session-digest.sh\""
+          }
+        ]
+      }
+    ],
     "SubagentStart": [
       {
         "hooks": [
@@ -16,6 +26,25 @@
           {
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" UserPromptSubmit"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/recall-inject.sh\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/dispatch-recall.sh\""
           }
         ]
       }

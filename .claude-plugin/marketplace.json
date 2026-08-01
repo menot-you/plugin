@@ -11,7 +11,7 @@
       "name": "nott",
       "source": "./",
       "description": "Engineering methods for decisions, delivery, observed verification, and safety.",
-      "version": "2.0.0",
+      "version": "0.3.0",
       "category": "development",
       "homepage": "https://github.com/menot-you/n-soul",
       "tags": [

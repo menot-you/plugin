@@ -5,10 +5,6 @@ description: Convert a ratified result into an execution-ready dependency graph 
 
 # Plan
 
-**Normative scope.** Sentences carrying **MUST**, **MUST NOT**, or **NEVER** are
-mandatory method clauses. The client-loaded skill is the instruction mechanism;
-`tools/doc-lint.sh` gates the declared scope and normative hedges in this file.
-
 Use for non-trivial implementation, cross-cutting change, production work, or any result that needs several dependent actions. Do not size by time.
 
 ## Inputs to lock
@@ -43,12 +39,26 @@ Write for a skilled engineer with ZERO context for this codebase and no access t
 9. Self-review against the contract: (a) coverage — every requirement points at a unit that implements it; (b) placeholder scan — hunt the failures listed below; (c) interface consistency — names, types, and signatures match across units.
 10. Run an adversarial pass over decisions, coverage, failure paths, and rollback. Revise until no blocking finding remains.
 
+## Every unit carries its senior bar, or the plan has deferred quality to nobody
+
+A unit that names a deliverable and not the threshold it must meet has moved the quality decision to whoever implements it, at the moment they are least able to argue for it. The bar is a pull request the most sceptical reviewer at a bank approves, and a plan states it in numbers.
+
+Each unit MUST therefore also carry:
+
+- **The thresholds it is held to**, by name and value, not by adjective. Complexity, function length, nesting, argument count are measured by tools the repository already runs; a unit that will exceed one states that up front with an owner, a reason and an expiry — never by loosening the threshold, because debt admitted that way is invisible forever.
+- **Its test-strength bar as mutation, never coverage.** Coverage says a line ran; mutation says something would have noticed it being wrong. A unit whose acceptance is a coverage number has not stated a bar.
+- **The falsifiability step, written out.** Not "add tests" — the exact mutation to apply to the SOURCE, the red it must produce, and the green after reverting. A test that has never failed proves nothing, and inverting an assertion is not that proof.
+- **Whether the unit's fixture can express the failure it guards.** A double more permissive than the real subject makes every red written against it vacuous. Where a unit's proof depends on a fake, the plan says what that fake CANNOT model — that sentence is where shipped defects hide.
+- **The rung its mechanism honestly holds.** A unit claiming enforcement it cannot perform is a finding, not a unit.
+
+**Structural units are planned before the units that would relocate their defect.** Decomposing a module before its invariants are declared and tested moves the defect somewhere harder to see. Where both are needed, the ordering edge is `declare → prove → fix → split`, and it is a `blocked_by` edge like any other.
+
 ## Placeholders are plan failures
 
 NEVER write: "TBD" · "TODO" · "implement later" · "add appropriate error handling" · "handle edge cases" · a test step without the actual test content · "similar to unit N" in place of the repeated content (executors read units out of order) · a name, type, or signature defined in no unit. A step that states what to do without showing how, where code is the deliverable, is a blocking finding.
 
 ## Output
 
-Return one durable master plan plus atomic work units. It must distinguish decision from execution detail, keep one active result visible, and let the executor derive the clean diff from current code. Its opening declares the plan's normative scope and current enforcement rung; plan review rejects an omitted declaration.
+Return one durable master plan plus atomic work units. It must distinguish decision from execution detail, keep one active result visible, and let the executor derive the clean diff from current code.
 
 No time estimates, vague phases, hidden deferral, or orphan follow-up. A deferred requirement needs its own durable work unit and dependency edge.

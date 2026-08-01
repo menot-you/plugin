@@ -14,7 +14,7 @@ Use after direction is chosen but before planning or autonomous actions. Ratific
 - Scope in and explicit scope out.
 - Non-negotiable constraints.
 - Reversible authority already granted.
-- Actions that require the engineer's approval.
+- Effects that require the engineer's approval.
 - Independent verification required for acceptance.
 - Rollback path and stop conditions.
 
@@ -24,15 +24,9 @@ Use after direction is chosen but before planning or autonomous actions. Ratific
 2. Rewrite the result as an observable state, not an activity.
 3. Enumerate all capabilities named by the engineer. Put each one in scope or out with a reason, without exposing skills or agents as choices.
 4. Separate preparation from the action. Mark destructive, public, production, financial, credential, data-loss, and merge-to-main actions as gated unless authority is explicit.
-5. Apply the closed `witness` and `evidence` meanings in `decisions.md`: name
-   the independent observer and required observation separately from the
-   evidence and independent verification required for acceptance. Apply the
-   no-kernel boundary in `SPEC.md` §3; do not trust the implementation's own
-   claim.
+5. Define the witness that can prove the result without trusting the implementation's own claim.
 6. Define rollback in operational terms and state any irreversible portion.
-7. Define stop conditions: missing authority, unexpected reach, failed required
-   observation or independent verification, unsafe rollback, or conflict with
-   current state.
+7. Define stop conditions: missing authority, unexpected reach, failed witness, unsafe rollback, or conflict with current state.
 8. Check correctness, reliability, maintainability, reversibility, security, and reach.
 9. Return one ratified contract or one blocking question. Never return a menu, multi-question survey, or process ritual as the product surface.
 
@@ -41,12 +35,11 @@ Use after direction is chosen but before planning or autonomous actions. Ratific
 Produce a compact record with:
 
 - Decision and rationale.
-- Result.
+- Outcome.
 - Scope in / scope out.
 - Constraints.
 - Authority and gated actions.
-- Witness and required observation, or their exact gap.
-- Evidence and independent verification.
+- Witness.
 - Rollback.
 - Stop conditions.
 - Known trade-off.

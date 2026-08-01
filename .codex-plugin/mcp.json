@@ -6,13 +6,6 @@
       "args": ["./bin/nmemory-mcp", "--project", "nott"],
       "cwd": ".",
       "env_vars": ["NOTT_NMEMORY_BIN"]
-    },
-    "nbrowser": {
-      "type": "stdio",
-      "command": "/bin/sh",
-      "args": ["./bin/nbrowser-mcp"],
-      "cwd": ".",
-      "env_vars": ["NOTT_NBROWSER_BIN"]
     }
   }
 }
