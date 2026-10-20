@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "omit_hooks": [
+    "watch.tsx"
+  ],
+  "omit_agents": [
+    "app.md",
+    "browser.md",
+    "hooks.md",
+    "host.md",
+    "memory.md",
+    "ops.md",
+    "plugin.md",
+    "spawn.md",
+    "store.md",
+    "swift-reviewer.md",
+    "system1.md",
+    "tui.md",
+    "web.md"
+  ],
+  "plugin_paths": [
+    "NOTT.md",
+    "README.md",
+    ".claude-plugin",
+    ".codex-plugin",
+    "plugin.json",
+    "hooks",
+    "hooks.json",
+    "skills",
+    "agents",
+    "vendor",
+    "rules",
+    "types",
+    "scripts/plugin.py",
+    "scripts/plugin",
+    "scripts/env",
+    "scripts/state.sh",
+    "public"
+  ],
+  "optional_integrations": {
+    "jbcontext": "Install and authenticate jbcontext before you register its MCP server.",
+    "search": "Configure a supported search provider before you use web search.",
+    "browser": "Install Fortress, or explicitly set NOTT_NBROWSER_CHROME_BIN to an installed engine."
+  },
+  "clients": {
+    "claude": "The native view is built. Public activation needs a full-plugin nSPAWN admission path. Native authentication is required.",
+    "codex": "Local native registration uses Codex 0.163.0. Native authentication and hook trust remain required.",
+    "agy": "The native view is built. Public activation is unavailable. New nSPAWN AGY launches remain refused."
+  },
+  "platforms": [
+    "linux",
+    "darwin"
+  ],
+  "portable_paths": [
+    "plugin/tests/test_package_inventory.py",
+    "plugin/tests/test_package_properties.py",
+    "plugin/tests/test_plugin_entry.py",
+    "mcps/nmemory/tests/conftest.py",
+    "mcps/nmemory/tests/test_config.py",
+    "mcps/nmemory/RULEBOOK.md",
+    "evals/nmemory/tests/conftest.py",
+    "evals/nmemory/tests/workspace_root.py",
+    "evals/nmemory/tests/test_metrics.py",
+    "plugin/tests/test_public_activation.py",
+    "plugin/tests/test_public_documents.py",
+    "mcps/nmemory/tests/test_architecture.py",
+    "mcps/nmemory/tests/workspace_root.py",
+    "libs/netdoor/http-door-auth.tsv",
+    "mcps/nmemory/tests/storefile.py",
+    "mcps/nbrowser/tests/test_docs_surface_counts.py"
+  ],
+  "layout_map": "ops/mirror/projects.json"
+}

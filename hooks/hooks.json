@@ -1,32 +1,316 @@
 {
   "hooks": {
-    "SubagentStart": [
+    "Notification": [
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" SubagentStart"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
           }
-        ]
+        ],
+        "matcher": "permission_prompt"
       }
     ],
-    "UserPromptSubmit": [
+    "PostCompact": [
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" UserPromptSubmit"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-snapshot.sh\"",
+            "timeout": 15,
+            "type": "command"
           }
-        ]
+        ],
+        "matcher": "manual|auto"
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
         "hooks": [
           {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" PostToolUse"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/law-contract.sh\"",
+            "timeout": 15,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-anchor-queue.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit|MultiEdit"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nspawn-pairing.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "mcp__plugin_nott_nspawn__nspawn_run_start|mcp__plugin_nott_nspawn__nspawn_review_start|mcp__plugin_nott_nspawn__nspawn_batch_start"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-act.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(Agent|Task|Workflow|SendMessage|mcp__(plugin_nott_)?nspawn__nspawn_(run|batch|review)_start)$"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/bash-guard.py\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/red-first.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/two-misses.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/secret-in-output.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash|Agent|Monitor|Workflow|AskUserQuestion|ExitPlanMode|mcp__.*"
+      },
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/artifact-copy.py\"",
+            "timeout": 60,
+            "type": "command"
+          }
+        ],
+        "matcher": "^Artifact$"
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/secret-in-output.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/red-first.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/two-misses.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash|Agent|Monitor|Workflow|AskUserQuestion|ExitPlanMode|mcp__.*"
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-snapshot.sh\"",
+            "timeout": 15,
+            "type": "command"
+          }
+        ],
+        "matcher": "manual|auto"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/pynott-branch-lock.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/bash-guards.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/two-misses.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/campaign-pr-guard.py\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/plan-exit-gate.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "ExitPlanMode"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/dispatch-tier.py\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Agent"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-main-only.py\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "^mcp__(plugin_nott_)?nmemory(-http)?__"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/red-first.sh\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|Write|MultiEdit"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash|Agent|Monitor|Workflow|AskUserQuestion|ExitPlanMode|mcp__.*"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-snapshot.sh\"",
+            "timeout": 15,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/law-session.sh\" 1",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/law-session.sh\" 2",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/law-session.sh\" 3",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup|resume|clear|compact|fork"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-session.sh\"",
+            "timeout": 15,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup|resume|clear|compact|fork"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-session.sh\" pins",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup|resume|clear|compact|fork"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-act.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "compact"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nspawn-child-directives.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nspawn-notices.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup|resume|clear|compact|fork"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
           }
         ]
       }
@@ -35,11 +319,113 @@
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:?plugin root unavailable}}/hooks/nott-hook.sh\" Stop"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/final-state.sh\"",
+            "timeout": 10,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-capture-gate.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/subagent-law.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/fanout-reminder.sh\"",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/final-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/system1-suggest.py\"",
+            "timeout": 3,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-recall.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-act.py\"",
+            "timeout": 5,
+            "type": "command"
           }
         ]
       }
     ]
-  }
+  },
+  "modules": [
+    "./register.ts"
+  ]
 }

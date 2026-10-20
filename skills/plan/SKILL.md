@@ -1,54 +1,171 @@
 ---
 name: plan
-description: Convert a ratified result into an execution-ready dependency graph whose units a zero-context executor can land without inventing a decision.
+description: >-
+  Turn an agreed result into an execution-ready plan or identify the next ready
+  work. Planning alone does not authorize implementation.
 ---
 
 # Plan
 
-**Normative scope.** Sentences carrying **MUST**, **MUST NOT**, or **NEVER** are
-mandatory method clauses. The client-loaded skill is the instruction mechanism;
-`tools/doc-lint.sh` gates the declared scope and normative hedges in this file.
+Preserve the full result while making the next authorized work executable.
 
-Use for non-trivial implementation, cross-cutting change, production work, or any result that needs several dependent actions. Do not size by time.
+<!-- nott:plan:interview -->
+Consume decisions already made. Resolve repository facts and technical choices
+within scope. Ask only for a new owner-held purpose, taste, authority or result
+decision that changes the plan; do not reopen a settled interview.
 
-## Inputs to lock
+<!-- nott:plan:independent-authorship -->
+<!-- nott:plan:write -->
+The principal may author the plan. An execution-ready plan requires independent
+review; the author cannot supply that witness. A simple ordering answer does not
+create a new plan or review stage.
 
-- Ratified result contract.
-- Current code and repository state.
-- Active overlapping work.
-- Affected callers, services, state, and trust boundaries.
-- Required review and ship gates.
+That review runs BEFORE execution, and it loops: a finding that holds returns to
+the plan and the revised plan is reviewed again. When two rounds in a row find
+only execution-level detail, the loop stops and the plan is delivered: a plan
+holds on design, order, authority and observable acceptance, and a campaign's
+exact commands get their own readback and independent review against live state
+when that campaign starts. Carrying an unresolved finding into execution turns
+it into rework, which is the expensive place to find it. A review that holds
+readies the plan; the owner accepts results, never a plan or a draft.
 
-## The executor assumption
+<!-- nott:plan:final-text -->
+A plan's text is its final version. The rounds, verdicts, finding tables and
+revision notes of its review stay in the review record, never in the plan.
 
-Write for a skilled engineer with ZERO context for this codebase and no access to this conversation. Each unit carries everything its executor needs: exact paths, the complete change content where code is the deliverable, exact commands with expected output, and the interfaces neighboring units rely on. An executor who must ask a question or invent a decision marks the plan not ready — the shared-understanding gate at the plan-to-work seam.
+<!-- nott:plan:home -->
+Use the existing planning surface. When a durable repository plan is requested,
+record it as the nMEMORY plan capsule with a principal-chosen slug; its working
+copy lives at .nott/plans/<slug>/PLAN.md, ignored by Git, never in the tracked
+tree. Materialize INTENT.md beside it from accepted owner decisions only when the
+campaign needs that source; the owner owns its meaning. Do not demand a document
+stack for an ordering answer.
 
-## Method
+<!-- nott:plan:contract -->
+<!-- nott:plan:coverage -->
+<!-- nott:plan:matrix -->
+Connect every accepted requirement to its deliverable and observable acceptance.
+Name what the ready work proves, what remains and what makes it ready. Use a
+coverage matrix when it makes those relationships easier to verify; its presence
+or a fixed section order is not acceptance.
 
-1. Open with the home: problem, resolved result, keystone next action, proof path, and the dependency graph as a diagram.
-2. Map the file structure before drawing units: every file created or modified, one responsibility each. Follow existing patterns; split only what the goal touches.
-3. Confirm every capability named by the engineer is in scope or explicitly out with a reason; do not make the engineer choose a skill, agent, or backend.
-4. Identify the keystone: the one unit other units depend on.
-5. Split work into atomic units, right-sized: the smallest unit that carries its own proof cycle and is worth a fresh reviewer's gate. Fold setup, scaffolding, and documentation into the unit whose deliverable needs them; split only where a reviewer could reject one unit while approving its neighbor.
-6. Each unit carries:
-   - a human-readable id and testable acceptance criteria;
-   - exact files to create or modify, with line anchors when modifying;
-   - interfaces — consumes: exact names and signatures taken from earlier units; produces: exact names and types later units rely on (an implementer sees only their own unit; this block is how neighbors stay consistent);
-   - proof-first steps in order: write the failing check, observe it fail, apply the minimal change, observe it pass, commit;
-   - caller reach, risk tier, and trust boundary;
-   - required independent review;
-   - shipping action, post-action readback, and rollback.
-7. Express dependencies as `blocked_by` edges. Validate the graph: all edges resolve, no cycles exist, roots are intentional, and topological order is possible.
-8. Run the cold-executor test. If a decision is missing, put a `[DECIDE FIRST]` block at the top with one recommendation.
-9. Self-review against the contract: (a) coverage — every requirement points at a unit that implements it; (b) placeholder scan — hunt the failures listed below; (c) interface consistency — names, types, and signatures match across units.
-10. Run an adversarial pass over decisions, coverage, failure paths, and rollback. Revise until no blocking finding remains.
+Write the next useful increment as an observable result, concrete changes,
+necessary dependencies, consumer proof and next action. Keep later outcomes
+visible with the condition that makes them ready. State current constraints once
+where they affect a decision; reference their owning record instead of repeating
+approval disclaimers, capsule histories or policy text in every chapter. Remove
+planning steps that neither advance delivery nor protect a real boundary. Keep
+material risks, missing inputs and required owner decisions (result, taste,
+scope or a reserved act) explicit.
 
-## Placeholders are plan failures
+The responsible principal chooses delegation under the owner's standing grant; a
+leader may decompose only its assigned scope. Base the choice on independent
+deliverables, required expertise, risks, dependencies, shared writers and
+observed resource limits. Software-house roles such as #brainstorm,
+#workflow and #review name available responsibilities, not mandatory model calls
+or spawning levels. Use one responsible executor for a bounded task. Required
+independent review follows applicable rules and accepted criteria; the executor
+cannot waive it. Delegation cannot expand scope, budget, permissions or reserved
+acts; bring changes to those limits to the owner. Give each worker the original
+intention and acceptance alongside its scoped assignment; the principal owns
+integration and the full result. Use code and events for routine monitoring,
+adding model calls when interpretation is needed.
 
-NEVER write: "TBD" · "TODO" · "implement later" · "add appropriate error handling" · "handle edge cases" · a test step without the actual test content · "similar to unit N" in place of the repeated content (executors read units out of order) · a name, type, or signature defined in no unit. A step that states what to do without showing how, where code is the deliverable, is a blocking finding.
+<!-- nott:plan:workflow -->
+For a campaign, the spec stage follows ../workflow/SKILL.md (spec).
 
-## Output
+<!-- nott:plan:graph -->
+<!-- nott:plan:frontier -->
+<!-- nott:plan:parallel -->
+A dependency exists where one result supplies an input another needs. Preserve
+future results with their materialization conditions. Dispatch only observed,
+bounded ready work; independent disjoint results may proceed together. Use an
+existing graph where available and references/graph-law.md when graph topology
+needs definition. Do not invent speculative interfaces beyond the frontier.
 
-Return one durable master plan plus atomic work units. It must distinguish decision from execution detail, keep one active result visible, and let the executor derive the clean diff from current code. Its opening declares the plan's normative scope and current enforcement rung; plan review rejects an omitted declaration.
+<!-- nott:plan:waves -->
+Name the dispatch waves: which units are ready together, because their
+write-sets are disjoint and none needs another's output, and the dependency that
+makes each later wave wait. A wave states readiness, not a running order; the
+phase order a change passes through and when a ready unit is held back are the
+law's, not this route's.
 
-No time estimates, vague phases, hidden deferral, or orphan follow-up. A deferred requirement needs its own durable work unit and dependency edge.
+<!-- nott:plan:unit -->
+<!-- nott:plan:executor-floor -->
+A unit is a coherent deliverable, not an observation, test or commit. Multiple
+observations may establish one result. Give a principal the bounded result and
+evidence needed for technical discovery; give a mechanical worker exact paths,
+commands, values and signals. Use references/unit-contract.md when scheduling
+cold execution. Missing technical detail is not a reason to stop a principal
+who is authorized to discover it.
+
+A plan that reaches the owner opens with a `## Readback`: one sentence naming the
+promised result plus, only when the ask is ambiguous, the one question that
+resolves it, never a numbered list. The owner never receives a plan without it;
+plugin/scripts/floor.py refuses the principal plan that lacks it.
+
+<!-- nott:plan:dod -->
+<!-- nott:plan:judge -->
+Use the real consumer boundary and an integrated judge to decide completion.
+Reuse existing executable proof. Build only a missing judge that is necessary to
+observe the requested result, never machinery whose sole consumer is the plan.
+Persist scheduled accepted DoDs with dod_of relations before dispatch; do not
+recreate existing accepted records or split units by the number of observations.
+
+Acceptance names the host and the complete run there, not a sampled smoke;
+configuration being present is an input, never the result.
+
+<!-- nott:plan:floors -->
+The checks and limits the repository declares, required test kinds and
+independent witnesses remain binding; where the repository declares no limit, the
+plan names checks proportional to the change and no invented floor. A structural plan check cannot establish product behavior or replace a
+consumer proof. Keep accepted authority separate from met/partial/failed verdicts.
+
+<!-- nott:plan:panel -->
+<!-- nott:plan:verify -->
+Review coverage, feasibility, scope and consequential trust boundaries. Bind
+evidence to candidate bytes and relevant policy, configuration, target,
+dependencies and expiry. Reuse unaffected observations. A relevant change ages
+only its affected proof; patch-id equality alone is insufficient.
+
+The accepted result and integrated consumer judge own the monotonic miss history.
+Revision IDs, repartitioning, session names and new prerequisite labels do not
+reset it. After two misses without differentiating evidence, stop that path; a
+material input addressing the cause may justify a bounded next attempt. A miss in
+the proof's own scaffolding (harness, fixture, wait, lock or capture) counts
+against that path whatever its cause; a new scaffolding cause is not
+differentiating evidence about the result, so after two such misses prove the
+scaffolding offline against the last run's captured evidence before spending
+another consumer slot.
+
+<!-- nott:plan:proof -->
+<!-- nott:plan:one-pr -->
+<!-- nott:plan:merge-route-boundary -->
+<!-- nott:plan:mergeable -->
+Deliver the plan with its actual verification and open decisions. Planning alone
+does not authorize implementation, installation or merge. When execution is also
+authorized, continue through the same campaign and PR without a plan-only PR.
+Unrelated movement of main is not a reason to rebuild the plan or repeat review.
+
+<!-- nott:plan:output -->
+A cold executor can identify the result, allowed next action, proof and rollback.
+Use references/register.md only when a requested artifact, canonical diagram or
+imagery needs those domain conventions. Do not add media or documents as ceremony.
+
+Read ../execute/references/complete-results.md when defining a unit: it holds the result, RED and proof law.
+
+Read ../workflow/references/delegation-and-recovery.md when scheduling parallel or delegated work.
+
+Read ../readback/references/communication.md before producing a durable artifact or diagram.
+
+<!-- nott:procedure:native-planning:start -->
+## Native planning boundaries
+
+AskUserQuestion, EnterPlanMode and ExitPlanMode are conditional host bindings.
+Use a registered question interface only for an unresolved owner decision or action.
+Respect a planning mode the owner opened and the host's gate on leaving it;
+never enter plan mode to have a plan or method approved, never invent a gate the
+host lacks, and never ask again for implementation already granted. When the
+project has tests, the first implementation mutation of an authorized behavior
+change is its regression test, observed RED before product editing.
+<!-- nott:procedure:native-planning:end -->

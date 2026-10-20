@@ -1,33 +1,13 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "nsoul",
-  "description": "nSOUL — the public distribution of the NOTT proof-bound engineering peer.",
+  "name": "nott-public",
   "owner": {
-    "name": "menot-you",
-    "url": "https://github.com/menot-you/n-soul"
+    "name": "menot-you"
   },
   "plugins": [
     {
       "name": "nott",
       "source": "./",
-      "description": "Engineering methods for decisions, delivery, observed verification, and safety.",
-      "version": "2.0.0",
-      "category": "development",
-      "homepage": "https://github.com/menot-you/n-soul",
-      "tags": [
-        "nsoul",
-        "engineering",
-        "peer",
-        "review",
-        "delivery",
-        "verification",
-        "claude-code",
-        "codex",
-        "plugin",
-        "agents",
-        "skills",
-        "hooks"
-      ]
+      "version": "0.1.0"
     }
   ]
 }

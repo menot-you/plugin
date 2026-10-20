@@ -1,54 +1,58 @@
 ---
 name: ratify
-description: Turn an accepted direction into a locked decision and result contract with authority, proof, rollback, and stop conditions.
+description: >-
+  Record an already chosen direction as a result contract with scope, authority,
+  acceptance and rollback. Not a new interview or an implementation task.
 ---
 
 # Ratify
 
-Use after direction is chosen but before planning or autonomous actions. Ratification removes ambiguity; it does not add implementation detail. Collapse the contract for the engineer into result, proof, authority, rollback, and the first blocked decision.
+Make the chosen direction usable without inventing product decisions.
 
-## Inputs to lock
+<!-- nott:ratify:single-node -->
+<!-- nott:ratify:entry -->
+One writer reconciles the accepted decisions with current facts. Consume the
+owner's existing choice; return only an unresolved owner-held fork to brainstorm.
 
-- Accepted direction and the reason it won.
-- Observable result.
-- Scope in and explicit scope out.
-- Non-negotiable constraints.
-- Reversible authority already granted.
-- Actions that require the engineer's approval.
-- Independent verification required for acceptance.
-- Rollback path and stop conditions.
+<!-- nott:ratify:out-decision -->
+<!-- nott:ratify:out-result -->
+<!-- nott:ratify:out-scope -->
+<!-- nott:ratify:out-constraints -->
+Capture the chosen direction and reason, observable result, consumers, scope and
+non-goals, and constraints. Preserve every requested outcome. A contract can have
+several acceptance observations; their number does not determine work units.
 
-## Method
+<!-- nott:ratify:gated-actions -->
+<!-- nott:ratify:out-authority -->
+Record existing authority and reserved acts. Destructive, public, production,
+financial, credential, data-loss, tag/release, trunk-push, force-push and branch
+deletion acts require exact owner authority. The campaign's own merge, once the
+ship route's readiness holds, remains NOTT's delivery responsibility. Do not ask
+again for authority already granted or infer authority from silence.
 
-1. Read the decision source and current repository facts.
-2. Rewrite the result as an observable state, not an activity.
-3. Enumerate all capabilities named by the engineer. Put each one in scope or out with a reason, without exposing skills or agents as choices.
-4. Separate preparation from the action. Mark destructive, public, production, financial, credential, data-loss, and merge-to-main actions as gated unless authority is explicit.
-5. Apply the closed `witness` and `evidence` meanings in `decisions.md`: name
-   the independent observer and required observation separately from the
-   evidence and independent verification required for acceptance. Apply the
-   no-kernel boundary in `SPEC.md` §3; do not trust the implementation's own
-   claim.
-6. Define rollback in operational terms and state any irreversible portion.
-7. Define stop conditions: missing authority, unexpected reach, failed required
-   observation or independent verification, unsafe rollback, or conflict with
-   current state.
-8. Check correctness, reliability, maintainability, reversibility, security, and reach.
-9. Return one ratified contract or one blocking question. Never return a menu, multi-question survey, or process ritual as the product surface.
+<!-- nott:ratify:independent-witness -->
+<!-- nott:ratify:out-witness -->
+Acceptance names consumer observations and their falsifiers. Specify independent
+witnesses where required; the builder's own claim cannot supply one.
 
-## Output
+<!-- nott:ratify:out-rollback -->
+<!-- nott:ratify:out-trade-off -->
+Describe the reachable rollback, any irreversible portion and its compensating
+control, and the material trade-off the owner accepted.
 
-Produce a compact record with:
+<!-- nott:ratify:stop-conditions -->
+<!-- nott:ratify:out-stop-conditions -->
+Keep authority loss, unsafe rollback and scope/reach violations as stop boundaries.
+Bind attempt history to this accepted result and its integrated consumer judge;
+later repartitioning or revision does not erase an unresolved miss.
 
-- Decision and rationale.
-- Result.
-- Scope in / scope out.
-- Constraints.
-- Authority and gated actions.
-- Witness and required observation, or their exact gap.
-- Evidence and independent verification.
-- Rollback.
-- Stop conditions.
-- Known trade-off.
+<!-- nott:ratify:persist-readback -->
+Persist the contract in nMEMORY with owner provenance and read it back. Keep
+acceptance authority separate from the observed verdict. Capture failure blocks
+dependent durable handoff, not unrelated authorized work.
 
-The record is ready when a cold planner can build work units without inventing a product or safety decision.
+<!-- nott:ratify:no-menu -->
+<!-- nott:ratify:handoff -->
+Return the accepted contract or the exact unresolved decision. Do not add a task
+layout, implementation recipe, new approval round or execution the owner did not
+authorize.

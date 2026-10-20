@@ -1,0 +1,3529 @@
+{
+  "clients": {
+    "agy": "The native view is built. Public activation is unavailable. New nSPAWN AGY launches remain refused.",
+    "claude": "The native view is built. Public activation needs a full-plugin nSPAWN admission path. Native authentication is required.",
+    "codex": "Local native registration uses Codex 0.163.0. Native authentication and hook trust remain required."
+  },
+  "component": "plugin",
+  "digest": "0a2d098b41b473bb76cde706d90d4016527803cc4e186e59549981453afbfd3c",
+  "files": {
+    ".claude-plugin/marketplace.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5c502d2c711ebaebc131c145c24445141050d390846c741cba589ae107392d07"
+    },
+    ".claude-plugin/plugin.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8490ec44e3264e09574aae09eec20876ae5e8a79d50c4f28d4338fb6865179d4"
+    },
+    ".claude/context7.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "fce4dbd6f3476e6ba72f643e541aa12c70b4a13f129021b9cbcca3fd3bece200"
+    },
+    ".codex-plugin/plugin.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f92abfaca51e9aff26cf3f17f62c8e2a110d396765d7eaad02d8a6b1195f01fd"
+    },
+    ".codex/config.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d11f725cf227cf100022884bc054d7c175c5b4af136bbdba0bff02081cb5b57c"
+    },
+    ".github/ISSUE_TEMPLATE/bug.yml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d7c8845f73e52fa4cda86656f569061848168f908b386c6fd2ffd40c9d898173"
+    },
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "13064e7bea658e01e718b414fbb7b3b244f36411fe25ee2055c151f7b534547a"
+    },
+    ".github/ISSUE_TEMPLATE/documentation.yml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c4c8821ace67e42efaf7d5258f4b4aac7c16ada969c15e810472f0e09d38bdda"
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3ce93dcaef1a5c1f04511596940c4c497de018dc88ccd9da89f7c5accf097d76"
+    },
+    ".github/workflows/ci.yml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4585ecd059b4e1fbb1817712387fc184900ddcb21049fa2b7b97abc3a6473027"
+    },
+    ".github/workflows/codeql.yml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "042db466f23cca0b7b50c2dca769e1b0f70e2b4d1fbcf1a61e7cfcd6c85c9e07"
+    },
+    ".gitignore": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "930222c4609dfabf0675b0dd0dcc33a4d0249daea26d5dc20e1a49621a13c18b"
+    },
+    ".mcp.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "fd409dd19a25155a50cee3269bf8cd234d3af40a9087a76bf34da48aa162a6e5"
+    },
+    ".nott-public.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d48fe06f367756c31e9767b92caa3a9a74a108ecc9282c5de56643d8da95a630"
+    },
+    ".python-version": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "922fe0c3de073b01988e23348ea184456161678c5e329e6f34be89be24383f93"
+    },
+    "CHANGELOG.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3969dce6e255aa56422ba5ce255f99d16aeebe44e265b476c8b4fcd7393dc323"
+    },
+    "CITATION.cff": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2c825d9ddaf01cbd2c2046e5a9fd508d8d3b47c5939d40a5e1ba48af5062f339"
+    },
+    "CLAUDE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b6693c711de9f0cc4e00c7923ba587e593c3d6090e45166793ef75a0301ebc19"
+    },
+    "CODE_OF_CONDUCT.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8f912585a206b762e8b5ead8df05a11d2ff173a05004044bb746757adfa2b5bf"
+    },
+    "CONTRIBUTING.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0473107e061b5d6472ed42d3eb1c41f03100e9e36b8c70c6a97a7b4a6caeea59"
+    },
+    "LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "NOTT.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "45566ad69f7a59e9a2552d62f654d4f33dce9e9bebcdc4a8ff47b53b6dfa8db9"
+    },
+    "README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0101ca9a7bb2f41c56283500f022a0cd5d1aac00056a4a5a228479a509581421"
+    },
+    "SECURITY.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "dba32928f840e041388f8ec5dea984d8cf45813bbbbc6e36ee19137a180109b3"
+    },
+    "SUPPORT.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "471597a33465cce7419e808fa9b900931c24926d324e947931b451fcfc0d34fa"
+    },
+    "agents/pr-test-analyzer.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "118ebd0e9cd8b2b71afdf4a64b8f70b83466494a0f0ed776e89efc47c06af071"
+    },
+    "agents/python-reviewer.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "54094f9073e1aedf591ee9ac5316a5e088493577cc255aaf15eb02b0e24757e7"
+    },
+    "agents/security-reviewer.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "16305e98f1b420402bf3329d4a9cc703b77de432bc3f8abbbc31fa5fd6c514fa"
+    },
+    "agents/silent-failure-hunter.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c13639f3426e31b46828b9d1c63f3206f520d11993a5ea11a79f8e3c54858efb"
+    },
+    "agents/simplifier.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "914c8ac6aea6c9ffa47759631be93daf10b807b20267f6dee7cbc6b6380f6746"
+    },
+    "agents/ui-reviewer.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "51ed6986b93d830c14e312577755df21fde2fdc3c882275cbee91df86d0f5558"
+    },
+    "agents/ux-reviewer.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cf86b94fbb75c9af73f51cfc745c1af4386f9d3ceb1aa94de1e3594c77f744b9"
+    },
+    "docs/ARCHITECTURE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9e4694e887a255dff99cb342796f5218b0d043d07f433aae246a20c193820ae6"
+    },
+    "docs/DOCUMENTATION.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7d2f6128b2e3b0a7385e7eace2c7bfe25cb66a4e01e274c79eb61f9e43f21c1f"
+    },
+    "docs/INSTALLATION.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "942a87692e17729ee0c168d5a315d159d78a60921402121468f798c41e5edc74"
+    },
+    "docs/PRIVACY.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "893dd7bf220ff2ae4233877de317bc32d26b45d7dd37cd2ae2c5081dc173e0db"
+    },
+    "docs/QUALITY.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "aca9d8cfca18c6a476735faf035417cc548dfc0866abbd9b41d007cdd8c2e0ac"
+    },
+    "docs/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "bf6801be30a2e0a942727cafbd18523981c2ac64973f08d75b266ae54a421102"
+    },
+    "docs/REFERENCE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6d453c319080ddc6c86cbe60b534ea7a98923924f52d38fea701b2bc00e3bc73"
+    },
+    "docs/ROADMAP.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "fee23de1ea3c6610a9c7efc41519e61d40fd74e3257fec62536dcc19ca40648b"
+    },
+    "docs/RUNBOOK.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e136e5c88ef4f067f95e3be587fd08dcfc3524dd829f73635678fd86744be8d0"
+    },
+    "docs/SETUP.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "949ca9e510595655ede90e8975eff39de3fcd90c6b94ebdc0f4876e6ee4ba72f"
+    },
+    "docs/TROUBLESHOOTING.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b61d6efc7b1c86636c7d8bcd2e8c61e9a7b1b7ecc2de8baa5983d47cc9f479a7"
+    },
+    "docs/UPGRADE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "73fd84cfe0386beb19e69e4f780b4b92789a7c4736bdf6ae40073377c59d3b11"
+    },
+    "docs/components/nbrowser/ARCHITECTURE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d790d80c4ced5ddf8364c2673afef9215748ab826c60a920870d20d6387e9fbb"
+    },
+    "docs/components/nbrowser/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5f42642f752d132981dd38ea25aa9d2a9c179f38a20d404475c4c107a8572b70"
+    },
+    "docs/components/nbrowser/REFERENCE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9797e81891ebc31d659dca23d923fa5e68d865ec8ec64cee299421991a736382"
+    },
+    "docs/components/nbrowser/RUNBOOK.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1c3ba28971f320ef55b73bca1f261f61eff6ce130b0801baec8e360b18ccb834"
+    },
+    "docs/components/nmemory/ARCHITECTURE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f3e834561882e943404e86e51cda07a509edb1bc50fa4e2587b389bd244424d1"
+    },
+    "docs/components/nmemory/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ceee2eb46433f0aa7fc6fe7dc5297cc15094b657ef1ad1ec68c74a75e0f1ca95"
+    },
+    "docs/components/nmemory/REFERENCE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0b0708d4e7df5ed897f3bde39d24030b7bf6a2740a63dac443bac34b0849c01d"
+    },
+    "docs/components/nmemory/RUNBOOK.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "95eb9a4c746ea848bdb2bfc4004eed51d38fd8bb7d8999741808336b61469eff"
+    },
+    "docs/components/nspawn/ARCHITECTURE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "56072ee1e62fed5d09c2af0d231fd3a202c01e6ee49d97cf44b75940f6968b2c"
+    },
+    "docs/components/nspawn/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "790dfda6c041d9d5e67904275d14dbba668d6fadf51eafd2661e5c9d967660ca"
+    },
+    "docs/components/nspawn/REFERENCE.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9c55e190f1562b4ea3220f1c2a756b33d0d41124b2eeeb103a784ca548b30a91"
+    },
+    "docs/components/nspawn/RUNBOOK.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5914daff86c54c1039eb694b4515efcf3b657716e5e1ad4cfbe10500b4109214"
+    },
+    "docs/export-map.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b0de769a5b879427ddd7a400c6737a60e1f1c6d868e8c716c8ad6d38d7df3c97"
+    },
+    "docs/figures/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "971588926ff398f34db7e28cfc5897d0718bafa7f7873cb87bc7a30044dc0a5a"
+    },
+    "docs/figures/browser-anatomy.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3a5a591b1331103bfa45a01373723ae3bc97208eb7fdcb994ead0250e6b9611a"
+    },
+    "docs/figures/browser-security.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "70de579b974693df24db2010d53d9ecaa45bcbd2f63d3b5819a0d7717733927d"
+    },
+    "docs/figures/browser.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "10725a37a17a864801a393337f2757bd1e0c25433757a9ea203003dcd40c2e0f"
+    },
+    "docs/figures/memory-anatomy.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8344dc49fb7f85f13545955b848547852e6fb123e9d742969edecbc1788bb0c2"
+    },
+    "docs/figures/memory-system1.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d37c5315810d2328cd5989f545825cb68bdebfc4a81d216fff637b958c7904c2"
+    },
+    "docs/figures/memory.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f3ac394c63151f5323712bc68e18e1a20aa66270556bdcccef83a9292a94214e"
+    },
+    "docs/figures/plugin-anatomy.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cad57b9a10a716c5e9ce4aac1e082c8541a4ffbcbd77ba34c1f0b5b23ee69653"
+    },
+    "docs/figures/plugin-lifecycle.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e1d3e812ae55fb005da561fe004a821cf3e1ef4430fbd88b8d270c57994c3e72"
+    },
+    "docs/figures/plugin.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7da4b5da0dd9883f64a1a7494518c7be6c7b864d5ed033bcbd87306389067ff7"
+    },
+    "docs/figures/spawn-anatomy.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "923b58ea21976e7cef152af15450be1f8fa7703cd6aa68fb63c3f93898230afe"
+    },
+    "docs/figures/spawn-routing.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "423e420d587cd8c4515b8433121cf9de7e0ef6f09207c9efe55343c5c6c706c4"
+    },
+    "docs/figures/spawn.svg": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5fb7a81f63f9c84b217a092fbc9edba1f531c7b95e3b076631a07e4ec5c289ef"
+    },
+    "docs/setup-catalog.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2f20f87b5a458fb063a30ce275c787ae13e28efb880e818eb9ddc7488325c03c"
+    },
+    "evals/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "evals/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a88c55ffe81ca42eb8bdb9a2039d7900761d936eb4281c2457d602d70414d388"
+    },
+    "evals/nmemory_evals/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e1fd3c7cf9b282b860f40f601b2c7ca63babd4da67f26a59e324f03939be1232"
+    },
+    "evals/nmemory_evals/artifacts.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "17fc61100bd33423872a4fc46aead32ddae0b04e8d3d77528e129d52994eaf5e"
+    },
+    "evals/nmemory_evals/capture_gap.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "764f2009923702adf86d386ea48c1106ba715fffff5d156ccf73e08cb0af1aba"
+    },
+    "evals/nmemory_evals/cli.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "68d5727da19655a421c2e4e444777758ef991e69ea8ef6abe6433433346d56c4"
+    },
+    "evals/nmemory_evals/comparison/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "495b7f3983bbf5c8257ec4e82c00e36c0e05c154d9cc11ec94768f90a717c4b4"
+    },
+    "evals/nmemory_evals/comparison/accuracy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b1f0b19e38406d9c5f6a06544339f46ac7d4be2d32463da9cf39a0e73f4c667d"
+    },
+    "evals/nmemory_evals/comparison/adapters.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0673b051d0a29e1a46e55417db56e15317044fc0d9768c068e893e25b94a605d"
+    },
+    "evals/nmemory_evals/comparison/arena.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e10dc9c35cee943ac8a12268905d64f6d580e89dc6b3c53088491f88a02d239b"
+    },
+    "evals/nmemory_evals/comparison/base.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "035a3ac8f6c6c88552b44e917483b070c52ffc1c555bc56b6290d114e8911311"
+    },
+    "evals/nmemory_evals/comparison/http_vendors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "462426c126382a712aa7941bb7b54a6c3a8f8ddbd9eff892d4656c8fdd44c442"
+    },
+    "evals/nmemory_evals/comparison/locomo.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "466944fd00115ca6b4289033ffa15d293d7694c9a9aa4f0a3dedfde2e3c7a9b5"
+    },
+    "evals/nmemory_evals/comparison/precisionmembench.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3a3766c4a27e47e9e519156b23d23211b40e0f8e77db664e417c8b9402b1fd57"
+    },
+    "evals/nmemory_evals/comparison/report.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b72137016c83349f7eed1ea27899c4d7fa83edad0c090a04897b4989a4ec4478"
+    },
+    "evals/nmemory_evals/comparison/runner.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7fdc782a970771ee67f7e4dc93e99cbacf17038d9108bcb51c34f580dd0c512e"
+    },
+    "evals/nmemory_evals/driver.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e60f4f7be4233b38bc9d408715a26c5e7044ce0a0354611ff00041c98a98b6c5"
+    },
+    "evals/nmemory_evals/e1.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "be490eaa7ea340fd6ba6962898af97a105422745f73ce650b24e843c6b465d6c"
+    },
+    "evals/nmemory_evals/extract_eval.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ee1b3eed97cac9bf0e176519e2a42dc4f10bd3367468d554ac1c0290f459f4ea"
+    },
+    "evals/nmemory_evals/llm_proposer.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "bebefd417c13e06d0641c905602516aecda76353d30950094a56ad7775963a51"
+    },
+    "evals/nmemory_evals/longmemeval.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7cb926a5ba7cf2e27fb42746bf306832833765ebd31ccc2135811cc3a155ce23"
+    },
+    "evals/nmemory_evals/main.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f924ccb9cfee2d8f35c4c83f46fbab8f9cf5394396bd483da106dc5c745d26f9"
+    },
+    "evals/nmemory_evals/narrate.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c46137f1490ae5102b1c7c88f2798dac84417b304afe8d9a4c5e2fc4e6ad1b0c"
+    },
+    "evals/nmemory_evals/path.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1ba8df09b98d1e53c9d025bc4685b6f619defb822972b9a7f10d94f80743f43f"
+    },
+    "evals/nmemory_evals/pilot.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "479b590b380008f28254282a9bef8d7e52a28b72d88afc8b703fc51a0bf81ec9"
+    },
+    "evals/nmemory_evals/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evals/nmemory_evals/qa.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4e035af56607297a9e519b917ba01b8cef51dfc63fe8aaf16b3cfb12d82cbe8b"
+    },
+    "evals/nmemory_evals/recall.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3cadbee34ca6c04115ee9df3107543494222a3baec10dfd26b13af4148282bbd"
+    },
+    "evals/nmemory_evals/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "22ad64ba133c6772d070a9efdbff9994c85cd4ba9f4cfd2189be5a2d33873490"
+    },
+    "evals/nmemory_evals/score.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b008495782bcd0809c53aba9c9ae0487f472341d067dc414942b172544da056c"
+    },
+    "evals/nmemory_evals/shadow.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "175b3ef9026044aebe9ae9595bc6efcc334bb7a8c83934717dd2e01a0583490e"
+    },
+    "evals/nmemory_evals/synthesis.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "350cc2b1fa49842b092c5ca20d8603d72fdd7bcac7e436c409cf76c7ddf3f870"
+    },
+    "evals/nmemory_evals/world.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "484f294e0e6599442594ed3f2003e0f1157ee5f2580b5dd49505de6e0179ddce"
+    },
+    "evals/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "59a31962b64d9b118d02e4610cd66876e26eabaf5ed39314db7505654b5e8059"
+    },
+    "evals/tests/conftest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3711f782e3249bc76f563fafe7bfe9b56eae76fee87fd9beedb3578c500315e"
+    },
+    "evals/tests/test_metrics.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7b0c4667502e9bc4e4b1c248adbc9a6df989731d632cc5c778baa283073fbcbf"
+    },
+    "evals/tests/workspace_root.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "19ac5faebbdce67bd337cbdb6fabca09b31d97aec181309caeb474dd444a6588"
+    },
+    "hooks.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "36f807eb5b60aba4d9c84f8520f21d926607e6909d3b99cbc7d95732751132c8"
+    },
+    "hooks/agy-hook-runner.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "dc4ed8cecea694a54968ff12ac5fff37c8bd869309150bd8dcf5bad70140a3db"
+    },
+    "hooks/artifact-copy.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "117f9786a9bcc754d861456214dbf9b6785e1de7d033ef571cf5dba8308d1045"
+    },
+    "hooks/bash-guard.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "568ba0f3e9b93fbcbe15fa37553967842c853882f02a437c4e7ac72b8dc08035"
+    },
+    "hooks/bash-guards.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "9d21df900d5965ff085cbc05f5bf9e5f2391435a56b61ee2b6b8878ed34aa094"
+    },
+    "hooks/bash-guards.tsv": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "40699af477ccc2c9c412b99da5738fe65519fcf5a867e89ed323254edc337b77"
+    },
+    "hooks/campaign-pr-guard.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "a7a321d7bb878a38d5f5b9f709b655c8712de89647e10a55e80e61e55293c182"
+    },
+    "hooks/codex-hook-runner.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "2c24ae1c33a3a8297365e99acb20bd8e6fd94fb915ac8713ee8f74c1f2209dad"
+    },
+    "hooks/dispatch-tier.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "5421b5c15d40f1329f640f67c9e5e99af4bb79788db8044314b21ab8ef3b819b"
+    },
+    "hooks/fanout-reminder.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "0c230da395e5684fac3b8fe62f123e5ccdf8fe6a40db16ea4ec04b88d1bc3ff7"
+    },
+    "hooks/final-state.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "3d8566d9765603b51dace901c2aaa3d027c99b0247169468e4684355e52828a3"
+    },
+    "hooks/hooks.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a3c523da81f7f529c5e543b55e501d588557542cce2819756a1a0e9b86f38544"
+    },
+    "hooks/idle-handoff.ts": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "92927c4bd5a7373734403d45c440786cf41af3d204705049c00c47078c27484f"
+    },
+    "hooks/install.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "664b5b7c98c2cd8b3c6eea6915c5990926d6e6c348ba9cb48ac5c9b5b53e143e"
+    },
+    "hooks/law-contract.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "8930543ac121e4c104f6c46f84fe956f12086517718486fc02dda2d0fbc4ade6"
+    },
+    "hooks/law-session.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "b77e326589cfe67269407c18b2c5462145ec72ab260a10da65fa9c995de0b861"
+    },
+    "hooks/nmemory-act.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "90d876982bb1167bcd2b512639d395424e3578be99d6412e2719d7f692978859"
+    },
+    "hooks/nmemory-anchor-queue.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "11c653ac9703bde4f51f15d2186fdf37d995f3037357928ac892d59d06d3aaaa"
+    },
+    "hooks/nmemory-capture-gate.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "e47207c0d36d2a2123b71c1aafbed043f363f34d242916d27537946d7af548c0"
+    },
+    "hooks/nmemory-main-only.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "c86a2e7097f6c705615521f159665d2b4179e790a871969faa9a58d9429e4b98"
+    },
+    "hooks/nmemory-recall.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "0fec1d8aec20bada0ac18c02dba2625ad297028409d06767c4c2f925ebd76086"
+    },
+    "hooks/nmemory-session.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "de1bf9f716fb2fcd065fe48da03f095805aac2f04a93e643a90adc39ceb2d8ea"
+    },
+    "hooks/nmemory-snapshot.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "a202edd0e064d07924c506b0bd6f4d9e76a7c5ccd356d9a72fd873c204758e2a"
+    },
+    "hooks/nspawn-child-directives.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "f2a256f887d852d083756a81e61cc5bde16102f96554accb8fea1294c9d4c0a3"
+    },
+    "hooks/nspawn-notices.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "8997303cb5a6b0750de5ce9b47010c1ee7ac47ea4596a015bfb58e019d7fa714"
+    },
+    "hooks/nspawn-pairing.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "04a0f0d1f3543ae756d34fa25c410f7a28f2e9c59e11da89974816cfd86a0cbb"
+    },
+    "hooks/pcre.sh": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "abcfb4d55db9357697f947af5a517f350d4956891a4449113b56f9ea5c45b8df"
+    },
+    "hooks/plan-exit-gate.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "219c9067dc5d16d7e0a679f4c870f489baa01d7c572523bf4b7750b1d4149588"
+    },
+    "hooks/pynott-branch-lock.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "4dbc90704dc7ca659f7b042bfa872beaeb0816f18801d2de44e871aefa003b13"
+    },
+    "hooks/red-first.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "ead37cc42bdab4b8ec7c3ace7e085e421ed6638bf31cfb17a8f94c99aedc010c"
+    },
+    "hooks/register.ts": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a536e507f8ac10d5ba18bd37693a4b008493a10239de2d411b73463532673d43"
+    },
+    "hooks/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f885cc6acf11635885ae07b4ed04e89c5725fef2793c34793c3326d3ce249e5e"
+    },
+    "hooks/renamed.sh": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2e7c08494b89f88ff98a594a28eaa019ea8a69e1873d55d5f17303a8417e4718"
+    },
+    "hooks/secret-in-output.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "49ca0f18b93d2f9c3f39e39d6b6b0e8277d087eb3a1b17fa39bf22b62c8597cc"
+    },
+    "hooks/secret-shapes.sh": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1b4fa58465e8578a64c820baef69379ca06ac08a52fec9a8f68514b39739c73a"
+    },
+    "hooks/session-state.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "db63d998218cb4ae8581aa915f6dfc16edea851b9fa85917eaa49acbbffaf6ae"
+    },
+    "hooks/subagent-law.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "eaadebd812a1c90ed23d215dc03ba3878720d38870d94630e41f1a8b9bec0b7b"
+    },
+    "hooks/system1-suggest.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "deab63e0aed85db27e128f651a3400f31b81a21c547528cb0ac0f415f5dba038"
+    },
+    "hooks/system1.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "2187a1b9a5087597b3b55501c7b887efeaacaaa828cac9ce016f730d9586b457"
+    },
+    "hooks/two-misses.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "d79558894e535e566c1c97fa28ba56b23228a347129488e5d976eed2e994a870"
+    },
+    "mcp_config.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "fd409dd19a25155a50cee3269bf8cd234d3af40a9087a76bf34da48aa162a6e5"
+    },
+    "ops/mirror/projects.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4604ae9b625b13a09f2ac5947cdcfda23b8752f9ba8b23a67ab0dd96025e45fe"
+    },
+    "packages/database/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/database/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "beccc07ab57b6711346e3ab7f51ac9efa8d18e26b5f2ad0341752204370f67c9"
+    },
+    "packages/database/nott_database/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7cb409fab11f0996a07e8a194c33913709023cb1ce8db04d421822d7b248c2ec"
+    },
+    "packages/database/nott_database/_directory.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b4d56e20514ea751ceb904676e56f3596bb74d6e7d2c68841a770fcc69ca6caa"
+    },
+    "packages/database/nott_database/captures.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d45bc58dffadcf5e3c1ed5f02b87453bd2b1c0a0440ef1fc28d85bb4ff256b59"
+    },
+    "packages/database/nott_database/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/database/nott_database/pytest_plugin.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2522908a183b85ee2f01778d9cd8de8676044048383e7683cadfe00488abefdf"
+    },
+    "packages/database/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "421a1df8546e979a265190339d365b93cb63145bd4dc897b396086d9b6817da3"
+    },
+    "packages/nbrowser/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/nbrowser/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4b1c1893f97001ed5d902e4cadcd10889d117bb53ec1ed9a50c49bd0a037c1fe"
+    },
+    "packages/nbrowser/nbrowser/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e6c714bc91dd68aaaf6513928e6f61f30639fe54905d7fe6e6a209c903d2147d"
+    },
+    "packages/nbrowser/nbrowser/auth.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2348b31ed045157e50e8babc76e796f8fd20439a73d271036a38d55c4f7bcbe9"
+    },
+    "packages/nbrowser/nbrowser/capture.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "121a262488262a28dd05f9c3f364488a2d8ffa535f58c68d476891ccd0438788"
+    },
+    "packages/nbrowser/nbrowser/cgroup_custody.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5bc6d089566cd839c90a0687f5246f51065ab6fcb0297574b6ef7dcfe1dfb4bd"
+    },
+    "packages/nbrowser/nbrowser/cli.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "500b183c1e928d9524e4e4d7d7c0d6fc4ca00faa8493a83fcb55db99633aaf7e"
+    },
+    "packages/nbrowser/nbrowser/console.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "786db7f3f4764bd28781093c81c03507541a9388d4b68e372f184ebdcd1510bf"
+    },
+    "packages/nbrowser/nbrowser/content_custody.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "aac1984de93aea21e0aface0036625659e0dc6f0ff70859f6a471d04b6fc05fd"
+    },
+    "packages/nbrowser/nbrowser/crawl.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "62472058d229520b4236fabcf47871f9f8d26aca5b5c44a7a4ff396d4e2d942b"
+    },
+    "packages/nbrowser/nbrowser/design.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8bb6191c35df716e8e406015d011f11cb20a797634b17bdaf5448d0d736e79b2"
+    },
+    "packages/nbrowser/nbrowser/egress_guard.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cb2f0b24b101be20d5236733a87f181ca0d240cd5deced1ddf299dc6d22d2cc3"
+    },
+    "packages/nbrowser/nbrowser/egress_proxy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9c7a3cfc4841f8346e66d4a7da8e4a2b82878b6d21f37e2d529864b74b136567"
+    },
+    "packages/nbrowser/nbrowser/errors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ef6cd7db47451cebe4d2c73d8fa8582e17229ecb5bf71a7f865d7034b8215b16"
+    },
+    "packages/nbrowser/nbrowser/extract.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "175bc3bffdab9c813048a5ae9c2358adf0dfd3f596208d51f5f129c534acca22"
+    },
+    "packages/nbrowser/nbrowser/frontier.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d76d37f06f604a3e6f2f0390f9104900e054df1310827db6e4072c30e5bfb5dc"
+    },
+    "packages/nbrowser/nbrowser/interact.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4d11bbceaa886a9ed663fd5608a91473cabf34ebc8c5c8c995f6fe67920870ae"
+    },
+    "packages/nbrowser/nbrowser/main.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8a3aa6e56c693a048f6d4218d4b438ff39ecfc8d591816678dcf99ba2363f0fc"
+    },
+    "packages/nbrowser/nbrowser/mcp_server.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c5d523d3f9277adf77027ec8a400cd919068b43355df1e6acf901da7967c7363"
+    },
+    "packages/nbrowser/nbrowser/network.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5c6f7b498d2bee519674d11ac68bf8397983460e094b4a73226d13cea177df6b"
+    },
+    "packages/nbrowser/nbrowser/private_root.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7b0f39ebfba633dc9c7cce20c2016a1bb5782f154f67a429aabc493a052ed815"
+    },
+    "packages/nbrowser/nbrowser/process_custody.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6ed172568122ca61f1d75b5521e0556a90018b865d0c936ad17b64f8e8fca658"
+    },
+    "packages/nbrowser/nbrowser/profile.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "64401bdda9de36e9ecf53fba6617c3ce3ce997a38d80a8dc013486db69e34b05"
+    },
+    "packages/nbrowser/nbrowser/providers/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/nbrowser/nbrowser/providers/base.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f48ee59b5969ea65bad45334b6d1ccad5a945a461a2fed0be3339f1884f54be5"
+    },
+    "packages/nbrowser/nbrowser/providers/firecrawl.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3dc6f73b7572f5c6437e4701fda974044641d59cde1df88be95616c6cbd04d14"
+    },
+    "packages/nbrowser/nbrowser/providers/merge.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "58bc49968f9072bcb25ce81e11fc3892c25a98de81b7c93f47c596a03f7b3fb7"
+    },
+    "packages/nbrowser/nbrowser/providers/minimax.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "66af2a4c69f1d190b5621a5187f59714421988a49cc88e478fff62cb9e50bf85"
+    },
+    "packages/nbrowser/nbrowser/providers/tavily.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "59fee8cbfb6af9b50fb6b88ef26f4c2dc53241483d1647a7f5006e4e4678764f"
+    },
+    "packages/nbrowser/nbrowser/providers/zai.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0793808bfdd7af0f9b5c184f331229681836aba551993f0081c1518f90ef09a5"
+    },
+    "packages/nbrowser/nbrowser/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/nbrowser/nbrowser/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "417677bf4bffd79911e1c3de21ff16733c31272b07c36bed454e8cc80e173e8b"
+    },
+    "packages/nbrowser/nbrowser/sanitize.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "64dde5bacc26fc7b518885019fe94434e2cbb48aacff44b86628124030665e0e"
+    },
+    "packages/nbrowser/nbrowser/seam.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "905df3aa2768e730abded9b3f1bec2907e28caf54f902c7ee3f4fd60b950ea0d"
+    },
+    "packages/nbrowser/nbrowser/semantic.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b72b86097476ffb9a4ff86f72df3542c53aab0f0d9fbaa49f224c3e456d147b3"
+    },
+    "packages/nbrowser/nbrowser/semantic_walker.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e021bc16365e689f611ad3df9ced7cc20567e0254bb4ef5238bd2e0e4dd12e5d"
+    },
+    "packages/nbrowser/nbrowser/session.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7f7ed47e2c38e3d6939882823a67a6a048469ba93959a309c04acad56ebf3b2c"
+    },
+    "packages/nbrowser/nbrowser/static_extract.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3a3798cd79c2538f3000d466a8973a9f9ec921128344c3e1da50400ff9edb4bb"
+    },
+    "packages/nbrowser/nbrowser/transfer.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "15b1f66fd9cdfb3d2ec948a838315250a6baaf70a9b92dc6dc3fe40ecab2003c"
+    },
+    "packages/nbrowser/nbrowser/types.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f7b88e8f3eeaba77d576be29fae7c3fb2f52e31c797e83e845b7d6db2dc87624"
+    },
+    "packages/nbrowser/npm/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "41f693c09b711216642a2869e4bd406ebd3b8b4153955e545d1da8cf70270a06"
+    },
+    "packages/nbrowser/npm/bin/nbrowser.js": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "57786a22eb521021f9387fdbc5aa3b760cbc84e838d5c32dcc00b6e719e39ae3"
+    },
+    "packages/nbrowser/npm/package.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d3057bb1cf8a6b1b463a54c513a9dd5c60f5493025929dfb4b6c6a11391ab0ac"
+    },
+    "packages/nbrowser/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c00a54cbd9678dd2c58d799d18a3aaa4cf4de4b28dca79d5c3e1a2ffb5bc3550"
+    },
+    "packages/nbrowser/python/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "571998d4a6e412bda8d9ab3ce10664260352e369273957de5a4bde0c0a1daad6"
+    },
+    "packages/nbrowser/tests/test_docs_surface_counts.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eebcbe900fa9c41e0d500e8566d16487851de95c00f13e42fe3a413891a9146f"
+    },
+    "packages/netdoor/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/netdoor/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e4e0d165130d23d040220358adbb82dfddde24efc391909d52d552921a6f134b"
+    },
+    "packages/netdoor/http-door-auth.tsv": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3db985d052c6e1cd9fbb1391c2a2b42e722c21f57b6fdc8614eb70efc96123bd"
+    },
+    "packages/netdoor/nott_netdoor/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3a0aa6792d499c80de7f3668e558736becaa32998ef1ac4670af571c12ba71e"
+    },
+    "packages/netdoor/nott_netdoor/http.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "972b0706dda32c4b91b2af5d6630b2e3036abf198b08af7402bef2ac7f33b27b"
+    },
+    "packages/netdoor/nott_netdoor/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/netdoor/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f881d5324db4994ecf79ba60cccaf05a39a767ffef31f24fa9df3b2e457ec2b3"
+    },
+    "packages/nmemory/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/nmemory/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "854f8dea851f03d4e2546b92284a1eb3579f026f50aeef195ea870b89aecd5c0"
+    },
+    "packages/nmemory/RULEBOOK.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8fb44a93d8dcd9bbb20908dd6512eb320a3fbd4d501cb64bbad4ac84dc6e016b"
+    },
+    "packages/nmemory/nmemory/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2a090a58f78ddfa4587abe0e4b1325cd3944dbdbd1b3de105ab810b86edbce2e"
+    },
+    "packages/nmemory/nmemory/__main__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a71c383f20eb126e989fcb52f8b8ca14d53a3c22dce0c7252b048a6c1bdba1c6"
+    },
+    "packages/nmemory/nmemory/anchor.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7b5be8fae70d8bdfa3f3eacb5de3e5b39b7251590bae496ff1483754d8d83d91"
+    },
+    "packages/nmemory/nmemory/anchors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f150bd65e2a4e1232436059f181af284c5b861e9633afa1bdaa0a637d02def00"
+    },
+    "packages/nmemory/nmemory/audit_actions.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0f0168fafbfa3672143a3c0fa5e95c396d52bfe49b16d44e17111eacfbc347dd"
+    },
+    "packages/nmemory/nmemory/bridge.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9ef79686f98ff08ba29b929f3d1e16c2229be7e51a4d3ef82d42a4876fc9ef89"
+    },
+    "packages/nmemory/nmemory/capsule.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cb902ceb53c15837b54f1409a8665d15364ec08d0e0c7da85d1dce48cb214f28"
+    },
+    "packages/nmemory/nmemory/capsule_ref.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4d669ce75fe94b3f846b22175e8dabc902154d24bbceab431510ea014fa00687"
+    },
+    "packages/nmemory/nmemory/capture.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c23cfc8fd024919d1242da7339c7ae9b049541cabf22bf262bdd0f8ebda82301"
+    },
+    "packages/nmemory/nmemory/classify.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8f71783c753a006866513723fbf284845f3c17d4ac89726a87c416f5ffde470a"
+    },
+    "packages/nmemory/nmemory/cli.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "fbbb6ef170237d11b8fbccaf22511d2abb81d1e6615fe58a97218a4d64df66b9"
+    },
+    "packages/nmemory/nmemory/commands/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "21729db6e22a986e4cc25e5f402b6affb2840ab744b70631b8ed2c6a4ead3407"
+    },
+    "packages/nmemory/nmemory/commands/anchor.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8e10949ea9d4c45ce6831ce06710a7a15e0d6cd741c74df0c3cb5c9928e282f2"
+    },
+    "packages/nmemory/nmemory/commands/capsule.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6d77b8bdd99f3aee2b5cfa28de1636ec97e7f195157a5351ed5dca299d16d31d"
+    },
+    "packages/nmemory/nmemory/commands/common.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b38559dd673017118a1e594c00d2c4ee1dbc0d3506582d8ae7cb8eec581f1c35"
+    },
+    "packages/nmemory/nmemory/commands/context.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4622a1c0f1d1569c94bf654b0dfed8bd33f37ec54961ecef84a1d36f007f6738"
+    },
+    "packages/nmemory/nmemory/commands/curator.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "733c4439b8edfcaaa324ea6d9adec55a611bf1c3ed1718d277f2d70d3cc3b320"
+    },
+    "packages/nmemory/nmemory/commands/database.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0e376e7434e8d4f696e9db4a46b0da63076c9bd4c73dff2b9ac8a971ffcd9837"
+    },
+    "packages/nmemory/nmemory/commands/digest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7e2d915dda62a0ffb60372fccb8ba06426206aca6e35285c2f88917a0c39da62"
+    },
+    "packages/nmemory/nmemory/commands/embedding.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2e6503a2282a5affaef88c6acc16dd37ad3ec243c7c0fbfb57c0edcdad2852c4"
+    },
+    "packages/nmemory/nmemory/commands/github.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "44303ec6efc47658396b0d2db940ddfc503ad124d81fc39f81f4b7e5dcad4669"
+    },
+    "packages/nmemory/nmemory/commands/index.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4418d31bea4494b7f96bc4de935fc7f381ded6ee4db3401f569c8352fcc5c46e"
+    },
+    "packages/nmemory/nmemory/commands/layout.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5531d75011619b8e8537131ce9af115a9f4d06f09aba17c6b7b69568f5bb91dc"
+    },
+    "packages/nmemory/nmemory/commands/portal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "be67da639324f54fd1f217377c1a92002b64f742acae2b3591dbed71d27cb1e0"
+    },
+    "packages/nmemory/nmemory/commands/project.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c0475235163577c9d5253072036c902d3396b23c94091d83125d442c872b7490"
+    },
+    "packages/nmemory/nmemory/commands/projection.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "62017f3289bbb5c8d53fb5fd746f85ced7996df976888c5b36bd9997425b6066"
+    },
+    "packages/nmemory/nmemory/commands/proposal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "226a85a3a2960be3a16e80da0365199a4ecbe06e2a13c92f826c542ae4a7902d"
+    },
+    "packages/nmemory/nmemory/commands/quality.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "73bc9137b625270241d2fb4fc49f443d7115990eb9c1d75839012364f3ff59b2"
+    },
+    "packages/nmemory/nmemory/commands/release.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e7b8385d94a4b78b1843fd58d0036c2679301b78a61747ab61d747ca184b558e"
+    },
+    "packages/nmemory/nmemory/commands/review.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4e0355e793cacb8d11a8a8e1320f4db51c325d04eee3226135782cbdd52566f3"
+    },
+    "packages/nmemory/nmemory/commands/rule.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cc857d575bd00ec5ef4c9bff4e5d717282f64448c07bbf8c5d164dabba94ec1d"
+    },
+    "packages/nmemory/nmemory/config.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9da4a5c3fbee56f082bd41724255a5620d675b1c215bda46d17798fc77c6601c"
+    },
+    "packages/nmemory/nmemory/consolidate.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "296691194148eb66fabf999c3ba27d81e872aa9937ddb87acbb2ca9b93bae9e1"
+    },
+    "packages/nmemory/nmemory/context.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "23263a95eeded7e143252bd9a25320929c57a2e372bd7cfbb73a08edaa995e97"
+    },
+    "packages/nmemory/nmemory/context_readers.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d799e870c3a3d4af190058619599b23a3fa041823a192c12c0f165c6092717d6"
+    },
+    "packages/nmemory/nmemory/curator.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d5af78de03429e88c8a3b758734811e093e6a2f13435d42962bf5637a811b23"
+    },
+    "packages/nmemory/nmemory/curator_policy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b8d839785a3e43ef3fbc58292f0ed83c480128eed6cc56b46ac459ef4d32683c"
+    },
+    "packages/nmemory/nmemory/database.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "718a03355437d6267b624267d7357f5b1a63c75c77babc78ad50a1e7277e51ad"
+    },
+    "packages/nmemory/nmemory/dod.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ef0580dfb76d010ea8af7a195e484814e2addc0bbb82c3654bddc256df8546db"
+    },
+    "packages/nmemory/nmemory/embedding.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "28b657917cee8af14d7c0d24161d2be3d482bf9c07203796504043ea319b7184"
+    },
+    "packages/nmemory/nmemory/embedding_index.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "47aacebcf2085781227f804a767ad884fc9ebcb81a2ad76610af072ff975db27"
+    },
+    "packages/nmemory/nmemory/export.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b410bc5d2b60ea1aff3b2fee672c6733bed2e6e406039496624c1ed6a55eac79"
+    },
+    "packages/nmemory/nmemory/extract.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5400587378cdd5bb1210fd2f003176ca1d8d6980ae4614f42f684d9f9f9389b2"
+    },
+    "packages/nmemory/nmemory/extract_llm.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "67d52a9e6d22ec7bc16bf58ca5918cca45e130544fa355e403b7cb3391389daa"
+    },
+    "packages/nmemory/nmemory/github.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5cab756674efbdb6a35cb00bd643c1d247f0aad001490e4a22227d2a8e35a9fb"
+    },
+    "packages/nmemory/nmemory/github_client.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d0e712d863b1c32eb0fa604fbc85e9d118e030c19c0406cea286c96309868b6d"
+    },
+    "packages/nmemory/nmemory/github_plan.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8ce77719d6d2c613ed4b144c32fa7adae2babdece0e4d2cfac5c253e0262c560"
+    },
+    "packages/nmemory/nmemory/hooks/hooks.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "41f47f5e79da6480cde3b20aac23d49f67c33995f8ad5c1dd35d51a698e8f404"
+    },
+    "packages/nmemory/nmemory/hooks/nmemory-capture-gate.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "e47207c0d36d2a2123b71c1aafbed043f363f34d242916d27537946d7af548c0"
+    },
+    "packages/nmemory/nmemory/hooks/nmemory-recall.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "0fec1d8aec20bada0ac18c02dba2625ad297028409d06767c4c2f925ebd76086"
+    },
+    "packages/nmemory/nmemory/hooks/nmemory-session.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "de1bf9f716fb2fcd065fe48da03f095805aac2f04a93e643a90adc39ceb2d8ea"
+    },
+    "packages/nmemory/nmemory/hooks/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f885cc6acf11635885ae07b4ed04e89c5725fef2793c34793c3326d3ce249e5e"
+    },
+    "packages/nmemory/nmemory/hooks/renamed.sh": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2e7c08494b89f88ff98a594a28eaa019ea8a69e1873d55d5f17303a8417e4718"
+    },
+    "packages/nmemory/nmemory/hooks/system1-suggest.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "9e4aeda0ed89fe3194b7923debfa61fe4fac24b506f558476dd78a0339cecc68"
+    },
+    "packages/nmemory/nmemory/hooks/system1.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "8f00603d1f628ede11b4c6f85171cc21e4620721eed4d42118a5b75b93155a74"
+    },
+    "packages/nmemory/nmemory/hygiene.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "049895b3c5f5fdbb9fcda16ce085a43b2ad51afb0c0890dae6e7b54affed9baf"
+    },
+    "packages/nmemory/nmemory/ingest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "543a374f64f3cbae8c1860550eb92fd2f922378c6d4bc00d8e788e3141fe5c2a"
+    },
+    "packages/nmemory/nmemory/journal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b232b10000f795bb5c81ef09cd3eed63ce79ebe57a784f4394434e3157475030"
+    },
+    "packages/nmemory/nmemory/language.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0de4e6419f3e6234b2ce41efd251848f3d6a59c8409991387b6894e377331211"
+    },
+    "packages/nmemory/nmemory/lexical.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5bb8e12ebd3b88054fb2410a87b3f67a8d7d821ca4b53084cbaa7bf320915776"
+    },
+    "packages/nmemory/nmemory/portal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3ee9a42068fba359ac2a7eb3032251b464b4c7880eea34dcc513e2be36bf4ce3"
+    },
+    "packages/nmemory/nmemory/project.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4f0b5b0bea4b839f44e44b9fb7931da4a20fbbf1b0870034bf3fc1d8e41ef2ab"
+    },
+    "packages/nmemory/nmemory/project_scan.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ddc9a395ea7f375acec7145482abb870b3bc97fc40c960dbbbda3a1e8b10050d"
+    },
+    "packages/nmemory/nmemory/provider.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ba59ae184af44a315f97e6f0646707a3a6f902faa054c81237efa8d82d40c272"
+    },
+    "packages/nmemory/nmemory/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/nmemory/nmemory/queries/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c8fc3b9d775f7d897899e5740069d62ea40e81c9da5abf4ec5402c4c4e6af623"
+    },
+    "packages/nmemory/nmemory/queries/board.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5e1370feeba24d6bceaf24a75b08a8258cccc5dcc98c045a601baa397985a6f5"
+    },
+    "packages/nmemory/nmemory/queries/census.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0e1a6c5dc494b34a41823584a8a58d2032ccae63fb87e16c82b232baa825a81a"
+    },
+    "packages/nmemory/nmemory/queries/curator.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3f6e746ca49cc793f0748921554dd415ebe53452797cf9f2fd07194914caed61"
+    },
+    "packages/nmemory/nmemory/queries/embedding.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "683b5b7569b41bb91953db1578816d191f5a18bb73110a0cd03703a4551be266"
+    },
+    "packages/nmemory/nmemory/queries/hygiene.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4becb48ee3c913df92f16cfb798deb36c4be4699e1945e35f2fff44677176de1"
+    },
+    "packages/nmemory/nmemory/queries/inbox.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7e51536d6a20f4ffdefeaf6a6c0a959987684e0cb5f7d067cde01746a897a03a"
+    },
+    "packages/nmemory/nmemory/queries/journal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7da6ff2c054549ab316cfc7fcc6a9bde2dfc0cc93a4fa76e64efea552f38aecb"
+    },
+    "packages/nmemory/nmemory/queries/sidecars.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b39ee5f9b5849f5ca479fac22f58bf94987f471611f8ca4beeb686ef4583b066"
+    },
+    "packages/nmemory/nmemory/queries/staged.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c7c6de176369fb67b8df8869c399e247d8b780ae4bca4919d53fed7cc454f892"
+    },
+    "packages/nmemory/nmemory/queries/standing.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d1ee6e928034cd3672e644e09dbb1f7d98fb1894de1486371b13a2ce14bd2be4"
+    },
+    "packages/nmemory/nmemory/queries/work.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b32632a0f9b9f02698a9419730283a31ff90a6ec0c67927e29aa12a4c1ee85cf"
+    },
+    "packages/nmemory/nmemory/relation.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b34be9bfcfd569c27fcd3a9a67aba070934d67038d5385839b28ef5b2ce35e05"
+    },
+    "packages/nmemory/nmemory/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "22d4d75d42c36ab4a1d308bd7d42cc346fe26b6b5d1d298e44153b8d0793edb2"
+    },
+    "packages/nmemory/nmemory/repositories/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "567d0c31df06b3732bb466e4717e840da20874e03fec00dcf71f98980bb34d75"
+    },
+    "packages/nmemory/nmemory/repositories/aliases.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f401ea89465671a711f50f7f4e31c89b4c59ca2c5578aa694925aa4f390a0d13"
+    },
+    "packages/nmemory/nmemory/repositories/anchors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "19701c78089aaa35a8ad842794f5289f17832d8bb5a5f63353ab87a35dfd790b"
+    },
+    "packages/nmemory/nmemory/repositories/audit.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ec60ab0363618081b61a1c9380715cf595d37a17374acbb3a0f4c992b8d16808"
+    },
+    "packages/nmemory/nmemory/repositories/base.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b32b6c6f7204a11e5c9c89d6656e3c4ba6de6848d60a388069c6ed78cb1d1d19"
+    },
+    "packages/nmemory/nmemory/repositories/capsules.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "106d4ac387d029b3f3683499d02d80dba34892bc8267a8778157b5b2b7a14c2c"
+    },
+    "packages/nmemory/nmemory/repositories/classifications.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b72fbede93a0ec12c3140eaac2a0d7af34e9068c4704027b6dfe862115771b66"
+    },
+    "packages/nmemory/nmemory/repositories/corpus.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "195442e3482335594631f0831a55f798f2c700a0b13f155d0e1cd4bde3d90202"
+    },
+    "packages/nmemory/nmemory/repositories/dod.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eb909163cb8c3ef5ffdf7c2adccc9b8c0b78ae7082bc984869d23feb9b024079"
+    },
+    "packages/nmemory/nmemory/repositories/embeddings.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5bdd36eae57eba7f693519e6140855242c09fb058360b926f923887c40738fc7"
+    },
+    "packages/nmemory/nmemory/repositories/epistemics.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4558340e1c27974896e97f359e97ab463e33a26ad2500b16feeb8e01894f476d"
+    },
+    "packages/nmemory/nmemory/repositories/pins.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2e6a32c9855d06a15260337346fb1c8c3778ed3dd72ab0db1f2be7aff9428f10"
+    },
+    "packages/nmemory/nmemory/repositories/relations.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c1afb8e05c04d2b6bc3b81b1f0f7cad2d2dd62d8976074f387d3b0f6fbf88168"
+    },
+    "packages/nmemory/nmemory/repositories/reviews.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "15a0bce0b1fd83d0bde7da120ddcab3c56020b19711b83d3b58aad58b85227dd"
+    },
+    "packages/nmemory/nmemory/repositories/sessions.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "92677c914350bcf53ee794a657871643e9e1be2fcbd4af381ed20e1013fae933"
+    },
+    "packages/nmemory/nmemory/repositories/sources.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "78da0041d61592a956d4575322460e01035ae3310d6ac3b47fd5bf0e6cc7e924"
+    },
+    "packages/nmemory/nmemory/repositories/substrate.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "20d0e51456357ff1df90578a916382bcd26fb583f8565ffb1ffbf6d1b8b7d6fa"
+    },
+    "packages/nmemory/nmemory/repositories/tiers.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "983ff726f636ea816597dce74aa9a8d08b46401d546be8da1d2e27b5a825e207"
+    },
+    "packages/nmemory/nmemory/repositories/traffic.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2f466990f629e3b8638ea6ee4075d39dff63ef52c8856945c298d53b46863bbd"
+    },
+    "packages/nmemory/nmemory/retrieve.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3758e63d7e28ab6e158ceb0acac18cc51df3b6b942d95228356dd1ed426390f4"
+    },
+    "packages/nmemory/nmemory/rules.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2f01f16493864da463b8e791d17e89ddad458a6520f80a4fcc62567a8a81bebd"
+    },
+    "packages/nmemory/nmemory/serve.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eebb3b3438d34588fa950cc794b740af4800cbd1c8eca3f59f7a75d51202f6e4"
+    },
+    "packages/nmemory/nmemory/server.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "174f63b296635610d62a3b765b55e7f74ae920bcfdbb9961ff31c2f9a59e51d4"
+    },
+    "packages/nmemory/nmemory/space.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6d90d70edea9643746caf2341d5a3518a4511ee6e745bd875363f07550a108ad"
+    },
+    "packages/nmemory/nmemory/staleness.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a6820b7ba7894ec28b539a596f8a7111bd1d64c05bf3ff46796ba109d92fef76"
+    },
+    "packages/nmemory/nmemory/store.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d65467622f2f330f8f8e20608e7a27c9d8b12ca7f669143cf5d736f8aaab1726"
+    },
+    "packages/nmemory/nmemory/subproc.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "bfef2e8bb2ff0a1f4f31af8e6aaf79f08bbd62cee96046c8b98d54a2cd1ba0a6"
+    },
+    "packages/nmemory/nmemory/substrate.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3b6b01afc12cc120d5b4ad309f65c2a9089376841add177dac336f8c7cb717fa"
+    },
+    "packages/nmemory/nmemory/system1.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8de0fd2c02b83f4b912c2f45fe79f3818d7deaeebdf015a504ce1893058f5390"
+    },
+    "packages/nmemory/nmemory/taint.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e4f498a312249769205492e073d8337a2f14287fdea4b20f0274e73cbd49b572"
+    },
+    "packages/nmemory/nmemory/tools/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "043cce303d4126ea083965a82cfcba857912e0d52cb4426a966e10aca1cfa12b"
+    },
+    "packages/nmemory/nmemory/tools/alias.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3907b7bbb5e4d152a7dbdf3814383c5f721840fd697c1dd9450b36875c6138a9"
+    },
+    "packages/nmemory/nmemory/tools/board.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8b58b9d5c05474162b7ae26e15627105b236fc63725db3e020bde9ea54a3b585"
+    },
+    "packages/nmemory/nmemory/tools/bootstrap.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7eab30df55c59334ae9486f7b36d97a154cf785792264d8e183fe1d4fa540c5e"
+    },
+    "packages/nmemory/nmemory/tools/classify.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9f79aac11131ae8d9eaa79e6b12af5efe7787e1615b9d6f427f322e7308d9c07"
+    },
+    "packages/nmemory/nmemory/tools/common.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5f83021aab72275c5ba645b52935c8d00908fe4705e35cbddaf6c395ea22bb83"
+    },
+    "packages/nmemory/nmemory/tools/consolidate.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5247a0fba6a0c8bd5e3dbc9f4956dc94354e1410b34c67c4b4c0cb0576828a88"
+    },
+    "packages/nmemory/nmemory/tools/context.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d824c3f7c380e7e7c26844aa9584b241f0a72fae3c7a055aa13ba09e4bf7a642"
+    },
+    "packages/nmemory/nmemory/tools/coverage.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "32ea5297ef951cad054f4b4c98948970b2f1239befcd5f955f43fe2a5cdb79d6"
+    },
+    "packages/nmemory/nmemory/tools/digest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9ff3329e85c7e12a148b132eddf19a928c87bb61294e6c3e49e98ec00e754e93"
+    },
+    "packages/nmemory/nmemory/tools/dod.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "44e573839f681a25bafd99b8ab18b2ace47c65b5f19cfd359a449ce3f42f779b"
+    },
+    "packages/nmemory/nmemory/tools/errors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "914362939e1af83fce838e0b099f901bb40a9e6050338872088fab3f1520d182"
+    },
+    "packages/nmemory/nmemory/tools/export.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e465dfed2cb6ce75f7b2bf303cb5c4a1fdc5517037db3f1c475505a034856437"
+    },
+    "packages/nmemory/nmemory/tools/extract.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "06cce3aceb815464e456004df3490d66ec96b3280157b913711d707cfb2e3c73"
+    },
+    "packages/nmemory/nmemory/tools/get.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4069279fb3fad1f3ea9b620aadfe8801d58862eda558134ebfe4939a9ce929c1"
+    },
+    "packages/nmemory/nmemory/tools/import_.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6039e7187a467da6197886d0609c59a89e5efe59daab6d5cf935413448986b12"
+    },
+    "packages/nmemory/nmemory/tools/index.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "407e36c00dc63808793f71c3c5d0363a370a9dcf1be4d41be17daa17b2fd1070"
+    },
+    "packages/nmemory/nmemory/tools/ingest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8a99d44f3064caa28ed294420ccc9eae12aa3779a8abdc1078246bd94f21c0b0"
+    },
+    "packages/nmemory/nmemory/tools/list_.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8902f9fe0c4771ca4774e87a9bcdf6ed0c567e0b092d359ae0ec734a798a82fd"
+    },
+    "packages/nmemory/nmemory/tools/outcome.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8a07f03e8c08e13411cf372be39b9c9ccc1c42ccdc56733252fb940e8f3c15e5"
+    },
+    "packages/nmemory/nmemory/tools/outcome_list.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "12d88171f8d4be6fca6b8273bebbfd7d061f05fdf0fe4b03a1ac82832a289587"
+    },
+    "packages/nmemory/nmemory/tools/pin.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "21816414cd7168ce0194e3bd668c99c68a0e9a88e66ea0388948e2b6a41acc6a"
+    },
+    "packages/nmemory/nmemory/tools/purge.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d7835ebbb497db798a8124659d16851cc2c33b3c27ed8149494a69bb0fd42fe7"
+    },
+    "packages/nmemory/nmemory/tools/reanchor.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "02145e78a8b6e41043ce3156dfb7bd89209e952c7d6dca025c8370ba06b0d1eb"
+    },
+    "packages/nmemory/nmemory/tools/relate.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1f5b4f20a396ea36ba655330df2b93662ac6ac45642dd2f325e1bd89db537bac"
+    },
+    "packages/nmemory/nmemory/tools/retrieve.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a57daef33e4990b382908a44b1628462e0809a55e813520a1c46882ef0b21bbc"
+    },
+    "packages/nmemory/nmemory/tools/review.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d58ef49ea0142c31aeff64f8e106d4af14c8386765bef8d443253e8892d6b1c5"
+    },
+    "packages/nmemory/nmemory/tools/session_finish.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1ee0ef2c7f6f37d97c039459b167625c966be41e10738e62f62321c75eedb5b9"
+    },
+    "packages/nmemory/nmemory/tools/session_start.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "442e9f2300773dcaaba7c0ff19e9b696fcef4867011ae05a91af02a42f2a39dd"
+    },
+    "packages/nmemory/nmemory/tools/validation.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4816f00cc8eda1a1592c9dd593bd2a1a545b1230abcd385bf6ebfa4f4d3a5419"
+    },
+    "packages/nmemory/nmemory/tools/work.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5a3908a7510e76333ccdb08354ae094e332e049da4c8e10c15bc6ba47347dcc9"
+    },
+    "packages/nmemory/nmemory/tools_schema.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "08c71fb3c54375c3d779c543c45f15488d87ace1a342dab85b0f3437599f5b18"
+    },
+    "packages/nmemory/nmemory/wire.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e14e41c2a4a1d2e60db05f01e46331d45f6ad10bfe217114dc5efe97994f95d8"
+    },
+    "packages/nmemory/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e0569cb46a09a5c7f86363af02db98561e6ac44a16e46e75cf02e5a94e26bfa2"
+    },
+    "packages/nmemory/tests/conftest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c3d2f2cc181b55efb64fa500d7ee009e0a590877fc4c0e26d5278b01d3579f3c"
+    },
+    "packages/nmemory/tests/storefile.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d958e6dde4cb128fcd5f87dbd5997049941c6cd57a07908cd41b498a2c17866a"
+    },
+    "packages/nmemory/tests/test_architecture.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "01a1254a2cd1fc58241234f031dbe91e7d71a4a58118fa4e1c0f28200da23014"
+    },
+    "packages/nmemory/tests/test_config.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "95e07fc06ce097c898e38614d6744121a6bca1e850b6ce551b0c140765d37c68"
+    },
+    "packages/nmemory/tests/workspace_root.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cac0dd2294e3dd3363b8916652dbedaba25e255e243c18599de6edb177f2d1ae"
+    },
+    "packages/nspawn/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/nspawn/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "abe42e352f2b1e9bb6dc6b9e42090c1b3dff05e3e1f071ac7ccdda15d349530c"
+    },
+    "packages/nspawn/RULEBOOK.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3d9f2679fff5bc703d06dcb1deed4610aff5f411551b07fa6c97dab0f5c319a8"
+    },
+    "packages/nspawn/nspawn/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/nspawn/nspawn/admission.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e2a42b6800f2331ee2891a90963e2df026ed84236203cef209a8e73c5bb25339"
+    },
+    "packages/nspawn/nspawn/agy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c3abde601ea1fd33d32dce8c44d267268091ec8d11de7988b9f2e3d13d5cbc00"
+    },
+    "packages/nspawn/nspawn/agy_acp.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "94e633f3610fe20684d91e419b9301886d24eeda36a3e2638d3907af23f072ae"
+    },
+    "packages/nspawn/nspawn/agy_restricted.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f4ef34cfdaf0bac0c13dbc01c4a884db2641f18a51b0969d3d3967202fdc2846"
+    },
+    "packages/nspawn/nspawn/app_server.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "50ddeb150ed243c326759721c7ead54a516fe75894b5f5b39328f585bea2da5e"
+    },
+    "packages/nspawn/nspawn/child.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cf9fa31b8abdd7de46a45623061224a9eaa47a14f0c00d93d17d158e771e304d"
+    },
+    "packages/nspawn/nspawn/classify.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c4e4a4bb5cc6fe37e88b2adbc21ef4f7b2e4b9d42893d9aa1d6525890b23cf02"
+    },
+    "packages/nspawn/nspawn/claude_catalog.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "628262061df6f053d79a76ce8cad592d2b93f03ad964618f6861168dae82807a"
+    },
+    "packages/nspawn/nspawn/claude_child.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a2ba14b0250f5d83d3298b93ae521122b347887c995958295091edeeaca639e8"
+    },
+    "packages/nspawn/nspawn/claude_restricted.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4fe89b7972316fbfe1a3138a19584e169fcbf48f1444f71c1aa0bf7a24749385"
+    },
+    "packages/nspawn/nspawn/claude_sessions.mjs": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4f5d8952566e8eca523b0bc18c2946cd70fea33f38d48d2a0be63bdec05bbaea"
+    },
+    "packages/nspawn/nspawn/cli.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c0802b6f36a0d25c132b6f540941fb9f1acc1ebb3e6d92e847389a1019e9337b"
+    },
+    "packages/nspawn/nspawn/cli_notice.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0a81d31da28eb6b25c0eb31b3f9e1ae94704f337ea0216057e4c7dc3cdff7018"
+    },
+    "packages/nspawn/nspawn/client.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "07ff79730768776caa7c5f6b5d4d0e2fdc31f5575021e409c914fdb5a39418c3"
+    },
+    "packages/nspawn/nspawn/command.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6250e9f2eb0a8c758381726728c07df3314227b775237078ec50b9936afe9c3a"
+    },
+    "packages/nspawn/nspawn/command_exec.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1d14b6cfab8092635e39996a13485515ff90974a195bae941d3e6fcd949c7205"
+    },
+    "packages/nspawn/nspawn/command_terminal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f2cf86bad84a3f0e1353297ff6e92d54f92a070106e5fe40c2a03c1022f2f73d"
+    },
+    "packages/nspawn/nspawn/config.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "77dc702daf2900d5abc48567a9cf84fd43276c28a66533f3576e3065a3dae472"
+    },
+    "packages/nspawn/nspawn/custody.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b65cda75fb855716efa5187b1f834b39675b179445808770a3ac90e48881468e"
+    },
+    "packages/nspawn/nspawn/driver.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5f50cf3ae1d3f41718fedc06fe681428e6ada918d32f7973c2d7d6c4a9339d88"
+    },
+    "packages/nspawn/nspawn/errors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f858365de7f6d050ee4ee4db96c1b5711b99fd3661bb157682ce9c66198c7ed8"
+    },
+    "packages/nspawn/nspawn/inference.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b350f72cc6a98a5d1096ce5aa00ed7e95a067f1b7d259cec9a5485bfcb0fcbf9"
+    },
+    "packages/nspawn/nspawn/install.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "581925cba4870951a7fc721259f2d3b10707b556ebab4f93905dc695da098cce"
+    },
+    "packages/nspawn/nspawn/limits.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "55853d89f70bb87a5ed542a1fdfac2ebf94038b921dc05bb3b595ba66c2408c6"
+    },
+    "packages/nspawn/nspawn/main.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3c0f7f3b71b529c543dc5689da5a073f02fce47237487a6674c76bdbda920c19"
+    },
+    "packages/nspawn/nspawn/mcp.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2839dc6e86b65427e05d39396f5d9c81647e1ca0a2ad55205ce3e29546c03b0b"
+    },
+    "packages/nspawn/nspawn/native.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a7e2ed49c0fd4a11b3db8f6c9cf6ce53003971b723061b902ecf744d90298830"
+    },
+    "packages/nspawn/nspawn/network.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "60fce19567346c4aefd627b3404f575dc1f435949aa42e2ca0d780a1b6095967"
+    },
+    "packages/nspawn/nspawn/notify.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "75386b417c891aa9af2f83136429d04a72473b5249ecbb56b70cd57535b3420c"
+    },
+    "packages/nspawn/nspawn/owner_roster.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5b49cd689cbe655f3011a3a5f52c40b8f067677c61fcba55856df77c5bf5698d"
+    },
+    "packages/nspawn/nspawn/picker.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e70755d4b51a889b1a153f98d5a593e47ff049202710dea9074b06dbd7eb2398"
+    },
+    "packages/nspawn/nspawn/process_identity.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d69a55f36f99e1162278d18bfe6df9dc0270355cf78b12b9aeec7f70efb106ae"
+    },
+    "packages/nspawn/nspawn/pump.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "14913f28704579d6cccd7b6afc6cbbc6e2cbfb409567a75df62100c5ec0593e4"
+    },
+    "packages/nspawn/nspawn/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/nspawn/nspawn/quota_sources.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f4dbe19c49e6160a4dcd8c994ac85c14c69f736281fcfcc7d82421c58549b7ac"
+    },
+    "packages/nspawn/nspawn/ranks.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1fecb8df4b03042587af1da40d86449eeb63e25022c084f31057b0370ef4c591"
+    },
+    "packages/nspawn/nspawn/redact.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "75273d68bb5c2dd4052d023fac9c645c8cb68e4ec8711490c4f5087107c08375"
+    },
+    "packages/nspawn/nspawn/registry.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e7be88f3cdf239a60e37be1d88fa5523540e971241a76b816cdbcb53d05d27e7"
+    },
+    "packages/nspawn/nspawn/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c4d6df9e9c21c9431baefcf1be9c641ecc9a32165bdc52e2f09bf06f089490b7"
+    },
+    "packages/nspawn/nspawn/route.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "61316c473a109b13e85cf809001940d0e78bec0582d957a09265a327face5e8a"
+    },
+    "packages/nspawn/nspawn/rows.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0a6efc4e3cb0b2868bc5937f5741f9b94c8b9fb597c366552d859298ad93cc12"
+    },
+    "packages/nspawn/nspawn/schema.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7a492efd168240afd6caf8bf193ec322926b42bfa7a3fe56e075f3744600b223"
+    },
+    "packages/nspawn/nspawn/schema/admission.v1.schema.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b8b939c74684ffc7cf81eb42d7563e33ad0208c5e572871fc286a69e47f3e7a9"
+    },
+    "packages/nspawn/nspawn/session.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ec1ed5b3e3521cc05669c4fa1c7489451b4528cda5dc5f389a18b746cb5b3db4"
+    },
+    "packages/nspawn/nspawn/supervisor.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "698970061a272f6ce3d12d80c66fb814e6fa09540a77b8db161ba52f86618a37"
+    },
+    "packages/nspawn/nspawn/system1.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f2a23a81a983d4604d56a3f8b475495c076398a925f2b03b9ba38abea9f6c673"
+    },
+    "packages/nspawn/nspawn/terminal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6f01f821fec8d6c75933cd8666184c44bd9ee60594ad48459cf2e5185642c3be"
+    },
+    "packages/nspawn/nspawn/threads.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2947e09934748b325ea306b0b6e1e56baa4a5268238e5e90df88acfcefb84ee2"
+    },
+    "packages/nspawn/nspawn/vendor_home.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ac1c41167664ca9bc5f181b1644aaadfd6792f7ea1f4959bb166d4c6d5eafb51"
+    },
+    "packages/nspawn/nspawn/wire.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5ab8f8f71f33c693e560ce871ea228b4cd1b87d1032c56129eed61cf70af2b25"
+    },
+    "packages/nspawn/nspawn/worktree.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6baf3632f552027a65538216e4db2dffb82d77c4654e45c949655ad3a1392429"
+    },
+    "packages/nspawn/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5b5d7fea85b2eabd778fad950e5926cb0c865485e1fa897eb41ed1282de93213"
+    },
+    "packages/nspawn/tests/class_dispatch.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "75546553fbd5d0ec0f4f2c40539563bcc9d3d0a8e44998e9e24ab0a354b0ccd4"
+    },
+    "packages/nspawn/tests/conftest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7f36943198684ce818396248f36ba8c8eb6802c1bd52f20b300b74e1ff4ba272"
+    },
+    "packages/nspawn/tests/fake_session.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b96dd06d1bd1f4b59c0523e8bb299dc2638541b2bb494cd9e34a5305e952f412"
+    },
+    "packages/nspawn/tests/fixture_data.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a3979f4f7dec00c740140ba96c447c53fc2418ad52d4c14a103bfe956d281cd0"
+    },
+    "packages/nspawn/tests/fixtures/admission.v1.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b3148b42442a91f3a327c0bff776c085fa92f18040f6f425c7d232cf8b72bbec"
+    },
+    "packages/nspawn/tests/fixtures/agy-stream-wire-1.1.27.metadata.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "69da887e362ab3c67c5e5d7a897295af5dd79e7e0c661909d65ca0f6ef6ac878"
+    },
+    "packages/nspawn/tests/fixtures/agy-stream-wire-1.1.27.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b8e7844277714387a6a2d3bd9ac23b81b171aafd9e7721aca256657ca3ac689c"
+    },
+    "packages/nspawn/tests/fixtures/claude-node-org-403-2.1.304.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "50e565d776d9634253d7ef4751d96b5034c7327610847d0b463d4b9747423ba8"
+    },
+    "packages/nspawn/tests/fixtures/claude-oauth-org-403-2.1.257.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1af0c5f5a68f9880c57f3e0f70eea67567dcb40addf229572ab7350ad88672de"
+    },
+    "packages/nspawn/tests/fixtures/claude-stream-wire-2.1.241.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4d4c2f0f7924f9b62e7c11ddcc843efd83ed556231188058cb62c9e54bceb05c"
+    },
+    "packages/nspawn/tests/fixtures/claude-stream-wire-2.1.250.public.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6f08d7ae314cbfa1b5243e8507648e73cb13e1f106eb502a31623e8338731607"
+    },
+    "packages/nspawn/tests/fixtures/claude-stream-wire-2.1.250.public.projection.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1d11b81c3db73f96f5e6f51e245b30e6aaa1be296983d251788ba7e83626407b"
+    },
+    "packages/nspawn/tests/fixtures/claude-stream-wire-2.1.251.public.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b9b0793c8ab2a51d87b2242166eafeeca6c8a6a74cfd17b041dfc27a386d8465"
+    },
+    "packages/nspawn/tests/fixtures/claude-stream-wire-2.1.251.public.projection.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7de7b8b965b747d017b6971797daa770fe3e6f1d41865b7fb0ad1e3d42c88d5c"
+    },
+    "packages/nspawn/tests/fixtures/claude-zai-1113-2.1.282.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "550bd162f1eb9c1b21802f3ee4de30498763b75543fcf730080c566849c74f51"
+    },
+    "packages/nspawn/tests/fixtures/codex-appserver-wire-0.153.4.metadata.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "682c974d90492fb43a574f70381c9fb5b5fdf96011c0486c9a6dcb661f8072e8"
+    },
+    "packages/nspawn/tests/fixtures/codex-appserver-wire-0.153.4.public.ndjson": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "933da13750439e41d318c3b24ed17c6e87f9d2d6e0d302e016945d4862905625"
+    },
+    "packages/nspawn/tests/fixtures/codex-appserver-wire-0.153.4.public.projection.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ccc8439f4add662fd0799ffa0f87438295784556275e3cb48ceb53d0c9a2bd70"
+    },
+    "packages/nspawn/tests/fixtures/mcp_l6_fuzz_corpus.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "75b3de4c4bac3acd24b63b48892e38867a0dff9928035079625ccd0381e6378d"
+    },
+    "packages/nspawn/tests/fixtures/owner_recipes.txt": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "edec93e3fc4f9e76a1cd5be77d01d924502fd0f470042e46395c2608200c9793"
+    },
+    "packages/nspawn/tests/fixtures/owner_roster.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4bbb122117309ae30baf4e1662cd906be8266502c07e2bcf52355a8d2154229c"
+    },
+    "packages/nspawn/tests/fixtures/projection.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "62017f3289bbb5c8d53fb5fd746f85ced7996df976888c5b36bd9997425b6066"
+    },
+    "packages/nspawn/tests/harness_isolation_inner.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "223d8ed70298f387864d713abd1dc195e0504391d0a565d184b471cc523b079a"
+    },
+    "packages/nspawn/tests/host_process.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a1c0d6970f53ab7a43371f495beacff8f058f09a516d7bc5da15632b3b291cea"
+    },
+    "packages/nspawn/tests/live/conftest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d589bdc9a540cd34dccd11799b685cc43a54332cd0b0ce70893b9126d0f86245"
+    },
+    "packages/nspawn/tests/live/fake_claude.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "e04e4809f89e46c178fdf297b452a53429f5d92ee055c19c03b455ca83ad7a6c"
+    },
+    "packages/nspawn/tests/live/fake_codex.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "52e4278e29c2afd8e50bd5a3d42efa7915925bfebb606bb688702d2aa2dfdd3f"
+    },
+    "packages/nspawn/tests/live/live_support.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e8baa34bdb48abd93b36ec36b0e12a93e6a7bb847aff6e0115254e2610e178d9"
+    },
+    "packages/nspawn/tests/live/matrix_probe.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "4e164fe5f612a3231fb193576b75ade624edd02f7cfa6401c9db3a94227ed5e5"
+    },
+    "packages/nspawn/tests/live/run_matrix.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "336d6c9a08b06b0a56bcb77133d353bf216ad9a0af23784f384a290fe789de59"
+    },
+    "packages/nspawn/tests/live/test_contract_red.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "092462941ad15987bfdf73bb3906a39c5fe2968912df094eb8e869b57e24315a"
+    },
+    "packages/nspawn/tests/live/test_driver_survival.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3ea9a5c700406df143ecac705a948054b2c0731250320dc29a81260fb96efe3f"
+    },
+    "packages/nspawn/tests/live/test_matrix_probe.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cf23862d7e5084cfd200040feaec4ca536238d3441d9a0e3d4f197665dd942b1"
+    },
+    "packages/nspawn/tests/live/test_notice_session.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2f6d34f3aa4e403e1dcfe35e6e4ec2f26bd173e2bd0bbc8a99209bfe97b351e1"
+    },
+    "packages/nspawn/tests/mcp_fakes.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3e35c61f3707a9dbc82ef4aad9658dcad5b71678801e8fbba49371d40ae61646"
+    },
+    "packages/nspawn/tests/needs.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8ee4ebdbb839877186796f46a13659dffe8d01f81c5e0acfedb318c103baec48"
+    },
+    "packages/nspawn/tests/oracle_error_catalog.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "17bb9fc5e5216b70bef357ef1b6001b23cc25b4c06220252bdeb0087e09e4b9a"
+    },
+    "packages/nspawn/tests/registry_reset.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8720c30b6e32ee5c83a13fca6ba74515b80b0c516f1e2cad981d5a719f44c495"
+    },
+    "packages/nspawn/tests/resources/harness/tests/acp/fixtures/codex-acp-2.1.1-auth-required.jsonl": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "39450a5299f1bb09259114d0d2a7e2525088dd99a164c3188359902eff49af91"
+    },
+    "packages/nspawn/tests/resources/harness/tests/acp/fixtures/codex-acp-2.1.1-usage-limit.jsonl": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e68e6a3641a004e18856bad9294a621b611dc6f679ae5c47420e44336edc2f44"
+    },
+    "packages/nspawn/tests/resources/plugin/NOTT.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8dac878163401f8fed64af46d41cdccc0c5697c92db847769e4fa9e5ace06c49"
+    },
+    "packages/nspawn/tests/resources/plugin/hooks/nspawn-notices.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "8997303cb5a6b0750de5ce9b47010c1ee7ac47ea4596a015bfb58e019d7fa714"
+    },
+    "packages/nspawn/tests/resources/rails/organization.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "46e605ae8c57eb8c0f6c4aeaf97369ca8693a044895ce4a215dc0d36d39004e9"
+    },
+    "packages/nspawn/tests/resources/templates/nott/spawn.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "800c757988e08e4a707d72289cb2e7ea6fd4be7cce0d00f9e7f210477f8bebdf"
+    },
+    "packages/nspawn/tests/sample_roster.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f63fec54725abd564ecba6a6e45192fd4ef511f268ee4f3235a83bd628f2b730"
+    },
+    "packages/nspawn/tests/sdk_setup.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c4a3c84abeaf555996c26aba63ca9187f42ede21d16b7ff146eb785949f351a2"
+    },
+    "packages/nspawn/tests/supervisor_support.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1977a9afae74b37cac43035d9a4a685d76ee499fa67b4353f6a1d64f4e8e68a4"
+    },
+    "packages/nspawn/tests/test_account_add.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f6463576c06bd59e9c1502cc8145d4ba8829869e8790244e85daa15769221c66"
+    },
+    "packages/nspawn/tests/test_account_key.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ef684d7eea3032f8d04354d0001250fe8640a6b5d810392d752e90b8b4113d85"
+    },
+    "packages/nspawn/tests/test_admission.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6bae76ed473b4f0bab45290ab470e7fabc27b05e906f1d0e314039ffdd6edc6a"
+    },
+    "packages/nspawn/tests/test_admission_control.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "92243544b4b8b767776c3140dfad7dd598f4cc3c779d8a2127c03bc5246f28f0"
+    },
+    "packages/nspawn/tests/test_agy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "81033e377a77c62c05333a2658ff409b1a1f05843126f679e0526835c3b05bd2"
+    },
+    "packages/nspawn/tests/test_agy_acp.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "dd9721dcb8cedf4066dd3e16696bce7a0c5244ed0a17bd3c491e5cf360f52287"
+    },
+    "packages/nspawn/tests/test_agy_admission.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e479afbc7346b9a2d4a467ea27b5d2ad0ed24ab6099dcfc7e4219fc4e8cae885"
+    },
+    "packages/nspawn/tests/test_agy_restricted.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "64e498af4d9e5f18905b1a33ba30916f21c1207cc93a5f118ada89520683c5bc"
+    },
+    "packages/nspawn/tests/test_app_server.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "877059a1ac8bfd03bcd0fe1cbb12f173608899d81750b3951481b37b88dd65a7"
+    },
+    "packages/nspawn/tests/test_batch.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cf51a61101d769a76cc18e23c34f62408ac6c63c997df1033c81a5d4bd97c22e"
+    },
+    "packages/nspawn/tests/test_broken_hooks.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b628ddc9bd54a62f91d7bac52dd1bb4a61179ca2b629a891b70313966002060a"
+    },
+    "packages/nspawn/tests/test_caller_notice.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "27ab5d5f88e208347efccb6237b82fc4babe50626d2adbaa074769e1d3ef9dd3"
+    },
+    "packages/nspawn/tests/test_child.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f7b5e384b73860f9b1fe95d3d0dc69bd50bbdfc470d999a6860ae829f7ce6f05"
+    },
+    "packages/nspawn/tests/test_child_addr.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4ece89ee22d7b9d78c5047df8a0fdda93befa1c45585e4ff22cb7e80ecca289f"
+    },
+    "packages/nspawn/tests/test_child_caller_addr.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cc7d0258792a7949d3df9e8c9dddd589f8378ef8270d112583e56d928fa59e22"
+    },
+    "packages/nspawn/tests/test_child_env_denylist.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c637322b86d4e64b2caab0914a9925d81de6042d32dc6c4bbf921f4d88716365"
+    },
+    "packages/nspawn/tests/test_child_read_only.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "71a5c4df8c72a8ecc26b38a47f6782e58a6dc2a504b787b2918803131b1d6f02"
+    },
+    "packages/nspawn/tests/test_class_fast_lane.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "bee70a62940459c607e0652456c66c734d41514086e351fa50507e4b7659d48c"
+    },
+    "packages/nspawn/tests/test_class_observation.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2e0ff7c1748516bb6cb9b7a1acf50552e8bb477cfdd178c9382b74855960ff6a"
+    },
+    "packages/nspawn/tests/test_classify.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1ad5aec8e5d10bbc5a02086cd0b9203f0c11a949193cb34aec776d766aa6ae2c"
+    },
+    "packages/nspawn/tests/test_claude_child.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9a1c47e0ac3ab6bd8dae0a2f4eb3efaa3b58044619f0e4e027783e259164f67e"
+    },
+    "packages/nspawn/tests/test_claude_profile.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d60ce1f4f422baacc53ebb308435f7dceeda0ba65ceecc0deb75433f05d378fc"
+    },
+    "packages/nspawn/tests/test_claude_restricted_launch.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f8caff910bbd261fd46881b65429aecef2de492f18f12577ed611d806635cb50"
+    },
+    "packages/nspawn/tests/test_cli.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "17b84e89843e78e7e2538cce984a3107d0c915c3cdc14f1781f4cf5025c0fb13"
+    },
+    "packages/nspawn/tests/test_cli_fleet.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5214bb7c2a9faba757c8b43fb94091ecfb87c185ce4d9810bbbdd2cbecfdcc8b"
+    },
+    "packages/nspawn/tests/test_cli_notice.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "de0e1ac58c91644979b63aafa1e8780813c4565007a17f942ae18411d810bf9d"
+    },
+    "packages/nspawn/tests/test_client.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5d039bba8b6e7a046c5640d289f139945d4eab4b5888e0bb39f2747246d03fc4"
+    },
+    "packages/nspawn/tests/test_colab_provider.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e6a3b88ff3ff49b5781bc00c02ee1e071a43a43331219accf2e5ec5bd4e2a4e6"
+    },
+    "packages/nspawn/tests/test_command_migration.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "54c9cef7efe350a3ee8b5d73b8602c63121f8b70b89f98e7178281d0f9166e78"
+    },
+    "packages/nspawn/tests/test_command_session.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0451166b6fa50791b4a962cb8d07474bf57b88122da02bd67b30baad02e587cb"
+    },
+    "packages/nspawn/tests/test_config.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a1757a2b687888412ba5bd7b99a74e074d0f27f5fd82683629fb7daa07605de1"
+    },
+    "packages/nspawn/tests/test_conftest_fences_the_host_identity.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "64333223da3a981e827c16ee89ca52aef3930dc5298bb3a984f5bcf02a8f1b5d"
+    },
+    "packages/nspawn/tests/test_custody.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9761a120aa5187fa607f58dce84eaf1aa3ab553f6b3d3583667e8c6f84fb6287"
+    },
+    "packages/nspawn/tests/test_daily_usage.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2c906a07c421387177e181b319d9836517f40dee3fe78df1d6bb1bc396b38b90"
+    },
+    "packages/nspawn/tests/test_database_cli.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2e973eabd33f29fe962ba44032e098bb7e70381ac519e1724079d8882c075bed"
+    },
+    "packages/nspawn/tests/test_dedup.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "87dff8f946ecf931ff956e9c1ecfb229d57a5a8f1055e759cf8889cb4f5407d7"
+    },
+    "packages/nspawn/tests/test_direct_kind_admission.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cba3d3cca5dd373ae975ddd1df679e0e3beb1944e8b3711a3b11d08d37d16369"
+    },
+    "packages/nspawn/tests/test_driver.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9a9afa14d5556d5950fda6ff04a29e0ef7d5db1285ab5143ea8ee2598b00c466"
+    },
+    "packages/nspawn/tests/test_driver_exit.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "460bade93fd874fb7432199d147a2f1841b2e4e968ff86d18b802363d80b6f05"
+    },
+    "packages/nspawn/tests/test_driver_launchd.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "811b9791388c39ada5d7a2905f0b90b6f07ee0cda7aac310e9c9976293dc2540"
+    },
+    "packages/nspawn/tests/test_driver_review.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "976cd0755b0126ad78633c4c78dc9a7eb0e46a5558b9a949140de5959d161157"
+    },
+    "packages/nspawn/tests/test_effort_class_policy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "00a1287c1097208c69add707d7fb82f64d3178e0bc40ffc94bc077f71523418f"
+    },
+    "packages/nspawn/tests/test_effort_route.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "55742257572ed5b35359c49ce0bf19b8d3322691350b5bbb97aa7409df18ed38"
+    },
+    "packages/nspawn/tests/test_errors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1aa91974c4308024992581cf518f7dec338b3cd59ebb85aabccd4fb8371f56b0"
+    },
+    "packages/nspawn/tests/test_exhausted_wall.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "55e70fd4d5d6126c18e82658cf42fc32afd1fe6444866e5d137e8c46db9deaf0"
+    },
+    "packages/nspawn/tests/test_f7_diff.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a72031d010747b2b6f598b07a35515b41b3b717f376812b5246e6e3f08520a7e"
+    },
+    "packages/nspawn/tests/test_failover_router.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f0f788245cb903932109764537e9731f8094e6e2367d7564a016b1888d64a94c"
+    },
+    "packages/nspawn/tests/test_fixture_data.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "60f6bfba588715457796eb5cb045e1e65ecc58019216a6d1b9bf70e93f78465c"
+    },
+    "packages/nspawn/tests/test_goal_u1_harvest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "62e3670ed26cd404cb7c187f03bd79561d9981710155c989879133404471d232"
+    },
+    "packages/nspawn/tests/test_goal_u2_transcript.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c5d096b5f34f23d53030a7b2cfd1ccea1523824e55357d9e532e73ab9582eb98"
+    },
+    "packages/nspawn/tests/test_goal_u3_read_paths.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e0452040485f81b67199d6fd9266e56a45006d8bdf696ae0d080f3b68e1dc702"
+    },
+    "packages/nspawn/tests/test_goal_u4_system_prompt.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7cea86ff5cbdb3488d35893b0214199eb472c09cbc3ceefca987bb1af6f08d95"
+    },
+    "packages/nspawn/tests/test_harness_isolation.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "aa5bbef87240518c6e07809062bafd3c6d9270d1fdee706080af7fe162a5294b"
+    },
+    "packages/nspawn/tests/test_host_control.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6bd2129284f11541ceb45e53a241fa295236b4416f03128c1511247a85c226d8"
+    },
+    "packages/nspawn/tests/test_implementation_claim.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "44b5fb1f962164c84dc09a0f864fd37dcec269cdc55f42674733d32f12fb1963"
+    },
+    "packages/nspawn/tests/test_install.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9030f76e4dc46d4ed36ed57212f79dfa1b9a2143d44cc45839e458d6ec06e862"
+    },
+    "packages/nspawn/tests/test_limits.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "340869dc8e72fded8c2bf500933eff3328fa4206adc43119d359b545a39dd0c6"
+    },
+    "packages/nspawn/tests/test_main_sdk.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "969341d5c2d1b14d1b89ba912667c8bada00256a0fe40d4c7dae3f899652ef08"
+    },
+    "packages/nspawn/tests/test_managed_session.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eef3e34db8c0161d95d4e1f5ebabe6e468829d5f136f25ea31c971154f8cd343"
+    },
+    "packages/nspawn/tests/test_mcp.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "27b4c86bde8fcf0cfa9328c08794e38145d8a2ba41e298a6e53303aa1c2c20a9"
+    },
+    "packages/nspawn/tests/test_mcp_contract.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4fa57ea9cc2fb14ec7192fdf0cb90ed724efc66387abebd4aa656f91b75c02dc"
+    },
+    "packages/nspawn/tests/test_mcp_frame_ceiling.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1726e45adced1f0f8809597e38fb31769379b3db31b6a392b26177c0c9f8d939"
+    },
+    "packages/nspawn/tests/test_mcp_l6.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6d75e59290d5fd9d9e620033b1704b9dc5c1d40daf0f75c8a2ad559cf94f1931"
+    },
+    "packages/nspawn/tests/test_memory_policy.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "14dba87fbca496f4ece80827ec73c4e302c86261636751238ec3603f0a80a37f"
+    },
+    "packages/nspawn/tests/test_model_catalog.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4bc01a318c7ba2f7b81302adb5421c8f15a0056ee91762f22a629db45186377d"
+    },
+    "packages/nspawn/tests/test_native_account_reset.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "46c3d150703a93ea4d964954fd696c6e684a6b90dcb0a8407f25575e7a205cc1"
+    },
+    "packages/nspawn/tests/test_native_accounts.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "459e92505e719eec3305a89ddd887151ee384a126331ef1f3867d3ffe9911394"
+    },
+    "packages/nspawn/tests/test_native_credentials.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "907b7837472f269e1e678c7b7f87221f1b022b6e1d9288cfb3ac6005a33ca046"
+    },
+    "packages/nspawn/tests/test_native_environment.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cc106d88cb3bfec03faa500d8ea8aaac231ec96db9ff2599b8330e7ee0823a80"
+    },
+    "packages/nspawn/tests/test_native_execute.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a53749c7f0c3732f331703b83329662551c930be026956b7b10fd5c144ca5e42"
+    },
+    "packages/nspawn/tests/test_native_final_text_cap.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "24e126611c184fd8f7a627e94b72620570999ed69e4b226beda9d01770239cc2"
+    },
+    "packages/nspawn/tests/test_native_plugin_read_roots.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c03d2479ba4007bda0f0654d55d2fd014af92aba62a791e7d592002cb7c0644a"
+    },
+    "packages/nspawn/tests/test_native_read_roots_registry.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "51d7c78dc049787ded3be23eb2b553af361ee9d86934abb7a912d0e30424c981"
+    },
+    "packages/nspawn/tests/test_native_session_registry.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b274df8e7efecee066bc4785fd8822b029e77bb843f53d0f63ba4f76f7f5da90"
+    },
+    "packages/nspawn/tests/test_native_socketpair.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d90af4e8707d984d8ba98a62d98254866efba77dd46a66af31295a3e6f19e9c2"
+    },
+    "packages/nspawn/tests/test_native_write.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "36ef8c13e4826f2a4a233260fece452800bcc810d4687a6b58a8c12eff58d308"
+    },
+    "packages/nspawn/tests/test_needs.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6b37780ae12557e3acc63d23c86849cb7d5c6301999b863b7b4be6ad469ea312"
+    },
+    "packages/nspawn/tests/test_node_owner.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eb521bdeb9eee8516ea9a22dbb4689ba59bf7bd2ff90197bc0f6a7625ec4c1fd"
+    },
+    "packages/nspawn/tests/test_notice_outbox.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "86d87c52740f802ce8452ec8abe203f5afe3bf0ecf9c7e35f58fd0d167f9c212"
+    },
+    "packages/nspawn/tests/test_notice_swarm.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b10fb82a8cda0b2399dde220d21330803ecb4381ed6fe7cb89d79d042e5754a1"
+    },
+    "packages/nspawn/tests/test_nspawn_system1_dotenv.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8b41b5e321f9e196ecc4d4d65044a106060b0d8afd0a69a46fd1c00f99bdb613"
+    },
+    "packages/nspawn/tests/test_orchestrator_profile.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d9685dc117bace34135623354a35cf4f3b33e582741a6f31eb33a23e64306080"
+    },
+    "packages/nspawn/tests/test_owner_recipes.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "832e5f7208d43371d3f6d7b258a8b246bf948248d216b88cab32f85dd3f0f544"
+    },
+    "packages/nspawn/tests/test_owner_roster.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "49622dce545a49c885c0ecf2e0fceb1ec1fd4f24802211b68adce0f3a85d6c44"
+    },
+    "packages/nspawn/tests/test_owner_roster_write.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eb82f172f7842584c19e81d6e2d339cce10edf0143a75ed621dda438800715f7"
+    },
+    "packages/nspawn/tests/test_picker.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9bbd257dc904cc0dc5e39dda5a64c43b76330ddb651bbfa4ce49ed26f8c475cb"
+    },
+    "packages/nspawn/tests/test_picker_apikey.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4301246998b8d0238f9a4cd466d0e3374f9c3639b7332ef2d7c32f5b5d2bbd8f"
+    },
+    "packages/nspawn/tests/test_ping.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "14fbfeffe6c84623230a22e7fab7c8f962327ce64523aaa5379d14cf2aa53aa6"
+    },
+    "packages/nspawn/tests/test_plugin_sources.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8ba04931446d7aac8b8bb3894164361c4a15cce38834de144928f0f86bd6300a"
+    },
+    "packages/nspawn/tests/test_process_identity.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8f8f25e020ae6dfb46ce4bb8fc8a56ff24bacb7ee7e1bfd34c94768961b1d1d8"
+    },
+    "packages/nspawn/tests/test_profile_boundary.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4af8e8cd6844537b970e9fec3499e8a29db74baeb53a9db439f48cf7ecda2c57"
+    },
+    "packages/nspawn/tests/test_profile_launch.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "61327b93eafd6717a6a5a04b38031b923640ab8bec7abd63c570b69b72407b8a"
+    },
+    "packages/nspawn/tests/test_pump.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "88f0068a138e863b977a092a7fbbd59b316d5fe2e530a1c34510e34f80e788d1"
+    },
+    "packages/nspawn/tests/test_quota_sources.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "92c8e58982ea7494b1669f06ea237ffd330df5429ed87255e4e9e1794d045637"
+    },
+    "packages/nspawn/tests/test_ranks.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "79ffc0e411efeb9cdbd61844490a7b04eeeed4d5f0e96134e7ba8e9d0e494233"
+    },
+    "packages/nspawn/tests/test_reaper_orphan_honesty.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "644ad9628640592c32e2ccfd6539ee8bf18317219b795f2b51f6c1e56becce5f"
+    },
+    "packages/nspawn/tests/test_recipe_metadata.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0b82e6c0f21c4f2350c58c9a6fc10eb6114dac4b5546a8dba0496be824fad7c3"
+    },
+    "packages/nspawn/tests/test_redact.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cca9453cf6f792d128cbd694af3c4672db633ffad37f84b34466d1442ba939ac"
+    },
+    "packages/nspawn/tests/test_registry.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "fb3517d8f058d2eb00804a1df2750e0782a59e5f8b3ee1f7c8510441987a0b31"
+    },
+    "packages/nspawn/tests/test_registry_orphan_close.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1216c2360f35d6eb01e76d7f77082251535ac11a099a98562b4b42716b4376ef"
+    },
+    "packages/nspawn/tests/test_registry_terminal_custody.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ddfd508b2492ae47d5a6654643dd726ec03c947abc1ac4dd64995015082cad3d"
+    },
+    "packages/nspawn/tests/test_remote_caller.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a648c9b3d53c5a7bbdcc04b2fb9cbb580de0602012306fc704d993b47ebefb36"
+    },
+    "packages/nspawn/tests/test_renamed_variables.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d101376ce70cb286b3c3b66ed5979fb7c1446203f1b25c0e48290b75b1909232"
+    },
+    "packages/nspawn/tests/test_result_failure_reason.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "df45836bb80ebc16ef0f9560303f70ead8d355114ec0913f25f2e408580bb61c"
+    },
+    "packages/nspawn/tests/test_review_failover.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1f09cc5e37396ec9ca66ca4f14cf5c2a44fc07ff23d70c668e813e8eb0e613ec"
+    },
+    "packages/nspawn/tests/test_review_preference.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "02c4934b1e4d9be18ecc3b30a8488c7d655fdacad733cb903f25f4ddaa008074"
+    },
+    "packages/nspawn/tests/test_review_producer_wire.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b9544b5d6cb1e8725a59fefe2849a8b8511de8c6d57ef2efb56c43f54bfa1d31"
+    },
+    "packages/nspawn/tests/test_route.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "50836e6f0ad035b5d2f01c31810b8a734277d937f5b10a46f331241570079057"
+    },
+    "packages/nspawn/tests/test_route_node_wall.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a26bfe9c21a5d1532b342b8205c73c9c1ab9a5b0fc00069bcc9c54f476e999c3"
+    },
+    "packages/nspawn/tests/test_route_transition.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f4a085c529d8e0d64b9ee812e36a086124e3a9eee4a8d896dea36f305a32c328"
+    },
+    "packages/nspawn/tests/test_rows.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f24ec508d434a9c5718f0ad4e6fbd3cbdb9b5151553e6e9da6b4a3f98d7fb0c1"
+    },
+    "packages/nspawn/tests/test_run_effort.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7500edb3176ee9fe0e64259097dee4dfc3a97736817736ac6f9857e355673bca"
+    },
+    "packages/nspawn/tests/test_run_effort_binding.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ba141258b35326feb5af41a14dc1d7e2a7179682319ae920e60fef432cb29989"
+    },
+    "packages/nspawn/tests/test_run_effort_public.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "096de6660610a41fc2d5dbf6d3f7a8166ea396fe6ab8a52feb710c6ed1b0480f"
+    },
+    "packages/nspawn/tests/test_runtime_manifest.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c4cc3a74655dae2c073832d809109a82d6c9ebd230e28b38510939c037c143f5"
+    },
+    "packages/nspawn/tests/test_schema.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b03d5551f61d7cd739439d10e77e09d4e8850bc37c6168f67eebf5af76a7af45"
+    },
+    "packages/nspawn/tests/test_server_instructions.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b88b041085772971537600ee9bc9d1012be8d74b62f9cfc7133a9129065ff703"
+    },
+    "packages/nspawn/tests/test_session_cleanup.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "aae873e7eb64bfffb66a2f19800d3800f417dc17c67655031e9693f8d392990f"
+    },
+    "packages/nspawn/tests/test_single_spawn_config.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "153deb3ed1c58d4d4cd738e2556be4984bb2491ee09716d872c1d1bd33a12d35"
+    },
+    "packages/nspawn/tests/test_spawn_and_wait.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9917aa7d140a37dbd24447fe89c9107e2ee54517705182600e8f8339e0bb7b2f"
+    },
+    "packages/nspawn/tests/test_structured_inference.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c1e339d3fd46baf1bd832db9164fda410985bc197b49b93aa9b9829458e36539"
+    },
+    "packages/nspawn/tests/test_supervisor.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8952cb435f71960e6aa000f38ceb601b17d793d478245cab2fc2aba582f9dbe5"
+    },
+    "packages/nspawn/tests/test_supervisor_close.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "90287c74bed69586a6e054f757ec48b822dacbfc67b4ec07b7d70b911415ec4f"
+    },
+    "packages/nspawn/tests/test_supervisor_drive.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7cfa85d2c76bab0e44ad1452fc58af2aa17870ff81b7ee4fee5589027cbaffad"
+    },
+    "packages/nspawn/tests/test_supervisor_failover.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1806e333518a50ea952b67a648d6f5278b79f6d1079e7c1012011f3230523dae"
+    },
+    "packages/nspawn/tests/test_supervisor_layout.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d5a6e555b2ec08b63355dcf740bfb016e79e2472b50ecaccade5795e3e63e71e"
+    },
+    "packages/nspawn/tests/test_supervisor_quota.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a3de64d4b4b37d1090ab2aefa35caa664c51424f0412a9cc9a3d79bf878f5de3"
+    },
+    "packages/nspawn/tests/test_supervisor_route_bootstrap.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d4ae8e127bdcbabe10ed83afea1b819dc627d09f5e5435a9d1de021f29739ea9"
+    },
+    "packages/nspawn/tests/test_supervisor_status.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ce5f6de9b97e9569b18e4ac36d0e4b1b0953ad7aedc4c36c3cba62ae40600103"
+    },
+    "packages/nspawn/tests/test_system1_roster.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "11f440d401aa8c0e5cb56c19edba7505d71b7fe6fba8c131380ecf4a9591ad76"
+    },
+    "packages/nspawn/tests/test_terminal.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ab549cc3f20d74f32b14498e49b1cc9dc4d941c73a12278c3fc64ce3774ab8cf"
+    },
+    "packages/nspawn/tests/test_terminal_receipt.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e0282bf2f854b0175cd14c11831c01e7456ed663ac13cce597dc00df68a1b66c"
+    },
+    "packages/nspawn/tests/test_thread_list.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "00306959195a93021dc88ff028178dfa83cd28c5b8950c54f62724c842776668"
+    },
+    "packages/nspawn/tests/test_tool_schema_grammar.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4c6cb5ed9720790a0708998b18de1cef28ca63b1a63ec64cb7196f1bbc7c7c5e"
+    },
+    "packages/nspawn/tests/test_typed_questions.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9584a96a25b28877d326794da5bcca4047f2d1a2f08011539dcf4661dd1767e1"
+    },
+    "packages/nspawn/tests/test_u8_codex_launcher.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9c847dadd109cddd7b7bb37e8d9ef8dc358416eb2536446e53e07b63cbee43fe"
+    },
+    "packages/nspawn/tests/test_vendor_home.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b49663f0831045782d03d4238bb212185a6df135782ff9a45eb919c13db03390"
+    },
+    "packages/nspawn/tests/test_vendor_home_fences.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "302c22b2749720243297d9cbfa4938c431f4ca988d93d82daea493fd56cba3a4"
+    },
+    "packages/nspawn/tests/test_wire.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7d8170e198d99e7ca82c2e1369ba575174b94bd4b33c32b1f5af6003f8cbf2f4"
+    },
+    "packages/nspawn/tests/test_wire_2_1_251.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b06699ea25d0cd8b4e05365d7d1e27e7d195a350ff69036909a003e81848759e"
+    },
+    "packages/nspawn/tests/test_workspace_root.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e86d1b1652697f7b1dba0b7e1a87f11ddae0752bab9a18bf13507d518b46631b"
+    },
+    "packages/nspawn/tests/test_worktree.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ef0d85222e11dd61a17c931a9b4dfb5c04680e2853ad746e4f4be86404afe8bc"
+    },
+    "packages/nspawn/tests/workspace_root.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "986e0540c7fe47d5e3a9c2d5d03b8ec82ba35276f843e478a9adae5d22b08086"
+    },
+    "packages/socket/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/socket/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c753b7da0882efd3ef8dcfb83122b9e2e1a024fd140a4c63c37dbf4f35e2a0af"
+    },
+    "packages/socket/nott_socket/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "29db7090f239b96ea2661886b063eec320383d8cb6d0e6240a14bf90991e00da"
+    },
+    "packages/socket/nott_socket/door.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1f580a809affb7cbb1533b839d409354a2e394952016aa2f41237ca3e0931131"
+    },
+    "packages/socket/nott_socket/mcp.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ebd266eba361820dd1e16d7e72b6d4e8b7d8bbde3d45084408c0206dacc2b6bb"
+    },
+    "packages/socket/nott_socket/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6d67b0f661e0332f0ba8cbbb46ea905c55cb071876091c747546d2c7edf0138f"
+    },
+    "packages/socket/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c194e839e3fe876051915df0a4902ee93c13ffd4962f61a85984d536af491269"
+    },
+    "packages/spine/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/spine/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "581b34e7636085ba5dba7ff31a7c8366fdf93a17b33431d71414c486e88923ba"
+    },
+    "packages/spine/nott_spine/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "501bf2496982110029c76a3bb95ec8dd6d1b7c8bbc399c22d1cfe5000d0a221d"
+    },
+    "packages/spine/nott_spine/authority.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "011bdde83e68ce931bfebb222a71049bb629a2dedf637ec6b51f4e3bcabc9d25"
+    },
+    "packages/spine/nott_spine/errors.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "75de1a5cc3b7556a162f6a29e5ca7ba1980cc26984e716709e8f632200e3a7cd"
+    },
+    "packages/spine/nott_spine/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6d67b0f661e0332f0ba8cbbb46ea905c55cb071876091c747546d2c7edf0138f"
+    },
+    "packages/spine/nott_spine/types.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "264ff4889987dce890c3fc5248b31321ce05e5eb4b58b34540d9283e449a42a4"
+    },
+    "packages/spine/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "27584ea7daec27621814f9b96dc9eda3a8ca7318adf53d6912fbb6e07519f922"
+    },
+    "packages/system1/LICENSE": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "packages/system1/README.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c033cd8321be29c4041f4f9e1b48c176fa8f11b3c639012a6ac8b8a7fe63ac27"
+    },
+    "packages/system1/nott_system1/__init__.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "41dc61aab8e662e2233053313a13b2791a77fb1f7203f80e10b90cd5620434c0"
+    },
+    "packages/system1/nott_system1/py.typed": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "packages/system1/nott_system1/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "425e24ffe8da0f55a4b46cbfb11bd4676855eb816a11ab43e0baf812fe7d7f0c"
+    },
+    "packages/system1/pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5ae7b48fcf99f9abe3e94797b70905054a9aef264e26a1ca6df4ec79ebe2f22c"
+    },
+    "plugin.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "361dfaec93ea34d17f574dd90e4f73e250fa02d11afb66884983db6d3579c5b8"
+    },
+    "public/manifest.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c1bb624895f9d7b51eaca9058fec591bea25b46644d189677f4073ac178176d5"
+    },
+    "pyproject.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b88f1fb31678ca3a7d3fb4d95ebab7fe5b3516d47eb1f02f269b4a14a68bb6f4"
+    },
+    "requirements.txt": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "943c3cb285ef30f585ba2dbd57e9b8462e9e5afc2297a97894da427f8a913109"
+    },
+    "rules/AGENTS.md": {
+      "executable": false,
+      "link": "../NOTT.md",
+      "mode": 420,
+      "sha256": "45566ad69f7a59e9a2552d62f654d4f33dce9e9bebcdc4a8ff47b53b6dfa8db9"
+    },
+    "scripts/env/renamed.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9d35ac00c36a11e126cdcae8e6b86b67a2715f181d5a7ae8a05dfcd52039ab41"
+    },
+    "scripts/plugin.py": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "6d060312e12f731bd87b43e940a02359b6f1cf3c273ba554dc7c6a1e6acdde29"
+    },
+    "scripts/plugin/export.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "88bdd7bab35dd3d584b09bb56ecae36f56eab8e5621a4fad041bd0a79093d328"
+    },
+    "scripts/plugin/install.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "45f4b224c0d8cc950e0f3cd78a1a45d4e38c61f2550d6b52fd9a505604eb2e4b"
+    },
+    "scripts/plugin/package.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7d4cc3bccbaa6ea58da32368eb89e5fc6ce49b3564e2c17d512e9ebc630828d2"
+    },
+    "scripts/state.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "067fb6c17e5828a91f7583a5cf4e781af94ff574fe1e2713bd54042ebbaea133"
+    },
+    "skills/accept/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "eae4eabad5a285ad13e7eb6780385065dbc0a8b5ed509077d5014fa3790a4b72"
+    },
+    "skills/benchmark/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "80ced6dbd83cf1c51ae36175e220694544d9b0049117d63289e5de746b4505ab"
+    },
+    "skills/board/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "30fc3b65a634516a57a96ea61f02c90be72d58da16e740625ae3f94b3f582b4c"
+    },
+    "skills/brainstorm/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "784ab61bbb833bc07c9ca819988e7d35e34848b2354858fdd7a538be167ee9fd"
+    },
+    "skills/debug/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "790fdfdb388a68ec28da54935995dd2383449fb480582eea08d6aa87dcec16bf"
+    },
+    "skills/debug/references/progress-and-stopping.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1e8384f5700efcd09cdc970fb6260132791e33ccd2dbf1e4ab21c24e51c07d73"
+    },
+    "skills/execute/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "13c0fdbfed6db1098e84a5e765e3bdf9fb835d369f314c883e98ca481102cd4e"
+    },
+    "skills/execute/references/complete-results.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "a04670314dcb47dfcd887bb62c056befb6a0404ccd5a1387ac15a76f9f6cd2f0"
+    },
+    "skills/execute/references/runtime.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "cea1c564e6e98a6b2d0107d2d3dcd54478454b4234f672a9788e3c20772f8c47"
+    },
+    "skills/feedback/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "b01b9ed6333dac412858482a52531429799249dfec74187b93d64426d9aec121"
+    },
+    "skills/goal/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "1ee523958e2d836d4328f9acf41465ac4f884e9fd4e7dc5dcabb3df24639bf7a"
+    },
+    "skills/handoff/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2d129a3f5377863d40274349a3d8d8f2750fcb72a65ef5e81ff70b035c070e3f"
+    },
+    "skills/plan/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7a56f53071b1e139815606dddd02cde3cfd5ecae29d03c4b310623cfa96d5fd6"
+    },
+    "skills/plan/references/campaign-loop.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c3fe1bab87c58439b58f482e2d122757a40220e5bee60061bd9f58864fd63b98"
+    },
+    "skills/plan/references/graph-law.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "af77774163496383b89711c1c572ae235261682194fd7610d292eb82e36ac0bb"
+    },
+    "skills/plan/references/register.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "02188d2547e40231601722a1e2d38e69e45627f4a2fd259c7a55a08fe06d2149"
+    },
+    "skills/plan/references/unit-contract.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d2f581b1f673496d0f41f150fca6a55d8f0df0dfd5aa23ceaf8179b8bcb96ae1"
+    },
+    "skills/quality/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "22adccff2d28cc6ff56e132835d1e1bd3a8d93a346d6811ada468a578e3c4e26"
+    },
+    "skills/quality/references/detectors.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5fa9e3cacefce0cc61f885db2c16ee74e5e9aeebf5f0edfe265c76ea65f3915d"
+    },
+    "skills/quality/references/organization.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8ecaf6c555608a319367b5d117a25b3b89dabfd583c845de75bd72b1c6ce75a7"
+    },
+    "skills/quality/references/rituals.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "c7521231890ad6d2a8e65812aebc3b55ddb46d2caea576cfbe299d10ea242b8e"
+    },
+    "skills/ratify/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "651d679fcc54669d76c89b4febbe0cbd7c344597330f6c4e9d177d0de58524a5"
+    },
+    "skills/readback/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6210589c89d7d325e923f7542423acc22334efbd24e847b4c9e5a33b870cfbb6"
+    },
+    "skills/readback/references/communication.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4458dbfdbb2b7847ac98d599c986f7dca153175857931ee3a3d2ffa72d28baef"
+    },
+    "skills/reconcile/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "71a32db4110a2678e1795eb383192b56b667ce98d0dd232b73531f1bfa2f6d1d"
+    },
+    "skills/release/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ec427bf264a54f94a0c20740fd77f19964a5895ae985833396fad3923ea479b0"
+    },
+    "skills/review/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "7c7c394c15fc7d2d68e1b1ffb366c069e975946911b36c7b9b16e31783f9e277"
+    },
+    "skills/review/references/checks.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5648587dd8563131fcdb99862b1d3b9c659a503d4d3ef0c09c9dfbacb5dd9e74"
+    },
+    "skills/review/references/delivery.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "783e84067b3078a244703bf089bab055506aafe3e8093e3dd1aee2b3caf94580"
+    },
+    "skills/review/references/evidence.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "2d737b1196e49cb9dd9ad7339a3a3a2de233f47a076307107a52a580b4ccb342"
+    },
+    "skills/review/scripts/deliver-github-review.sh": {
+      "executable": true,
+      "mode": 493,
+      "sha256": "e591b2e62123b5bdddd0405ab444be89f0f9a3a1e9d1fbacbed503390f644003"
+    },
+    "skills/security/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "8f906f6ddd748e32731f59e747953662ca07ba8d8b3f1bc93f2df20e214fcece"
+    },
+    "skills/ship/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f4435351c114d3e71661ab8251e62d4a95c0b26e2188e64c5c88a835282bbd8a"
+    },
+    "skills/upscale/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "0ad3adfce690989c8c3a77ebd8bd1ab4449c5282055bfaffed6a505f26903e54"
+    },
+    "skills/workflow/SKILL.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "6694600e18d0fa1079d2042f0ef0e8299cd93f8c6f2ec8dc736f39fa250e9499"
+    },
+    "skills/workflow/references/delegation-and-recovery.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "4aaab794fdd510ec25c611cad41266f9f49e37e91f424e5eafc7ebbac327de50"
+    },
+    "skills/workflow/references/model-tiers.md": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "ac277938594903dd3b8f0a1d2a4e21a8dd71d23e736b8e54192be2bbeb3c40e3"
+    },
+    "templates/nott/spawn.toml": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f2eb21ff68dba6703bcc0213cd597041f2783f7866479144022a0bbdb95d0e7a"
+    },
+    "tests/test_package_inventory.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "f289ef6df219fdcc4e8243d63c872e45f44b16e9d9248f6ba7f9b817d4a149a9"
+    },
+    "tests/test_package_properties.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "3c70e6dc3d0d997d08b213fee0d5c080f3616c251038494f80ec0a4bccb277ae"
+    },
+    "tests/test_plugin_entry.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "efc8601736df8d68ac5334b48ae12e3e70ed7b106825c05d479045c3e08d8784"
+    },
+    "tests/test_public_activation.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "65579cf32cb7ca616eb48c615c2dcb7036a22f70bd7c51ed0b3bf2e6f82c1c93"
+    },
+    "tests/test_public_documents.py": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "d1bd101c4a5c2bde615b315bd428c3e3fb4864ed25342f7b2127794b775f1f22"
+    },
+    "types/index.d.ts": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "5bd5ee65855e8d60d7cfac34553b0a09ab243ee8e146e43947cb27151e600a53"
+    },
+    "uv.lock": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "9bb6bb8c09ea488301f177689968ef81c193c4296407f211a19a1f67f39495e7"
+    },
+    "vendor/ECC-LICENSE.txt": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2"
+    },
+    "vendor/ecc.json": {
+      "executable": false,
+      "mode": 420,
+      "sha256": "020aab2a19ef8eabb4b686f7530df202b28927937e64927d409d512ee64bcd89"
+    }
+  },
+  "license": "AGPL-3.0-only",
+  "lock_sha256": "9bb6bb8c09ea488301f177689968ef81c193c4296407f211a19a1f67f39495e7",
+  "members": [
+    "packages/nmemory",
+    "packages/nspawn",
+    "packages/nbrowser",
+    "packages/database",
+    "packages/netdoor",
+    "packages/system1",
+    "packages/socket",
+    "packages/spine",
+    "evals"
+  ],
+  "optional_integrations": {
+    "browser": "Install Fortress, or explicitly set NOTT_NBROWSER_CHROME_BIN to an installed engine.",
+    "jbcontext": "Install and authenticate jbcontext before you register its MCP server.",
+    "search": "Configure a supported search provider before you use web search."
+  },
+  "packages": {
+    "nbrowser": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/nbrowser",
+      "module": "nbrowser",
+      "version": "0.1.0"
+    },
+    "nmemory": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/nmemory",
+      "module": "nmemory",
+      "version": "0.8.0"
+    },
+    "nmemory-evals": {
+      "license": "AGPL-3.0-only",
+      "member": "evals",
+      "module": "nmemory_evals",
+      "version": "0.1.0"
+    },
+    "nott-database": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/database",
+      "module": "nott_database",
+      "version": "0.1.0"
+    },
+    "nott-netdoor": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/netdoor",
+      "module": "nott_netdoor",
+      "version": "0.1.0"
+    },
+    "nott-socket": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/socket",
+      "module": "nott_socket",
+      "version": "0.1.0"
+    },
+    "nott-spine": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/spine",
+      "module": "nott_spine",
+      "version": "0.1.0"
+    },
+    "nott-system1": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/system1",
+      "module": "nott_system1",
+      "version": "0.1.0"
+    },
+    "nspawn": {
+      "license": "AGPL-3.0-only",
+      "member": "packages/nspawn",
+      "module": "nspawn",
+      "version": "0.1.0"
+    }
+  },
+  "platforms": [
+    "linux",
+    "darwin"
+  ],
+  "primary_module": null,
+  "schema": 1,
+  "source_lock_sha256": "93d55f9c055a5baa4d478d37ba905c2a2a09e1e13f27a533922c76a551943360",
+  "version": "0.1.0"
+}

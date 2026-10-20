@@ -1,0 +1,28 @@
+# NOTT plugin documentation
+
+Start with the [runbook](RUNBOOK.md) for a first useful result.
+The [architecture](ARCHITECTURE.md) shows service and trust boundaries.
+The [reference](REFERENCE.md) lists the source declarations and command arguments.
+
+| Need | Page |
+| --- | --- |
+| Contributor development configuration and catalog | [Setup](https://github.com/menot-you/plugin/blob/main/docs/SETUP.md) |
+| Checks and security review | [Quality](https://github.com/menot-you/plugin/blob/main/docs/QUALITY.md) |
+| Setup and processing choices | [Installation](INSTALLATION.md) |
+| Local data and external services | [Privacy](PRIVACY.md) |
+| Data compatibility and rollback | [Upgrade](UPGRADE.md) |
+| A failed operation | [Troubleshooting](TROUBLESHOOTING.md) |
+| Project direction | [Roadmap](ROADMAP.md) |
+| Contribution rules | [Contributing](../CONTRIBUTING.md) |
+
+## A first contribution
+
+Add a missing-link case to [test_public_documents.py](../tests/test_public_documents.py).
+Describe the failure and expected result before you change the implementation.
+Run this focused check from the public repository root:
+
+```bash
+TMPDIR=/var/tmp uv run --group dev pytest tests/test_public_documents.py -q
+```
+
+Read the [source README](../README.md) for the component overview.

@@ -1,0 +1,52 @@
+{
+  "nott": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 hooks/agy-hook-runner.py pre-tool-run-command",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 hooks/agy-hook-runner.py post-tool-write",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 hooks/agy-hook-runner.py post-tool-run-command",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python3 hooks/agy-hook-runner.py pre-invocation",
+        "timeout": 15
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 hooks/agy-hook-runner.py stop",
+        "timeout": 15
+      }
+    ]
+  }
+}

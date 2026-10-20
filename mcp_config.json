@@ -1,0 +1,56 @@
+{
+  "mcpServers": {
+    "nbrowser": {
+      "args": [
+        "mcp",
+        "serve"
+      ],
+      "command": "nbrowser",
+      "type": "stdio"
+    },
+    "nmemory": {
+      "args": [
+        "mcp",
+        "serve"
+      ],
+      "command": "nmemory",
+      "env_vars": [
+        "NOTT_SYSTEM1_ENDPOINT",
+        "NOTT_SYSTEM1_MODEL",
+        "NOTT_SYSTEM1_API_KEY",
+        "NOTT_SYSTEM1_TAINT_ENDPOINT",
+        "NOTT_SYSTEM1_TAINT_MODEL",
+        "NOTT_SYSTEM1_TAINT_API_KEY",
+        "NOTT_SYSTEM1_STAGED_ENDPOINT",
+        "NOTT_SYSTEM1_STAGED_MODEL",
+        "NOTT_SYSTEM1_STAGED_API_KEY",
+        "NOTT_SYSTEM1_KIND_ENDPOINT",
+        "NOTT_SYSTEM1_KIND_MODEL",
+        "NOTT_SYSTEM1_KIND_API_KEY",
+        "NOTT_SYSTEM1_CURATOR_ENDPOINT",
+        "NOTT_SYSTEM1_CURATOR_MODEL",
+        "NOTT_SYSTEM1_CURATOR_API_KEY",
+        "OPENAI_API_KEY"
+      ],
+      "type": "stdio"
+    },
+    "nspawn": {
+      "args": [
+        "mcp",
+        "serve"
+      ],
+      "command": "nspawn",
+      "env_vars": [
+        "NOTT_SYSTEM1_ENDPOINT",
+        "NOTT_SYSTEM1_MODEL",
+        "NOTT_SYSTEM1_API_KEY",
+        "NOTT_SYSTEM1_EXECUTION_CLASS_ENDPOINT",
+        "NOTT_SYSTEM1_EXECUTION_CLASS_MODEL",
+        "NOTT_SYSTEM1_EXECUTION_CLASS_API_KEY",
+        "SAKANA_MAX_API_KEY",
+        "SAKANA_PRO_API_KEY"
+      ],
+      "type": "stdio"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "repo": "https://github.com/affaan-m/ECC",
+  "license": {
+    "id": "MIT",
+    "file": "vendor/ECC-LICENSE.txt"
+  },
+  "files": [
+    {
+      "path": "agents/swift-reviewer.md",
+      "upstream": "agents/swift-reviewer.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/python-reviewer.md",
+      "upstream": "agents/python-reviewer.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/pr-test-analyzer.md",
+      "upstream": "agents/pr-test-analyzer.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/silent-failure-hunter.md",
+      "upstream": "agents/silent-failure-hunter.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/security-reviewer.md",
+      "upstream": "agents/security-reviewer.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/simplifier.md",
+      "upstream": "agents/code-simplifier.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/ux-reviewer.md",
+      "upstream": "agents/a11y-architect.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    },
+    {
+      "path": "agents/ui-reviewer.md",
+      "upstream": "agents/a11y-architect.md",
+      "commit": "ef648e01899ba3e8dc6371642deaaf64b4477775"
+    }
+  ]
+}

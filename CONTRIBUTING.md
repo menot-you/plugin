@@ -1,33 +1,49 @@
-# Contributing to nSOUL
+# Contributing
 
-## Change contract
+A small reproducible correction is a useful first contribution.
+Use English for issues, comments, commits, and pull requests.
+Follow the [code of conduct](CODE_OF_CONDUCT.md).
+Report vulnerabilities through [security](SECURITY.md).
 
-Read `NOTT.md`, `PRD.md`, `SPEC.md`, and `decisions.md` before changing a
-contract-bearing surface. Keep one writer per working tree. Make the smallest
-coherent change, add a negative proof for every new rule, and preserve the
-distinction between observed verification and external release state.
+## Choose one result
 
-No implementation language is prohibited. Every runtime dependency must be
-declared in `release/public-contract.json`, exercised by its consumer, and fail
-closed when unavailable. Shell changes must remain portable to the declared
-runtime and pass ShellCheck.
+Open docs/README.md in the public repository.
+Its first-contribution section links a focused test and the matching source.
+Choose one incorrect example, missing refusal case, or reproducible defect.
+Search existing issues before creating a report.
+Describe the current result and expected result with synthetic inputs.
+Keep the correction within that concern. Preserve unrelated work.
 
-## Required checks
+## Prepare and check
 
-```sh
-bash tools/public-release-check.sh full
+Use the Python version in `.python-version` and the root `uv.lock`.
+Run from the repository root:
+
+```bash
+uv sync --group dev
 ```
 
-The full check must pass on the exact candidate. Review is adversarial and
-read-only by default. A reviewer blocks correctness, reliability,
-maintainability, rollback, security, reach, or proof defects; taste alone does
-not overturn ratified direction.
+Write the regression before a behavior correction. Observe its intended failure.
+A missing dependency is a setup failure.
+Run the same check after the correction.
+Run affected lint, format, typing, and architecture checks when code changes.
+Use disposable homes and stores. Never test against a live account or database.
+Do not reduce a check or refusal to obtain a passing result.
 
-## Pull requests
+Documentation changes need local-link checks, figure inspection, and the available strict documentation build.
+The public documentation regression lives in the plugin's `tests/test_public_documents.py`.
+It checks all four final document layouts against source declarations.
+The private producer portal is not part of a public source installation.
 
-State the observable result, affected surfaces, checks actually run, known
-gaps, and rollback. Never include secrets or private operational context. A
-local green result is not a claim that a pull request is mergeable, merged, or
-deployed.
+## Submit a contribution
 
-Contributions are licensed under AGPL-3.0-only.
+State the problem, resulting behavior, exact checks, and their exits.
+Include the regression failure for a behavior correction.
+Name missing proof and external prerequisites.
+Never attach credentials, live stores, private transcripts, account homes, or activation receipts.
+Read [privacy](docs/PRIVACY.md) before sharing a report.
+A behavior change includes its changelog entry under the repository's declared convention.
+Maintainers review the candidate before integration.
+Public repositories receive selected source from the canonical workspace.
+An accepted contribution enters that workspace before a later public release.
+A contribution does not bypass publication approval or source-integrity checks.
