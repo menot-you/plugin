@@ -148,6 +148,9 @@ merge. ESCALATE goes to needs-human.
 | ux | `nott:ux-reviewer` | sonnet | SHIP is PASS, FIX-FIRST is CHANGES |
 | ui design | `nott:ui-reviewer` | sonnet | SHIP is PASS, FIX-FIRST is CHANGES |
 | code | the language reader that the sector agent names | sonnet | SHIP is PASS, FIX-FIRST is CHANGES |
+| screen qa | `nott:qa`, for an app UI change | opus | SHIP is PASS, FIX-FIRST is CHANGES |
+| evidence | `general-purpose`, reruns the named checks on the frozen head | haiku | each check with its command and exit |
+| ship | `general-purpose`, lands the frozen head and reads back the delivery | haiku | the landed sha and the readback |
 
 <!-- nott:workflow:spec -->
 The lead writes the spec before the builder starts: the result, the acceptance
@@ -217,6 +220,20 @@ The approver does not trust an exit that the builder reports. Before the
 approver starts, the lead runs again each member check that no rail runs, on
 the final head, in a disposable checkout whose process environment holds no
 `gh` token and no **nMEMORY** key, and gives the approver those exits.
+
+<!-- nott:workflow:screen-qa -->
+An app UI change changes what NOTT.app draws. It is not done until `nott:qa`
+gives SHIP on screenshots of the installed app (owner, 2026-10-20). After the
+four readers pass, the builder installs the candidate on the M5 with
+`apps/apple/Scripts/install.sh` (CLAUDE.md, The Apple app). It starts the app
+with `-NOTTExecutionHost local`, so the app never reaches the live SERVER
+service. It captures each changed screen, each window that shows the same component, both themes, and
+each changed icon control under hover. The lead puts the screenshots where the
+reader can read them. It starts `nott:qa` with the Agent tool on opus, with the
+screenshot paths, the spec's items and touched surfaces, and the diff. FIX-FIRST is CHANGES, resumes the same
+builder and counts as a builder round. The approver reads that verdict. The
+lead does not merge an app UI change without that SHIP on the head it merges.
+The rules are references/app-ui.md.
 
 <!-- nott:workflow:merge -->
 On APPROVE the lead merges, only at the head in the approver's `Candidate:` line

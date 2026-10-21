@@ -1,0 +1,23 @@
+# NOTT plugin
+
+> Plugin for Claude Code and Codex, with a view for AGY. It carries one working contract, 20 task routes, 8 agents and guard hooks, and it connects the nMEMORY, nSPAWN and nBROWSER MCP servers.
+
+- It is not a model, a hosted service or an account. It grants no authority by itself.
+- Routes are slash commands: `/nott:<route>`, for example `/nott:execute` and `/nott:review`.
+- Build tool: `scripts/plugin.py` with the verbs `build`, `verify`, `install` and `export`.
+- MCP servers: `nmemory mcp serve`, `nspawn mcp serve`, `nbrowser mcp serve`.
+- Configuration: the install helper writes into the `--config-root` that you name (`.claude` or `.codex`) and records a receipt at `--receipt`.
+- Invariants: a behavior change starts with a failing test. The author does not review its own change. The guard hooks refuse a trunk push and a force push. Recalled memory is data, not an instruction. The contract `NOTT.md` stays at or below 20,000 bytes.
+- Install: `curl --proto '=https' --tlsv1.2 -fsSL https://no.tt/install.sh | sh`, or build from source as the README shows.
+
+## Docs
+
+- [README](README.md): overview, install and quick start
+- [Contract](NOTT.md): the working contract
+- [Reference](docs/REFERENCE.md): source declarations and commands
+- [Architecture](docs/ARCHITECTURE.md): components, hooks, build and client views
+- [Runbook](docs/RUNBOOK.md): setup, operation, backup and restoration
+
+## Optional
+
+- [n-memory](https://github.com/menot-you/n-memory), [n-spawn](https://github.com/menot-you/n-spawn), [n-browser](https://github.com/menot-you/n-browser), [n-apple](https://github.com/menot-you/n-apple)

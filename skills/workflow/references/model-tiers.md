@@ -35,11 +35,34 @@ reviewers the repository law names for that surface.
 Opus, with a `Tier reason:` line in its prompt naming the miss. A second miss is
 a design question, not a third attempt.
 
-**The guard.** `hooks/dispatch-tier.py` gives an Agent dispatch that names no
-model the `opus` tier and tells the dispatcher; it never refuses the dispatch (a
-fork runs on its parent's model and is exempt). Whether the named tier
-fits the class is the dispatcher's judgment; no hook sees a workflow's run-time `agent()` calls, and a class is
-observed only where nSPAWN dispatches (BLOCKED.md, "Workflow agent() prompts").
+**The guard.** `hooks/dispatch-tier.py` reads this table at each Agent and
+Workflow call. It finds a unit's class from its brief with fixed markers, and
+never asks System1. A sentence that starts with a prohibition ("Never read
+credentials") is a rule of the brief, and the guard does not read it.
+- A read-only reviewer type, or a review brief, is `review`.
+- A security, concurrency, persistence, protocol or trust unit is `judgment`.
+  The guard never moves it to Haiku. On a named Haiku model it adds a context
+  line and keeps the model: a subject word alone does not move a unit up.
+- A contract marker (rerun, report each command with its exit, read back,
+  smoke, sweep, probe, watcher, mechanical edit) is `mechanical_fanout`. The
+  class is ambiguous when a task verb of judgment or of an edit (fix, add,
+  move, measure, answer, cure and the like, at the start of a sentence or a
+  clause) or a RED-first test is also in the brief. An edit verb does not count
+  when the brief says "mechanical edit".
+
+An Agent dispatch whose model does not fit its class gets the class's model
+through `updatedInput`, and a context line names the class, the tier and the
+signal. A dispatch is never refused, and an ambiguous brief keeps its model.
+A brief with a `Tier reason:` line keeps its model. A sonnet reader keeps the
+model that its pipeline stage names. A fork is exempt.
+
+The guard reads a Workflow script before the script starts. An `agent()` call
+whose label or phase names a mechanical stage (evidence, ship, install, smoke,
+probe, sweep, watch), or whose `agentType` is a reviewer, must use its class's
+tier. A mismatch denies the whole Workflow call, with one line per call and the
+fix: JavaScript is not rewritten. A call with a `tierReason` option keeps its
+model. The guard does not judge options built at run time, a script that it
+cannot parse, or a saved workflow called by name. A context line says so.
 
 **The record.** Nothing new stores it. Per unit, read:
 - a Workflow run: its transcript directory, `journal.jsonl` (each agent's label

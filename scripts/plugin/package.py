@@ -260,7 +260,7 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "nspawn-pairing.sh": "reads a Claude payload shape and has no "
                 "codex-hook-runner.py action; Codex serves the event, the "
                 "handler is not projected",
-                "dispatch-tier.py": "binds the Claude Agent tool, "
+                "dispatch-tier.py": "binds the Claude Agent and Workflow tools, "
                 "which Codex does not have",
                 "artifact-copy.py": "binds the Claude Artifact tool, "
                 "which Codex does not have",
@@ -335,7 +335,7 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "that AGY's PostToolUse does not carry",
                 "nspawn-pairing.sh": "reads a Claude MCP tool payload; AGY has "
                 "no agy-hook-runner.py action for it",
-                "dispatch-tier.py": "binds the Claude Agent tool, "
+                "dispatch-tier.py": "binds the Claude Agent and Workflow tools, "
                 "which AGY does not have",
                 "artifact-copy.py": "binds the Claude Artifact tool, "
                 "which AGY does not have",
@@ -1815,11 +1815,9 @@ def build(
                     for groups in hooks["hooks"].values():
                         for group in groups:
                             for hook in group["hooks"]:
-                                # nmemory-session.sh prints the rule files on
-                                # Codex, which does not expand @ imports.
-                                if hook_script(hook.get("command")) in (
-                                    "session-state.sh",
-                                    "nmemory-session.sh",
+                                if (
+                                    hook_script(hook.get("command"))
+                                    == "session-state.sh"
                                 ):
                                     hook["command"] = (
                                         "NOTT_HOOK_CLIENT=codex " + hook["command"]
