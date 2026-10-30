@@ -154,23 +154,6 @@ a reviewer can judge alone. The conductor continues through required review and
 ship. It does not stop at a ready check or ask the owner to perform its merge.
 No lane pushes main or opens its own PR.
 
-<!-- nott:workflow:load-gate -->
-Load gate (owner rule). The plugin refuses to start a builder while the
-5-minute load average of the host is above 2 x cpus / 3. Heavy suites then fail on
-timeouts that are not bugs, and the builder needs more cure rounds. These are builders:
-an Agent dispatch whose type is not a read-only reader type, a fork with a write signal,
-a Workflow `agent()` call by the same rule, and an `nspawn_run_start` with `native_write`
-or class `implementation`. Note that
-`nspawn run start` from Bash is not gated yet: its gate belongs to nSPAWN admission,
-which covers MCP, CLI and node calls in one place. A unit that reads as mechanical is not a builder, unless its brief
-has an edit, implementation or RED-first task. A resume through
-`SendMessage` is not gated. When the gate refuses, wait for the load to fall and
-dispatch again. Only the owner lifts the gate, with the whole prompt
-`Load gate: owner override`, from an interactive Claude Code CLI session. The lift
-ends at the owner's next prompt. An app node session has no lift yet, because
-it records no owner prompts. The hook plugin/hooks/dispatch-tier.py reads that prompt
-from the session spool of owner prompts, never from a brief.
-
 <!-- nott:workflow:watch -->
 ## Watch
 

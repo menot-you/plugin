@@ -263,8 +263,7 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "handler is not projected",
                 "review-cap.py": "counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here",
                 "dispatch-tier.py": "binds the Claude Agent and Workflow tools, "
-                "which Codex does not have, and the nspawn_run_start tool, "
-                "which has no native binding here",
+                "which Codex does not have",
                 "artifact-copy.py": "binds the Claude Artifact tool, "
                 "which Codex does not have",
             },
@@ -337,8 +336,7 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "no agy-hook-runner.py action for it",
                 "review-cap.py": "counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here",
                 "dispatch-tier.py": "binds the Claude Agent and Workflow tools, "
-                "which AGY does not have, and the nspawn_run_start tool, "
-                "which has no native binding here",
+                "which AGY does not have",
                 "artifact-copy.py": "binds the Claude Artifact tool, "
                 "which AGY does not have",
                 "two-misses.sh": "its ledger fills from the command text after "

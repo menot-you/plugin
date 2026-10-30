@@ -257,7 +257,7 @@ Inspect the final bundle and the native client's loaded catalog for the installe
 | codex | two-misses.sh | PreToolUse | codex pre-shell | two-misses |  |
 | codex | release-guard.py | PreToolUse | codex pre-shell | unproven |  |
 | codex | plan-exit-gate.sh | PreToolUse | not projected |  | Codex has no ExitPlanMode tool, so neither half of the plan gate has an event to hang on |
-| codex | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which Codex does not have, and the nspawn_run_start tool, which has no native binding here |
+| codex | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which Codex does not have |
 | codex | review-cap.py | PreToolUse | not projected |  | counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here |
 | codex | nmemory-main-only.py | PreToolUse | not projected |  | it denies a Claude subagent by the agent_id of a Claude payload. On Codex only an nSPAWN child is covered: nMEMORY refuses it by NOTT_NSPAWN_RUN_ID, which nSPAWN forwards. A Codex multi_agent sub-agent is not covered |
 | codex | session-state.sh | PreToolUse | codex session-state-pre | session-state |  |
@@ -306,7 +306,7 @@ Inspect the final bundle and the native client's loaded catalog for the installe
 | agy | two-misses.sh | PreToolUse | not projected |  | its ledger fills from the command text after the run, which AGY's PostToolUse payload lacks, so its PreToolUse deny would never fire |
 | agy | release-guard.py | PreToolUse | agy pre-tool-run-command | unproven |  |
 | agy | plan-exit-gate.sh | PreToolUse | not projected |  | AGY has no ExitPlanMode tool, so neither half of the plan gate has an event to hang on |
-| agy | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which AGY does not have, and the nspawn_run_start tool, which has no native binding here |
+| agy | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which AGY does not have |
 | agy | review-cap.py | PreToolUse | not projected |  | counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here |
 | agy | nmemory-main-only.py | PreToolUse | not projected |  | it denies a Claude subagent by the agent_id of a Claude payload; AGY has no subagent events. nMEMORY refuses an AGY nSPAWN child when its MCP server inherits NOTT_NSPAWN_RUN_ID (not measured) |
 | agy | session-state.sh | PreToolUse | not projected |  | surface of the Claude statusline; AGY has no statusline and no subagent events, so a phase file would have no reader |

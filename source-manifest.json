@@ -5,7 +5,7 @@
     "codex": "Local native registration uses Codex 0.163.0. Native authentication and hook trust remain required."
   },
   "component": "plugin",
-  "digest": "576855a402f62ab23c0adc2c402602a1f1909cd8fd56f2aabd90a963a26869e9",
+  "digest": "7ae2b20608360cddf5e3e367a68529c411c15118197d68c875ab22205d3af423",
   "files": {
     ".claude-plugin/marketplace.json": {
       "executable": false,
@@ -120,7 +120,7 @@
     "README.md": {
       "executable": false,
       "mode": 420,
-      "sha256": "a17c839acd2214e4fbe355da79cf41542a6d3c2dad50bfbc93de413d8fc5a2f8"
+      "sha256": "ddb4e9542dd8d356b0d36aae3258e6c1271d86adbcefa9b21b0f048f5e73ab1e"
     },
     "SECURITY.md": {
       "executable": false,
@@ -700,7 +700,7 @@
     "hooks/dispatch-tier.py": {
       "executable": true,
       "mode": 493,
-      "sha256": "c0187d05e815c47ae2140fe436dfed4a0b4a3355aba0c232010d28cb0a822e38"
+      "sha256": "a4c00b2dddc21b186ad1ad07e0a5ae25d2592b2735b5aedd745f25b20e126cfb"
     },
     "hooks/fanout-reminder.sh": {
       "executable": true,
@@ -715,7 +715,7 @@
     "hooks/hooks.json": {
       "executable": false,
       "mode": 420,
-      "sha256": "efd96e5decff9d5d9e1fa8bf7fd8a526e2a98e24469be43e6de65c6a1f3e1560"
+      "sha256": "978ff1f16b9013282e30020f6ac7f4a5c8e1e33c660fcf33245f2d4d7e723144"
     },
     "hooks/idle-handoff.ts": {
       "executable": false,
@@ -1325,7 +1325,7 @@
     "packages/nmemory/nmemory/commands/projection.py": {
       "executable": false,
       "mode": 420,
-      "sha256": "62017f3289bbb5c8d53fb5fd746f85ced7996df976888c5b36bd9997425b6066"
+      "sha256": "32db76ea4d091d3623eacf31500b236a688302e394ba9c9b01d5f0bdcbbd4f68"
     },
     "packages/nmemory/nmemory/commands/proposal.py": {
       "executable": false,
@@ -1420,7 +1420,7 @@
     "packages/nmemory/nmemory/hooks/hooks.json": {
       "executable": false,
       "mode": 420,
-      "sha256": "213b10ff98ad1b62b046dd53bf7083353befd6a7d95a0e1478fce06a79853e99"
+      "sha256": "30c7e142a51851f31cc5c057c9043128843b36a77d63c6060bde4dbeb588c008"
     },
     "packages/nmemory/nmemory/hooks/nmemory-capture-gate.py": {
       "executable": true,
@@ -2335,7 +2335,7 @@
     "packages/nspawn/tests/fixtures/projection.py": {
       "executable": false,
       "mode": 420,
-      "sha256": "62017f3289bbb5c8d53fb5fd746f85ced7996df976888c5b36bd9997425b6066"
+      "sha256": "32db76ea4d091d3623eacf31500b236a688302e394ba9c9b01d5f0bdcbbd4f68"
     },
     "packages/nspawn/tests/fixtures/run-list-caller.json": {
       "executable": false,
@@ -3576,7 +3576,7 @@
     "scripts/plugin/package.py": {
       "executable": false,
       "mode": 420,
-      "sha256": "1f9c1e70aa4ca09c4fc86534b8d73a529b72c6245e647442bbece07a088d39d5"
+      "sha256": "aff1aa2627f6cbcfea4f8065a86b74144d9fa36556ef101b872591005d3081a1"
     },
     "scripts/state.sh": {
       "executable": true,
@@ -3771,7 +3771,7 @@
     "skills/workflow/SKILL.md": {
       "executable": false,
       "mode": 420,
-      "sha256": "9e09d189da85a525037d0eeded22900134dab66436c109422ee4b75b1effce3b"
+      "sha256": "e21e97b9278319be2e1a5c09d3b2eb9033c83d7fe5765bcca14892b1d68c9f0e"
     },
     "skills/workflow/references/app-ui.md": {
       "executable": false,
@@ -3781,7 +3781,7 @@
     "skills/workflow/references/delegation-and-recovery.md": {
       "executable": false,
       "mode": 420,
-      "sha256": "d9be1547ee7e386190790a0e544a8c9db2c9d45f7ddd0b9682aa2b06370ae89c"
+      "sha256": "99be5a4746c6c4bd012d649ad54fd367d88d2f25e75d7095e19675aa2db08212"
     },
     "skills/workflow/references/model-tiers.md": {
       "executable": false,

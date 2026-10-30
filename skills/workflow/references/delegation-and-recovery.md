@@ -28,8 +28,8 @@ cannot run this kind of work or a model or effort pin carried over, is the
 lead's own work: pick a route that can serve and dispatch again. It does not
 count against the bound. That second run can also fail for such a reason, or
 nSPAWN can refuse the dispatch because no route can serve. Then the lead runs the
-unit with the client's own subagent tool, the Agent tool on Claude Code (owner answer
-q-9e13b715). It records each use with its reason. A unit that this tool cannot
+unit with the client's own subagent tool, the Agent tool on Claude Code (owner answer).
+It records each use with its reason. A unit that this tool cannot
 run either is blocked. Put it in the `open:` list with its cause on every delivered line while it stays
 blocked (NOTT.md, DELIVERED rule). The reset time the vendor gave may stay on
 the panel as the reason. Do not dispatch the unit again until the cause can have
