@@ -14,7 +14,7 @@
 #
 # THREE BINDINGS, one script, branch on hook_event_name:
 #   PostToolUseFailure on Bash -> FAIL: the client routes a non-zero exit here
-#     (red-first.sh reads it the same way). Measured 2026-09-15 in `claude
+#     Measured 2026-09-15 in `claude
 #     plugin eval` (p9b-two-misses-hook, --keep-temp): one `python3
 #     test_impossible.py` with exit 1 left `fails` = 1 in the sealed home; the
 #     tool result text begins "Exit code 1", so either event lands here.
@@ -29,7 +29,7 @@
 # a deny on those tools could never fire — dead code. PreToolUse is restricted
 # to Bash and hooks.json binds only Bash.
 # Fail-OPEN: bad JSON, no session_id, unwritable state -> exit 0 silent.
-# Two channels, as in red-first.sh: exit 2 + stderr is the block the client
+# Two channels: exit 2 + stderr is the block the client
 # honours everywhere; the JSON permissionDecision is the courtesy.
 set -uo pipefail
 

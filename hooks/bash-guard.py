@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-"""nott-bash-guard v2 — with the two guards round 2 demanded.
+#!/usr/bin/env -S python3 -B
+"""bash-guard v2 — with the two guards round 2 demanded.
 
 G1: does not touch output the harness has ALREADY persisted (<persisted-output>), nor
     a tool_response carrying persistedOutputPath: the harness already elided with a
@@ -106,7 +106,7 @@ def elide(text: str, log_path: str) -> str:
     if not dropped:
         return "\n".join(show(i) for i in range(n))
     return (
-        f"[nott-bash-guard: {len(sel)}/{n} lines shown, {dropped} elided; "
+        f"[bash-guard: {len(sel)}/{n} lines shown, {dropped} elided; "
         f"full output: {log_path}]\n" + "\n".join(show(i) for i in sel)
     )
 
@@ -126,7 +126,7 @@ def main() -> None:
     out = resp.get("stdout") or ""
     if not isinstance(out, str):
         return
-    if "<persisted-output>" in out[:200] or "nott-bash-guard:" in out[:200]:
+    if "<persisted-output>" in out[:200] or "bash-guard:" in out[:200]:
         return
 
     cmd = (payload.get("tool_input") or {}).get("command", "") or ""
@@ -163,8 +163,8 @@ def main() -> None:
         if log_dir.resolve().is_relative_to(project.resolve()):
             return
         new = elide(out, str(log))
-        if new != out and not new.startswith("[nott-bash-guard:"):
-            new = f"[nott-bash-guard: output shortened; full output: {log}]\n" + new
+        if new != out and not new.startswith("[bash-guard:"):
+            new = f"[bash-guard: output shortened; full output: {log}]\n" + new
         if len(new) >= len(out):
             return
         for directory in (state, state / "nott", state / LOG_DIRNAME, log_dir):

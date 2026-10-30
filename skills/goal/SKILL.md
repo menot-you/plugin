@@ -47,6 +47,18 @@ Bound time/tokens, findings and output scope to the actual assignment. At a ceil
 preserve work and return its state and exact gap; do not start new checks that the
 remaining budget cannot finish or enlarge the result to justify further activity.
 
+<!-- nott:goal:pause -->
+When the owner pauses the work under an active host goal, the host reopens the
+session at each Stop until the goal ends. When a pause leaves no background work
+running (it ended, you stopped it, or none ran), end that reply with ONE
+owner-action line. It names `/goal clear` to end the goal. It says what the owner can tell you
+to resume. Where the owner-question tool is available, record the action there
+and name it in one line of the reply. Write the line once. If the grant lets some
+work run during the pause, keep that work running and write no pause line. A
+Stop-hook continuation that changes no state is the same turn. Write no new state
+line. Do not repeat the action line. Do not ask the question again. A
+continuation that changes state writes the new state line.
+
 <!-- nott:goal:do-not-reinvent -->
 Name existing machinery and evidence the receiver should reuse. References are
 loaded only for an operation that needs them, not as a mandatory skill stack.

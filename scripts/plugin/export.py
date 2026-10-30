@@ -7,7 +7,6 @@ import hashlib
 import importlib.util
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -70,9 +69,7 @@ if (Path(__file__).resolve().parents[2] / ".nott-public.json").is_file():
 _policy = projection(_SELF_ROOT)
 Refusal = _policy.Refusal
 Finding = _policy.Finding
-PRIVATE = _policy.PRIVATE
 scan = _policy.scan
-private = _policy.private
 executable_ast = _policy.executable_ast
 public_python = _policy.public_python
 public_toml = _policy.public_toml
@@ -135,33 +132,9 @@ def copy(
         raise Refusal(f"unsupported source file: {relative}")
 
 
-def rewrite_links(text: str, origin: Path, destination: Path) -> str:
-    result: str = layout(_SELF_ROOT).rewrite_links(text, origin, destination, {})
-    return result
-
-
 def local_links(root: Path) -> list[str]:
     result: list[str] = layout(_SELF_ROOT).local_links(root)
     return result
-
-
-def public_readme(path: Path) -> None:
-    """Keep runtime API documentation and remove private plan references."""
-    text = path.read_text()
-    text = re.sub(r"(?m)^The crawl frontier was designed in [^\n]+\n", "", text)
-    text = re.sub(
-        r"The source parity inventory and outstanding real-vendor observations live in\n"
-        r"\[the native completion plan\]\([^)]+\)[.] ",
-        "",
-        text,
-    )
-    text = re.sub(r"\s*\(cap-\d+\)", "", text)
-    text = PRIVATE["private-record"].sub("", text)
-    if "../../docs/runbooks/public-installation.md" not in text:
-        text += "\nUse the [public installation guide](../../docs/runbooks/public-installation.md).\n"
-    if "../../docs/design/public/catalog.md" not in text:
-        text += "See the [public catalog](../../docs/design/public/catalog.md) for commands.\n"
-    path.write_text(text)
 
 
 def public_documents(source: Path, stage: Path) -> None:

@@ -3,7 +3,7 @@ name: simplifier
 description: Writer for one bounded CLEANING pass on a campaign's own diff. Removes what the change made obsolete, keeps behavior exactly, then runs the touched member's checks. Returns each cut as file:line and the check exits.
 tools: Read, Grep, Glob, Edit, Bash
 model: opus
-effort: xhigh
+effort: high
 ---
 
 You do the CLEANING phase of `plugin/NOTT.md`. You remove what the change made obsolete before the final checks measure it. You do one pass, then you stop.

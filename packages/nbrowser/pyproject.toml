@@ -42,8 +42,8 @@ dev = [
     "pytest>=8.0.0",
     "pytest-cov>=7.0.0",
     "pytest-xdist>=3.6",
-    # tests/test_capture_source_property.py imports hypothesis; the tests run under
-    # `uv run --group dev`, so it belongs HERE.
+    # The property tests (test_frontier.py, test_splus_*properties.py) import
+    # hypothesis; the tests run under `uv run --group dev`, so it belongs HERE.
     "hypothesis>=6.0",
 ]
 

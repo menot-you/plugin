@@ -25,6 +25,12 @@ capsule, or when the PR's base branch is not the one the capsule records. Each
 such refusal states the PR, the escalated sha, the current head and the base
 branch, and says that a new head goes back to the campaign readers.
 
+Before merge, run the regression delta on the escalated sha and record its
+command and result in a `Regression delta:` line in the PR body. Add the
+line `Accepted: owner /nott:accept at <escalated sha>` only on the owner's
+own call. This line records acceptance, not a reader verdict. Do not write a
+false `Review: ... SHIP` line. The merge pin remains the escalated sha.
+
 <!-- nott:accept:merge -->
 Merge with `gh pr merge <PR> --squash --match-head-commit <escalated sha>`,
 deliver by the ship route (../ship/SKILL.md) and record the outcome on the

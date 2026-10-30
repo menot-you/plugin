@@ -50,7 +50,7 @@ Unstructured agent sessions edit code without past decisions, skip regression te
 | Without the NOTT plugin | With the NOTT plugin |
 | --- | --- |
 | Sessions forget earlier architectural decisions and repeat rejected approaches. | `SessionStart` and `UserPromptSubmit` hooks recover grounded decisions and open work from `nMEMORY`. |
-| Agents write fixes first and write tests later (or not at all). | The `red-first.sh` hook and `/nott:execute` route require a failing regression test (`RED`) before product edits (`GREEN`). |
+| Agents write fixes first and write tests later (or not at all). | The law and the `/nott:execute` route require a failing regression test (`RED`) before product edits (`GREEN`). |
 | Vague prompts waste tokens on the wrong scope. | The System1 hook `system1-suggest.py` suggests prompt upscales. |
 | One agent writes and self-approves its own pull request. | `/nott:review` freezes a snapshot and dispatches an independent read-only witness through `nSPAWN`. |
 | Shell mistakes can force-push to `main`, kill unrelated processes, or leak secrets. | `bash-guards.sh` and `secret-in-output.sh` enforce least-privilege boundaries on every tool call. |
@@ -89,7 +89,7 @@ The plugin keeps universal judgment in `NOTT.md` (strictly capped at 20,000 byte
 
 - **Devil's-advocate premise testing:** challenges hidden costs and flawed premises with evidence before implementation starts.
 - **Four-valued D18 verdicts (`0 / 1 / 2 / 3`):** distinguishes `0` (satisfied), `1` (operational/provider failure), `2` (refused or inconclusive proof), and `3` (observed defect), aggregating `1 > 2 > 3 > 0`.
-- **Opus + Haiku base fanout method (`/nott:fanout`):** pairs a strong decision model with parallel fast subagents across independent work units.
+- **Opus + Haiku base method (`/nott:workflow`):** pairs a strong decision model with parallel fast subagents across independent work units.
 
 #### 2. Live System1 hooks (`Laya` / `Jev` and local SLMs) and runtime guards
 
@@ -99,12 +99,11 @@ The plugin uses `nott-system1` (`laya-nott` over `/v1/systemone` or a local loop
 flowchart LR
     A[User Prompt Submitted] --> B[nmemory-recall.py: Grounded Capsule Recall]
     A --> C[system1-suggest.py: Route & Agent Suggestion]
-    B --> D[PreToolUse Guards: red-first.sh + bash-guards.sh + two-misses.sh]
+    B --> D[PreToolUse Guards: bash-guards.sh + two-misses.sh]
     C --> D
     D --> F[PostToolUse & Stop: law-contract.sh + nmemory-capture-gate.py + final-state.sh]
 ```
 
-- **RED-first enforcement (`red-first.sh`):** blocks product code edits on behavior changes until a regression check runs and fails (`RED`).
 - **Two-miss suspension (`two-misses.sh`):** tracks repeated failures on the same proof path. After two misses without new evidence, it switches the session to causal diagnosis (`/nott:debug`).
 - **System1 prompt suggestion (`system1-suggest.py`):** queries System1 with typed probabilistic questions (`noul` and `choice`) to recommend routes. The hook fails open when System1 is offline.
 - **Memory capture gate (`nmemory-capture-gate.py`):** checks at turn end that the session persisted user decisions and corrections in `nMEMORY`.
@@ -159,7 +158,7 @@ The plugin packages **18 workflow routes** and **5 read-only review agents** (`n
 | Stage | Routes | What it governs |
 | --- | --- | --- |
 | **Direction and discovery** | `/nott:goal`, `/nott:readback`, `/nott:brainstorm`, `/nott:ratify` | Clarify the target outcome, test premises with evidence, and persist ratified decisions in `nMEMORY`. |
-| **Planning and fanout** | `/nott:plan`, `/nott:fanout`, `/nott:board`, `/nott:upscale` | Decompose work into independent units, deepen briefs with raw source material, bind Definitions of Done, and fan out workers through `nSPAWN`. |
+| **Planning and workflow** | `/nott:plan`, `/nott:workflow`, `/nott:board`, `/nott:upscale` | Decompose work into independent units, deepen briefs with raw source material, bind Definitions of Done, and fan out workers through `nSPAWN`. |
 | **Execution and debugging** | `/nott:execute`, `/nott:debug`, `/nott:quality`, `/nott:security` | Enforce RED-first regression tests, two-miss causal diagnosis, and repository quality floors. |
 | **Review and delivery** | `/nott:review`, `/nott:ship`, `/nott:release`, `/nott:reconcile`, `/nott:handoff`, `/nott:feedback` | Freeze candidate snapshots for independent review, check live consumers, and preserve cold-readable state across handoffs. |
 
@@ -330,6 +329,28 @@ Then a file with the bytes of one of these versions has no local edit. The
 first `--base` is the base of a merge and of the check for a changed local edit.
 The command refuses `--base` when the ref is there.
 
+A Claude Code session with no `--plugin-dir` loads `nott@pynott` too. The
+repository root has `.claude-plugin/marketplace.json`, which offers `nott` from
+`./plugin`. The host registered that root as the directory marketplace `pynott`
+through the link `~/.local/share/nott/marketplace/pynott-current`. Claude Code
+loads a plugin of such a marketplace in place from `<link>/plugin`. It does not
+load the cache copy that `installed_plugins.json` names, and it ignores the
+version string
+(`code.claude.com/docs/en/plugins/loading.md`, In-place and copied plugins).
+`claude plugin update` reports "nothing to update" for it (Claude Code 2.1.314,
+measured 2026-10-30). So the link is the only thing that makes a plain session
+current. When the link leads to the delivery tree, a plain
+session loads the same bytes as a `--plugin-dir` session. When it leads to an
+old copy, the session runs old plugin bytes: on 2026-10-30 the link was 8 days
+behind main. The plugin row of the install readback (`ops/campaign/campaign.py`,
+`plugin_market_link`) is STALE when the link is absent or leads elsewhere.
+
+A session with `--plugin-dir` loads that copy and skips an installed plugin of
+the same manifest `name` (`nott`) (same page, Name conflicts). This covers an
+nSPAWN writer that starts with `--setting-sources user`: the documentation says
+it loads its `--plugin-dir` copy and not the installed one. No session measured
+this. A running session keeps its plugin set until `/reload-plugins`.
+
 The command writes nothing and exits 2 in these cases:
 
 - A hook that a `hooks.json` command names is not executable in the commit, or
@@ -363,22 +384,6 @@ removed the execute bit of two hooks, and each Stop failed with
 `Permission denied`. The build refuses the same defect: a bundle with a hook
 handler that is not executable is not admitted.
 
-#### Native board mod
-
-`mods/nott-board` contains the native `/board` mod from the same marketplace.
-It reads the existing board records. `Verified` counts a fulfilled administrative
-record without claiming an installation or a pull request merge.
-Serialized record keys remain unchanged for compatibility. The UI labels use English.
-
-The native tests use private record and process fixtures on terminal and desktop.
-Run them in a private test home. Register the repository marketplace with the command above.
-Then use these native commands:
-
-```bash
-claude plugin test /absolute/repository-root/plugin/mods/nott-board
-claude plugin install nott-board@<marketplace>
-```
-
 `native_registration: required` in the receipt states what the helper does
 **not** own. It is written once and never flips, so it is not a signal that the
 native act is still pending; the witness is the client itself — `claude plugin
@@ -406,7 +411,7 @@ credentials, or a live repository to eliminate a duplicate skill path.
 - Claude uses its native `SessionStart`, tool and planning events.
 - The law reaches the main thread only. `hooks.json` binds `subagent-law.py`
   on `SubagentStart` with no matcher, in the `claude` and `claude-node` views.
-  The hook returns the subagent law (1,983 bytes) as ASCII-escaped
+  The hook returns the subagent law (2,660 bytes) as ASCII-escaped
   `additionalContext`: the scope is the brief, facts with evidence, no done
   claim without the named check, no owner-facing duties, and the safety rules
   of the main law (writes only in the named worktree, destructive acts only when
@@ -460,9 +465,12 @@ as such, never as ok.
 
 Codex loads the view through its plugin system from
 `~/.agents/plugins/marketplace.json` → `~/plugins/nott/clients/codex`
-(`./install.sh` keeps that path and refreshes the cache; before 2026-09-14 it
-pointed at the bundle root and Codex cached the AGY hooks file, so no NOTT hook
-ever ran there). The manifest declares `hooks: ./hooks/hooks.json` (Codex reads
+(the coordinated SERVER cutover alone writes `~/plugins/nott`;
+`./install.sh` only reads it to refresh the cache). See
+`docs/runbooks/server-cutover.md`, steps 1 and 2.
+Before 2026-09-14 the marketplace pointed at the bundle root and Codex cached
+the AGY hooks file, so no NOTT hook ran there.
+The manifest declares `hooks: ./hooks/hooks.json` (Codex reads
 only declared or root hooks — measured 2026-09-14, an undeclared file let a
 push to main through). **Codex runs plugin hooks only once TRUSTED** (its
 `/hooks` UI, per version) or under `--dangerously-bypass-hook-trust` —
@@ -484,9 +492,7 @@ Step 3 of each smoke iterates the matrix rows for its client and runs the
 named proof cell once against the built bundle's runner — `git push origin
 main`, a literal `API_KEY=sk-live-…`, `pkill -f x` — expecting each guard's
 `REFUSED` beside its allow control (`git status`, the lane push, the `$VAR`
-spelling, `kill <pid>`). The Codex smoke also proves `red-first`: a first
-product `apply_patch` in a session is denied once, the retry passes, and a
-`pytest` seen at `post-edit` before the write means no deny. A row naming a
+spelling, `kill <pid>`). A row naming a
 cell the smoke does not own is RED. No client binary and no model; a live
 client's honouring of exit 2 is `plugin/tests/live/*-live-smoke.sh`'s to show
 (optional, `NOTT_LIVE=1`, recorded in `plugin/evals/native/README.md`).
@@ -499,7 +505,7 @@ the smokes do not repeat it.
 ### Focused checks
 
 ```bash
-python3 plugin/tests/test_package_plugin.py
+TMPDIR=/var/tmp uv run --group dev pytest -n 8 plugin/tests/test_package_plugin.py -q
 TMPDIR=/var/tmp uv run --group dev pytest plugin/tests/test_plugin_agents.py -q
 bash plugin/tests/plan-exit-gate-hook-contract.sh
 bash plugin/tests/plan-exit-gate-hook-contract-self-test.sh
@@ -534,5 +540,6 @@ in the manifest to the `$new` printed above. A file you did not review keeps its
 old pin.
 
 A hand rebase keeps one deliberate frontmatter difference: every agent runs
-`model: opus` at `effort: xhigh` (decision of 2026-10-07), where upstream
-declares `sonnet`.
+`model: opus` (decision of 2026-10-07), where upstream declares `sonnet`. Each
+reader pins `effort: max` and each implementer `effort: high` (owner,
+2026-10-21); `plugin/tests/test_plugin_agents.py` refuses another pin.

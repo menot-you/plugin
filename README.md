@@ -54,7 +54,7 @@ flowchart LR
   subgraph plugin["NOTT plugin: one source, one native view per client"]
     law["Working contract<br/>NOTT.md, 20,000-byte limit"]
     routes["20 task routes<br/>/nott:&lt;route&gt;"]
-    agents["8 agents<br/>readers and a simplifier"]
+    agents["16 agents<br/>planners, builders, readers and a simplifier"]
     hooks["Guard hooks"]
   end
   client --> plugin
@@ -69,11 +69,11 @@ Task routes load only when that kind of work starts. Each hook binds only where 
 ## By the numbers
 
 <p align="center">
-  <img src="docs/figures/chart-tools.svg" width="49%" alt="MCP tools per server: nMEMORY 27, nSPAWN 15, nBROWSER 14, nAPPLE 10.">
+  <img src="docs/figures/chart-tools.svg" width="49%" alt="MCP tools per server: nMEMORY 18, nSPAWN 15, nBROWSER 14, nAPPLE 10.">
   <img src="docs/figures/chart-tests.svg" width="49%" alt="Tests per component: nSPAWN 4335, nMEMORY 2339, nBROWSER 731, nAPPLE 106.">
 </p>
 
-Counted on 2026-10-21. Routes: `ls skills | wc -l` (20). Agents: `ls agents | wc -l` in the published plugin (8).
+Counted on 2026-10-23. Routes: `ls skills | wc -l` (20). Agents: `ls agents | wc -l` in the published plugin (16).
 Tools: the MCP `tools/list` request to each server. Tests: `uv run --group dev pytest --collect-only -q` in each member root.
 
 ![Direction becomes a checked result.](docs/figures/plugin.svg)
@@ -83,7 +83,7 @@ Tools: the MCP `tools/list` request to each server. Tests: `uv run --group dev p
 | Without NOTT | With NOTT |
 | --- | --- |
 | Each session forgets the decisions of the last one. | Session hooks recall past decisions and open work from a local memory store. |
-| The agent writes the fix first and the test later, or never. | A hook blocks product edits on a behavior change until a failing test runs. |
+| The agent writes the fix first and the test later, or never. | The law and the `/nott:execute` route require a failing test before a product edit on a behavior change. |
 | The agent that wrote the change also approves it. | `/nott:review` freezes the diff and sends it to a separate read-only reviewer. |
 | One bad shell command force-pushes `main` or prints a secret. | Guard hooks refuse trunk pushes, force pushes and secrets in commands and output. |
 | The agent repeats a failed fix again and again. | After two misses on the same proof, the session must diagnose the cause first. |
@@ -129,7 +129,7 @@ This section is for a language model that reads this repository.
 
 - **What it is.** NOTT is a plugin for Claude Code and Codex, with a view for AGY.
   It carries one working contract (`NOTT.md`), 20 task routes (`skills/`),
-  8 agents (`agents/`) and guard hooks (`hooks/`). It connects the nMEMORY,
+  16 agents (`agents/`) and guard hooks (`hooks/`). It connects the nMEMORY,
   nSPAWN and nBROWSER MCP servers.
 - **What it is not.** It is not a model, a hosted service or an account. It
   grants no authority by itself. A merge, a release or a deploy needs the
@@ -166,6 +166,24 @@ See [license](LICENSE) and [citation](CITATION.cff).
 
 ## Native hook coverage
 
+The shared Bash guard applies to lead and subagent calls.
+It refuses process argument output and reads of secret process or environment files.
+It refuses an `rm` with a glob or a brace list under `/var/tmp`, `/tmp`, `$TMPDIR` or `/dev/shm`,
+and a `find` there that deletes by a name pattern.
+It also refuses an `rm` or a `find` delete of one of these directories itself.
+Delete the exact path that you created.
+A merge pins a full 40-hex head with `--match-head-commit`.
+Its `Regression delta:` line records the checks. Its `Review:` SHIP line names
+that exact head. The owner's own accept route records acceptance separately.
+If `gh` cannot read the body, retry after you correct access.
+
+The review-cap hook counts cold Agent and Task reviewer dispatches through
+`nspawn review admit --stdin`. The MCP review door counts its own head.
+Other recognized review doors are refused, including inline candidate tokens.
+A named reviewer cannot receive later rounds. Each round starts a new reader.
+Missing nSPAWN shows NOT COUNTED; dynamic Workflow calls show NOT CHECKED.
+Store, timeout and malformed-answer failures refuse the dispatch.
+
 A hook request alone does not prove that a client enforced a boundary.
 Claude uses its native event payloads.
 Codex has different shell and edit bindings. The host must enable and trust its hooks.
@@ -188,24 +206,23 @@ Inspect the final bundle and the native client's loaded catalog for the installe
 | claude | pynott-branch-lock.sh | PreToolUse | verbatim | unproven |  |
 | claude | bash-guards.sh | PreToolUse | verbatim | unproven |  |
 | claude | two-misses.sh | PreToolUse | verbatim | unproven |  |
-| claude | campaign-pr-guard.py | PreToolUse | verbatim | unproven |  |
+| claude | release-guard.py | PreToolUse | verbatim | unproven |  |
 | claude | plan-exit-gate.sh | PreToolUse | verbatim | unproven |  |
 | claude | dispatch-tier.py | PreToolUse | verbatim | unproven |  |
+| claude | review-cap.py | PreToolUse | verbatim | unproven |  |
 | claude | nmemory-main-only.py | PreToolUse | verbatim | unproven |  |
-| claude | red-first.sh | PreToolUse | verbatim | unproven |  |
 | claude | session-state.sh | PreToolUse | verbatim | unproven |  |
 | claude | law-contract.sh | PostToolUse | verbatim | unproven |  |
 | claude | nmemory-anchor-queue.sh | PostToolUse | verbatim | unproven |  |
 | claude | nspawn-pairing.sh | PostToolUse | verbatim | unproven |  |
 | claude | nmemory-act.py | PostToolUse | verbatim | unproven |  |
 | claude | bash-guard.py | PostToolUse | verbatim | unproven |  |
-| claude | red-first.sh | PostToolUse | verbatim | unproven |  |
 | claude | two-misses.sh | PostToolUse | verbatim | unproven |  |
 | claude | secret-in-output.sh | PostToolUse | verbatim | unproven |  |
 | claude | session-state.sh | PostToolUse | verbatim | unproven |  |
 | claude | artifact-copy.py | PostToolUse | verbatim | unproven |  |
+| claude | background-wait.py | PostToolUse | verbatim | unproven |  |
 | claude | secret-in-output.sh | PostToolUseFailure | verbatim | unproven |  |
-| claude | red-first.sh | PostToolUseFailure | verbatim | unproven |  |
 | claude | two-misses.sh | PostToolUseFailure | verbatim | unproven |  |
 | claude | session-state.sh | PostToolUseFailure | verbatim | unproven |  |
 | claude | law-session.sh | SessionStart | verbatim | unproven |  |
@@ -218,44 +235,45 @@ Inspect the final bundle and the native client's loaded catalog for the installe
 | claude | session-state.sh | SessionStart | verbatim | unproven |  |
 | claude | session-state.sh | Notification | verbatim | unproven |  |
 | claude | nmemory-snapshot.sh | SessionEnd | verbatim | unproven |  |
-| claude | nmemory-snapshot.sh | PreCompact | verbatim | unproven |  |
-| claude | nmemory-snapshot.sh | PostCompact | verbatim | unproven |  |
 | claude | final-state.sh | Stop | verbatim | unproven |  |
 | claude | session-state.sh | Stop | verbatim | unproven |  |
 | claude | nmemory-capture-gate.py | Stop | verbatim | unproven |  |
+| claude | background-wait.py | Stop | verbatim | unproven |  |
 | claude | session-state.sh | UserPromptSubmit | verbatim | unproven |  |
 | claude | fanout-reminder.sh | UserPromptSubmit | verbatim | unproven |  |
 | claude | final-state.sh | UserPromptSubmit | verbatim | unproven |  |
 | claude | system1-suggest.py | UserPromptSubmit | verbatim | unproven |  |
 | claude | nmemory-recall.py | UserPromptSubmit | verbatim | unproven |  |
 | claude | nmemory-act.py | UserPromptSubmit | verbatim | unproven |  |
+| claude | prompt-capture.py | UserPromptSubmit | verbatim | unproven |  |
 | claude | subagent-law.py | SubagentStart | verbatim | unproven |  |
 | claude | session-state.sh | SubagentStop | verbatim | unproven |  |
+| claude | subagent-record.py | SubagentStop | verbatim | unproven |  |
+| claude | background-wait.py | SubagentStop | verbatim | unproven |  |
 | claude | session-state.sh | TeammateIdle | verbatim | unproven |  |
 | claude | session-state.sh | StopFailure | verbatim | unproven |  |
 | codex | pynott-branch-lock.sh | PreToolUse | codex pre-shell | unproven |  |
 | codex | bash-guards.sh | PreToolUse | codex pre-shell | bash-guards |  |
 | codex | two-misses.sh | PreToolUse | codex pre-shell | two-misses |  |
-| codex | campaign-pr-guard.py | PreToolUse | codex pre-shell | unproven |  |
+| codex | release-guard.py | PreToolUse | codex pre-shell | unproven |  |
 | codex | plan-exit-gate.sh | PreToolUse | not projected |  | Codex has no ExitPlanMode tool, so neither half of the plan gate has an event to hang on |
-| codex | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which Codex does not have |
+| codex | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which Codex does not have, and the nspawn_run_start tool, which has no native binding here |
+| codex | review-cap.py | PreToolUse | not projected |  | counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here |
 | codex | nmemory-main-only.py | PreToolUse | not projected |  | it denies a Claude subagent by the agent_id of a Claude payload. On Codex only an nSPAWN child is covered: nMEMORY refuses it by NOTT_NSPAWN_RUN_ID, which nSPAWN forwards. A Codex multi_agent sub-agent is not covered |
-| codex | red-first.sh | PreToolUse | codex pre-shell | red-first |  |
 | codex | session-state.sh | PreToolUse | codex session-state-pre | session-state |  |
 | codex | law-contract.sh | PostToolUse | not projected |  | Claude runs it on PostToolUse Write\|Edit\|MultiEdit; the Codex post-edit advisory names the contract and does not run it |
 | codex | nmemory-anchor-queue.sh | PostToolUse | not projected |  | enqueues the EDITED path from a Claude Write\|Edit payload (tool_input.file_path); Codex writes by piping a patch into apply_patch from the shell tool, so post-edit sees patch text, not a path, and has no codex-hook-runner.py action for it |
 | codex | nspawn-pairing.sh | PostToolUse | not projected |  | reads a Claude payload shape and has no codex-hook-runner.py action; Codex serves the event, the handler is not projected |
 | codex | nmemory-act.py | PostToolUse | not projected |  | its act is a Claude dispatch tool on PostToolUse, which Codex runs only through runner actions, so a turn start or a compaction here would have no act to reach |
 | codex | bash-guard.py | PostToolUse | not projected |  | reads a Claude payload shape and has no codex-hook-runner.py action; Codex serves the event, the handler is not projected |
-| codex | red-first.sh | PostToolUse | codex post-edit | red-first-tested |  |
 | codex | two-misses.sh | PostToolUse | codex post-edit | two-misses |  |
 | codex | secret-in-output.sh | PostToolUse | codex post-edit | secret-output |  |
 | codex | session-state.sh | PostToolUse | codex session-state-post | session-state |  |
 | codex | artifact-copy.py | PostToolUse | not projected |  | binds the Claude Artifact tool, which Codex does not have |
-| codex | secret-in-output.sh | PostToolUseFailure | not projected |  | Codex has no such event. Both Claude handlers (secret-in-output's chain advisory, red-first's `tested` record) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
-| codex | red-first.sh | PostToolUseFailure | not projected |  | Codex has no such event. Both Claude handlers (secret-in-output's chain advisory, red-first's `tested` record) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
-| codex | two-misses.sh | PostToolUseFailure | not projected |  | Codex has no such event. Both Claude handlers (secret-in-output's chain advisory, red-first's `tested` record) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
-| codex | session-state.sh | PostToolUseFailure | not projected |  | Codex has no such event. Both Claude handlers (secret-in-output's chain advisory, red-first's `tested` record) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
+| codex | background-wait.py | PostToolUse | not projected |  | requires Claude launch-result fields and actor ownership; Codex has no subagent stop protocol or measured continuation binding |
+| codex | secret-in-output.sh | PostToolUseFailure | not projected |  | Codex has no such event. The Claude handlers (secret-in-output's chain advisory, two-misses' ledger) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
+| codex | two-misses.sh | PostToolUseFailure | not projected |  | Codex has no such event. The Claude handlers (secret-in-output's chain advisory, two-misses' ledger) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
+| codex | session-state.sh | PostToolUseFailure | not projected |  | Codex has no such event. The Claude handlers (secret-in-output's chain advisory, two-misses' ledger) ride post-edit on PostToolUse, which Codex runs after a non-zero Bash exit too (measured 2026-09-14, #444) |
 | codex | law-session.sh | SessionStart | verbatim | unproven |  |
 | codex | law-session.sh | SessionStart | verbatim | unproven |  |
 | codex | law-session.sh | SessionStart | verbatim | unproven |  |
@@ -266,42 +284,43 @@ Inspect the final bundle and the native client's loaded catalog for the installe
 | codex | session-state.sh | SessionStart | verbatim | unproven |  |
 | codex | session-state.sh | Notification | not projected |  | The Codex view has no native permission notification binding. Waiting tools use PreToolUse. |
 | codex | nmemory-snapshot.sh | SessionEnd | verbatim | unproven |  |
-| codex | nmemory-snapshot.sh | PreCompact | verbatim | unproven |  |
-| codex | nmemory-snapshot.sh | PostCompact | verbatim | unproven |  |
 | codex | final-state.sh | Stop | codex stop | voice |  |
 | codex | session-state.sh | Stop | codex stop | session-state |  |
 | codex | nmemory-capture-gate.py | Stop | codex stop | capture-gate |  |
+| codex | background-wait.py | Stop | not projected |  | requires Claude launch-result fields and actor ownership; Codex has no subagent stop protocol or measured continuation binding |
 | codex | session-state.sh | UserPromptSubmit | verbatim | unproven |  |
 | codex | fanout-reminder.sh | UserPromptSubmit | verbatim | unproven |  |
 | codex | final-state.sh | UserPromptSubmit | verbatim | unproven |  |
 | codex | system1-suggest.py | UserPromptSubmit | not projected |  | its catalog is the Claude agent types under ~/.claude and the routes as Claude names them; a Codex session has neither that Agent tool nor those names |
 | codex | nmemory-recall.py | UserPromptSubmit | verbatim | unproven |  |
 | codex | nmemory-act.py | UserPromptSubmit | not projected |  | its act is a Claude dispatch tool on PostToolUse, which Codex runs only through runner actions, so a turn start or a compaction here would have no act to reach |
+| codex | prompt-capture.py | UserPromptSubmit | not projected |  | its spool line names the Claude session_id and the Claude messaging socket that the node host admits as the asker; a Codex session has neither, so the hook writes only in an interactive Claude Code session |
 | codex | subagent-law.py | SubagentStart | not projected |  | Codex has no subagent events; the subagent law reaches Claude subagents only |
-| codex | session-state.sh | SubagentStop | not projected |  | Codex has no subagent events; session-state.sh's dead[] record hangs on SubagentStop |
+| codex | session-state.sh | SubagentStop | not projected |  | Codex has no subagent events; session-state.sh's dead[] record and subagent-record.py's effort log hang on SubagentStop |
+| codex | subagent-record.py | SubagentStop | not projected |  | Codex has no subagent events; session-state.sh's dead[] record and subagent-record.py's effort log hang on SubagentStop |
+| codex | background-wait.py | SubagentStop | not projected |  | Codex has no subagent events; session-state.sh's dead[] record and subagent-record.py's effort log hang on SubagentStop |
 | codex | session-state.sh | TeammateIdle | not projected |  | Codex has no teams and no TeammateIdle event |
 | codex | session-state.sh | StopFailure | not projected |  | Codex has no StopFailure event; a dead session is not announced there |
 | agy | pynott-branch-lock.sh | PreToolUse | agy pre-tool-run-command | unproven |  |
 | agy | bash-guards.sh | PreToolUse | agy pre-tool-run-command | bash-guards |  |
 | agy | two-misses.sh | PreToolUse | not projected |  | its ledger fills from the command text after the run, which AGY's PostToolUse payload lacks, so its PreToolUse deny would never fire |
-| agy | campaign-pr-guard.py | PreToolUse | agy pre-tool-run-command | unproven |  |
+| agy | release-guard.py | PreToolUse | agy pre-tool-run-command | unproven |  |
 | agy | plan-exit-gate.sh | PreToolUse | not projected |  | AGY has no ExitPlanMode tool, so neither half of the plan gate has an event to hang on |
-| agy | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which AGY does not have |
+| agy | dispatch-tier.py | PreToolUse | not projected |  | binds the Claude Agent and Workflow tools, which AGY does not have, and the nspawn_run_start tool, which has no native binding here |
+| agy | review-cap.py | PreToolUse | not projected |  | counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here |
 | agy | nmemory-main-only.py | PreToolUse | not projected |  | it denies a Claude subagent by the agent_id of a Claude payload; AGY has no subagent events. nMEMORY refuses an AGY nSPAWN child when its MCP server inherits NOTT_NSPAWN_RUN_ID (not measured) |
-| agy | red-first.sh | PreToolUse | not projected |  | both halves: its `tested` record needs the command text after the run, and AGY's PostToolUse payload is {stepIdx, error, ...common} (agy-customizations docs/hooks.md), so the deny half would call a tested session untested |
 | agy | session-state.sh | PreToolUse | not projected |  | surface of the Claude statusline; AGY has no statusline and no subagent events, so a phase file would have no reader |
 | agy | law-contract.sh | PostToolUse | agy post-tool-write | law-contract |  |
 | agy | nmemory-anchor-queue.sh | PostToolUse | not projected |  | enqueues the EDITED path from a Claude Write\|Edit payload (tool_input.file_path); AGY's PostToolUse payload is {stepIdx, error, ...common} with no path, so there is nothing to enqueue |
 | agy | nspawn-pairing.sh | PostToolUse | not projected |  | reads a Claude MCP tool payload; AGY has no agy-hook-runner.py action for it |
 | agy | nmemory-act.py | PostToolUse | not projected |  | AGY's PostToolUse payload is {stepIdx, error, ...common}, with no tool name or input, so no act can be matched |
 | agy | bash-guard.py | PostToolUse | not projected |  | reads a Claude payload shape (tool_response) that AGY's PostToolUse does not carry |
-| agy | red-first.sh | PostToolUse | not projected |  | both halves: its `tested` record needs the command text after the run, and AGY's PostToolUse payload is {stepIdx, error, ...common} (agy-customizations docs/hooks.md), so the deny half would call a tested session untested |
 | agy | two-misses.sh | PostToolUse | not projected |  | its ledger fills from the command text after the run, which AGY's PostToolUse payload lacks, so its PreToolUse deny would never fire |
 | agy | secret-in-output.sh | PostToolUse | not projected |  | no output text in AGY's PostToolUse payload |
 | agy | session-state.sh | PostToolUse | not projected |  | surface of the Claude statusline; AGY has no statusline and no subagent events, so a phase file would have no reader |
 | agy | artifact-copy.py | PostToolUse | not projected |  | binds the Claude Artifact tool, which AGY does not have |
+| agy | background-wait.py | PostToolUse | not projected |  | requires Claude launch-result fields and actor ownership; AGY has no subagent stop protocol or measured continuation binding |
 | agy | secret-in-output.sh | PostToolUseFailure | not projected |  | AGY has no such event; its PostToolUse payload carries {stepIdx, error} and post-tool-run-command names the error in its advisory |
-| agy | red-first.sh | PostToolUseFailure | not projected |  | AGY has no such event; its PostToolUse payload carries {stepIdx, error} and post-tool-run-command names the error in its advisory |
 | agy | two-misses.sh | PostToolUseFailure | not projected |  | AGY has no such event; its PostToolUse payload carries {stepIdx, error} and post-tool-run-command names the error in its advisory |
 | agy | session-state.sh | PostToolUseFailure | not projected |  | AGY has no such event; its PostToolUse payload carries {stepIdx, error} and post-tool-run-command names the error in its advisory |
 | agy | law-session.sh | SessionStart | not projected |  | AGY reads the law from rules/AGENTS.md (a link to NOTT.md) at startup; injecting it again at pre-invocation would double it |
@@ -314,19 +333,21 @@ Inspect the final bundle and the native client's loaded catalog for the installe
 | agy | session-state.sh | SessionStart | not projected |  | surface of the Claude statusline; AGY has no statusline and no subagent events, so a phase file would have no reader |
 | agy | session-state.sh | Notification | not projected |  | AGY has no native permission notification in this view |
 | agy | nmemory-snapshot.sh | SessionEnd | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no SessionEnd |
-| agy | nmemory-snapshot.sh | PreCompact | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no PreCompact |
-| agy | nmemory-snapshot.sh | PostCompact | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no PostCompact |
 | agy | final-state.sh | Stop | agy stop | voice |  |
 | agy | session-state.sh | Stop | not projected |  | surface of the Claude statusline; AGY has no statusline and no subagent events, so a phase file would have no reader |
 | agy | nmemory-capture-gate.py | Stop | not projected |  | reads the current turn's Claude transcript JSONL (tool_use and tool_result blocks for nmemory_capsule_ingest). This view does not supply that transcript protocol |
+| agy | background-wait.py | Stop | not projected |  | requires Claude launch-result fields and actor ownership; AGY has no subagent stop protocol or measured continuation binding |
 | agy | session-state.sh | UserPromptSubmit | not projected |  | surface of the Claude statusline; AGY has no statusline and no subagent events, so a phase file would have no reader |
 | agy | fanout-reminder.sh | UserPromptSubmit | not projected |  | AGY has no UserPromptSubmit, and a worker's completion never reaches it as a Claude <task-notification> or nSPAWN supervisor notice |
 | agy | final-state.sh | UserPromptSubmit | not projected |  | AGY has no UserPromptSubmit to carry the voice advice, and its stop action runs this script for the voice check alone (NOTT_HOOK_CLIENT=agy): AGY has no statusline for a state line |
 | agy | system1-suggest.py | UserPromptSubmit | not projected |  | AGY has no UserPromptSubmit, the only event the suggestion rides |
 | agy | nmemory-recall.py | UserPromptSubmit | not projected |  | AGY has no UserPromptSubmit, the only event the recall rides |
 | agy | nmemory-act.py | UserPromptSubmit | not projected |  | AGY's PostToolUse payload is {stepIdx, error, ...common}, with no tool name or input, so no act can be matched |
+| agy | prompt-capture.py | UserPromptSubmit | not projected |  | AGY has no UserPromptSubmit, the only event the capture rides |
 | agy | subagent-law.py | SubagentStart | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no SubagentStart |
 | agy | session-state.sh | SubagentStop | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no SubagentStop |
+| agy | subagent-record.py | SubagentStop | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no SubagentStop |
+| agy | background-wait.py | SubagentStop | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no SubagentStop |
 | agy | session-state.sh | TeammateIdle | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no TeammateIdle |
 | agy | session-state.sh | StopFailure | not projected |  | AGY's hooks.md offers PreInvocation, PreToolUse, PostToolUse, PostInvocation and Stop; there is no StopFailure |
 <!-- nott:client-matrix:end -->

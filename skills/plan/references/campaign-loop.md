@@ -16,20 +16,21 @@ dependencies and resource budgets. Use unit-contract.md for cold scheduled work.
 Load other procedures only for operations that need them; workers do not inherit
 a mandatory stack of planning, execution, quality and handoff documents.
 
-One campaign is one branch and one PR. Writers deliver commits. The lead
-integrates them on the campaign branch. A lane is one writer's worktree.
+A campaign lands as small, well-scoped PRs. Each PR is one coherent result
+that a reviewer can judge alone. Each PR has its own branch. Writers deliver
+commits. The lead integrates them on the PR's branch. A lane is one writer's worktree.
 Independent autonomous writers use isolated worktrees. The lane owns only its
 declared paths. It does not create its own PR or land itself.
 
 ## Shape: lanes, one integration, one landing
 
-A multi-lane campaign runs in three stages, by hand or as a workflow script; a
-campaign workflow is built in this shape. The repository battery is the full app
+Each PR of a multi-lane campaign runs in three stages, and a campaign workflow is built in
+this shape. The repository battery is the full app
 suite, the full harness suite and the rails.
 
 1. Lanes run as a pipeline: each observes its RED, writes its cure, runs only the narrowest checks that judge its surface and delivers its commits. No lane stage runs the rails or the repository battery, gets its own review or opens a PR.
-2. Exactly one integration stage follows: the lead integrates main and every lane's commits on the campaign branch, then runs the rails and the repository battery ONCE on that head, never once per unit, and starts the campaign's one review on it: the workflow pipeline (../../workflow/SKILL.md).
-3. Landing merges that head through the campaign's one PR.
+2. Exactly one integration stage follows. The lead integrates main and every lane's commits on the PR's branch. The workflow pipeline (../../workflow/SKILL.md, builder) sets review and proof timing.
+3. Landing merges that head through its PR.
 
 Absorbing main into a lane re-runs only the lane checks the absorbed delta
 touches, never the repository battery. The integration proof transfers to the
@@ -40,7 +41,7 @@ only what that difference touches.
 ## Dispatch and continuity
 
 The retained workflow, plan, review or other applicable route grants bounded
-delegation through a registered executor. No tool spelling is mandatory.
+delegation. Its dispatch path is ../../workflow/SKILL.md (ultra).
 Without an admissible executor, do independent implementation locally and name
 any missing required independent witness.
 
@@ -48,7 +49,9 @@ Measure host memory/swap and account capacity before adding lanes. Each free slo
 takes useful disjoint ready work; if none exists, invent nothing. The parent
 allocates capacity so descendants cannot each spend the same free resources.
 
-Every dispatch carries a STOP: line with budget, findings ceiling and ownership.
+Every dispatch carries a STOP: line with budget, deadline (../../workflow/SKILL.md,
+watch), findings ceiling and ownership.
+A review round has no findings ceiling (../../review/SKILL.md, rounds).
 Bind review to the candidate's own bytes and declared material inputs; unrelated
 trunk movement is never candidate drift. Preserve lane handles and real completion
 notifications. Do not repeat an uncertain dispatch or sleep-poll a stale status.
@@ -125,14 +128,18 @@ Proof runs omit inherited forge credentials where not required:
 env -u GH_TOKEN -u GITHUB_TOKEN. Pass every variable the actual gate needs;
 never put credentials in argv or infer a missing input from ambient state.
 
-Long work reports through the state line; do not invent timers or polling
-loops. Read current work after resume or compaction before mutating it.
+Long work runs as ../../workflow/SKILL.md (watch) sets. Read current work after
+resume or compaction before mutating it.
 
-A model never waits. The shell waits on a queue, a rail or a run (Monitor, a
-timeout or a wait loop), or the nSPAWN notice wakes the lead. No agent stays
-alive to poll. The lead answers a batch of nSPAWN notices in one turn, not one
-full turn for each notice. When the lead's context passes about 200k tokens, it
-hands off to a fresh session (../../handoff/SKILL.md).
+The lead never waits. The shell waits on a queue, a rail or a run (Monitor, a
+timeout or a wait loop), or the nSPAWN notice wakes the lead. The lead does not
+stay alive to poll. The lead answers a batch of nSPAWN notices in one turn, not
+one full turn for each notice. When the lead's context passes about 200k tokens,
+it hands off to a fresh session (../../handoff/SKILL.md).
+
+A subagent or an nSPAWN child gets no notice after its turn ends, so it waits in
+the foreground for its own background work, or stops that work, before it
+reports (../../../agents/worker.md, rule 11).
 
 ## Deliver
 
@@ -141,10 +148,10 @@ dependencies and expiry. Carry unaffected observations; validate any absorption'
 changed closure. Absorb main only for a real conflict, semantic dependency or
 the merge, not because peers landed unrelated work.
 
-Open the campaign PR early; ship defines its readiness. After required review
-and proof hold at the exact head, continue through ship to its authorized merge
-and authoritative readback. Readiness is not the result; tag, release and other
-reserved acts retain their separate authority.
+../../ship/SKILL.md defines when a PR opens and what its readiness is. After
+required review and proof hold at the exact head, continue through ship to its
+authorized merge and authoritative readback. Readiness is not the result; tag,
+release and other reserved acts retain their separate authority.
 
 The campaign report states its measured token use for each role (lead,
 writers, readers), so that the owner can set a spend ceiling later. No ceiling

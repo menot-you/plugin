@@ -42,14 +42,21 @@ traced against, and the specific question it must decide. Split a review across
 several dispatches only when its questions are independent and each is large
 enough to repay its own context; otherwise use one well-scoped dispatch.
 
-Dispatch the witness with `nspawn_review_start` and do not pin `provider` or
-`model`: nSPAWN chooses the reader by the owner's preference order, skips a
+Dispatch each witness, the required reviewer included, with
+`nspawn_review_start`, and pin no `provider` or `model`. nSPAWN chooses the reader by the owner's preference order, skips a
 route that cannot serve now, and continues on the next route when one refuses
-the turn. Name the author in `producer` (its route, account and model) so that
-the witness never runs as the author. A witness is always a new cold session,
-never the author's. Read back the executed route, account and model, and the
+the turn. Put only the author's account alias in `producer`, never its route or
+model, so that the witness never runs on the author's account and a witness on
+the same model stays possible. A witness is always a new cold session that
+shares no context with the author: never the author's own session, its fork or
+the session that dispatched the author. Its model may be the same as the
+author's or
+another. Read back the executed route, account and model, and the
 skip record in `warning`, from `nspawn_run_show`. A campaign reader is
-dispatched by ../workflow/SKILL.md (readers), not by this paragraph.
+dispatched by this paragraph, with the type and the effort that
+../workflow/SKILL.md (reader) sets. The lead
+watches each witness run as ../workflow/SKILL.md (watch) sets.
+Dispatch an adversarial reader with `nspawn_review_start` as the `adversarial` agent.
 
 Every reader brief says: do not read a host secret file such as `~/.nott/.env`,
 and do not print an environment value. Judge a configuration claim from the
@@ -74,51 +81,114 @@ the required witness's independence, exact candidate binding and STOP boundary.
 <!-- nott:review:quote-or-drop -->
 A finding names input, failure mechanism, consumer consequence and exact evidence.
 When alleging a law violation, quote both the applicable rule and candidate line;
-a guessed interpretation is not a finding. Deduplicate by root cause.
+a guessed interpretation is not a finding.
 
 <!-- nott:review:blocking -->
 A blocking finding is a reproducible defect against the accepted contract or
 plan, or a regression, with its input, mechanism and consequence. The accepted
-contract always includes the standing law: a safety, authority, security or
-data-loss violation blocks even when the plan does not name it. Test and eval
-adequacy (a missing case, a surviving mutant, an eval that cannot observe its
-promise) and hypothetical findings are recorded as an **nMEMORY** capsule, never
+contract always includes the standing law. A safety, authority, security or
+data-loss violation that the candidate introduces blocks even when the plan does
+not name it. A finding outside the PR's accepted result is not a veto when the
+base already has the same consequence on the same input. The candidate is no worse
+than the base. Record that finding as an **nMEMORY** capsule. The exception never
+covers a regression or an introduced safety, authority, security or data-loss
+failure. It never covers a defect that the accepted result promises to cure.
+Test and eval adequacy (a missing case, a surviving mutant,
+an eval that cannot observe its promise) and hypothetical findings are recorded
+as an **nMEMORY** capsule, never
 a veto, unless the DoD or plan names that proof. Every finding records its
 origin: `head` when it is present in the reviewed head, `fix` when a fix
 introduced it.
 
 <!-- nott:review:rounds -->
-An axis is one required review lens the applicable law names; for a campaign,
-the four workflow readers are four axes, whatever route and model nSPAWN
-gives each. Each axis has one veto
-reviewer. A round is one reviewed head of the candidate, whatever the axes or
-restarts on it, and every review prompt carries one line
-`Candidate: <branch-or-plan-id>@<sha-or-revision>` naming it.
+An axis is one required review lens the applicable law names. Each axis has one
+veto reviewer. A campaign round has one reader, and its axis is the main risk
+of the diff (owner, 2026-10-21). Count each new head that a reviewer reads as
+one round, whatever the axes, readers or sub-passes on that head. A pass after
+a fix reads a new head and counts as another round. Every review prompt carries
+one line `Candidate: <branch-or-plan-id>@<sha-or-revision>` naming the
+candidate.
 
-Round 1 is exhaustive over the whole candidate. The accepted contract or plan,
+Review rounds have no numeric limit. A cure round adds no scope. The reader's
+SHIP ends the review loop at the reviewed head when no blocker remains.
+FIX-FIRST starts another cure round with the same builder. A round count never
+triggers a stop, an escalation, a judge or a merge. The lead may ask a cold
+judge whether to continue, revise the spec, or stop at needs-human, as
+../workflow/SKILL.md (convergence) sets. The question must concern
+convergence, not the count.
+
+nSPAWN counts review rounds. Two doors count a head: `nspawn_review_start`
+with `subject` and `candidate`, and an Agent or Task dispatch of a reviewer
+type with one `Candidate: <subject>@<40 or 64 hex>` prompt line. Each round
+starts a new reader. A reviewer type takes no `name`. A brief or message that
+is not a review round has no `Candidate:` line or inline candidate token. The
+count is a measure, not a stop condition.
+
+Use a repository-qualified branch lineage as a PR subject, for example
+`<repository>/<branch>`; do not reuse it for another PR. A plan's subject is
+its slug. A compile subject is the plan's subject followed by `/plan.py`.
+A spec's subject is its repository path. A base branch is never a subject.
+A revised plan after Change or a revise stop uses `/v2`, `/v3` and so on.
+A revised spec after a returning root cause also uses the next version.
+A cure round in one review loop keeps its subject. A PR or compile review
+carries `Spec revision: <64-hex>` to bind it to the spec or PLAN.md reviewed
+under its own subject before the builder starts. A revised spec preserves the
+review history. It does not clear an open blocker.
+
+Round 1 is exhaustive over the whole candidate. In round 1, each reviewer
+repeats its search from a new angle (another input, caller, transition or
+failure path) until two consecutive passes add no new finding. Then the review
+is dry, and it returns every finding at once, grouped by root cause: each group
+is one finding and names every failure of that cause. A review that stops at its
+first finding is not a round. The accepted contract or plan,
 the owner's request and the diff of exactly that head are pasted into the brief
 or written where the reviewer can read them; a reviewer cannot read git or
 GitHub, and nothing edits the candidate while a review of it runs. A fix is
 re-reviewed only by the axis that raised the finding it cures, never by every
-axis again. A campaign's re-reads follow ../workflow/SKILL.md, where the
-security reader also reads every fix delta. That re-review checks only two things: whether each finding is cured, and whether the fix
-regressed anything. A new finding about code round 1 already had is a round-1
-miss with origin `head`: it is recorded and does not change that round's
-verdict, unless it violates acceptance or the standing law, in which case it
-blocks like any other finding.
+axis again. That re-review checks only the findings that the previous round
+listed: whether each finding is cured, and whether its fix regressed anything.
+It does not search the candidate again. A new finding about code that round 1
+already had is a round-1 miss with origin `head`. It blocks only when it is a
+safety, authority, security or data-loss failure (owner, 2026-10-23). The
+reviewer records any other round-1 miss, and that miss does not block.
+
+<!-- nott:review:dry -->
+A reader of round 1 runs again on the same head, in a new cold session that
+gets the findings already known, only while its last pass found a new blocking
+finding. A non-blocking finding becomes a debt line, as references/evidence.md
+says, and starts no new pass. These passes are one round, not a cure round.
+When no reader runs again, the lead sends the blocking findings of round 1 to
+one cure round. With no blocking finding, no cure round starts. A root cause with
+two or more failures goes back to the spec or design first, as the fix rule
+below says.
+
+<!-- nott:review:quality-measure -->
+The lead measures the review quality of each PR with two numbers: the findings
+of round 1, where each root-cause group counts as one, and the findings with
+origin `fix`. The lead records both numbers in nMEMORY after each round. In the
+lead's progress report, the state of the PR's line shows both numbers, for
+example `r1 7, fix 2`.
 
 <!-- nott:review:campaign -->
-A campaign has one review, at the end, on its integrated head: the four readers
-of the workflow pipeline (../workflow/SKILL.md). That route holds the
-readers' dispatch, the wait for all four, the 2 builder rounds, the last gate and
-the escalation. This route does not restate that text.
+Each pull request of a campaign gets its own review, on its integrated head: one
+reader for each round, in the workflow pipeline (../workflow/SKILL.md). That route
+holds the choice of the reader, the rerun of the checks, the merge and the
+escalation. This route does not restate that text.
 
 A reader has no nMEMORY (owner decision). It reports each finding to the
 lead, and the lead records the capsule.
 
 A fix rewrites the predicate or design that failed, not the reproduced
-scenario. When the same defect family returns twice, the work goes back to
-design and is not patched again.
+scenario. When one root cause has two or more failures, in one round or across
+rounds, the work goes back to the spec or design before any fix. The revised
+spec or design is a
+new candidate, and it gets its own exhaustive round 1 before the builder starts
+on it.
+
+When a data-loss, race or destructive-act family returns twice, the lead
+removes the automatic act from scope within the accepted result. If the
+automatic act is the owner's required result, the lead keeps it in scope. The
+lead alone makes this method decision. Do not send it to the owner as a question.
 
 <!-- nott:review:over-engineering -->
 Look for unnecessary dependencies, abstractions and invented scope. A cut needs

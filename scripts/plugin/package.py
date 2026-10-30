@@ -67,8 +67,6 @@ class RuntimeBinding(TypedDict):
     repository: str
     purpose: str
     packager_sha256: str
-    source: NotRequired[dict[str, str] | None]
-    transforms: NotRequired[list[dict[str, str]]]
     source_commit: NotRequired[str]
 
 
@@ -88,6 +86,7 @@ NODE_GUARDS = {
     # An app node is a NOTT session: its subagents get the subagent law.
     "subagent-law.py",
     "nmemory-main-only.py",
+    "artifact-copy.py",
 }
 NATIVE = (".codex-plugin/plugin.json", ".claude-plugin/plugin.json", "plugin.json")
 # Native AGY observation: a rule is truncated after 24,000 UTF-8 bytes.
@@ -123,8 +122,8 @@ CODEX_TIMEOUT_CEILINGS = {"SessionEnd": 3}
 # `not_projected`: the reason a source binding is absent, keyed by event, then
 #   matcher, then hook script. A binding with no route and no reason renders as
 #   `undeclared` — the matrix never drops a hook in silence (measured 2026-09-14:
-#   Stop and PostToolUseFailure arrived with final-state, chained-after-finding
-#   and red-first, and the Codex view dropped them with nothing saying so).
+#   Stop and PostToolUseFailure arrived with three hooks, and the Codex view
+#   dropped them with nothing saying so).
 # The SessionStart notice drain takes an nSPAWN notice AT MOST ONCE. Only a
 # Claude Code session is a notice caller (it owns CLAUDE_CODE_MESSAGING_SOCKET),
 # so a drain in any other client would consume the notice the project's next
@@ -170,6 +169,10 @@ CLIENT_VIEWS: dict[str, ClientView] = {
             "of a Claude payload. On Codex only an nSPAWN child is covered: "
             "nMEMORY refuses it by NOTT_NSPAWN_RUN_ID, which nSPAWN forwards. "
             "A Codex multi_agent sub-agent is not covered",
+            "prompt-capture.py": "its spool line names the Claude session_id and "
+            "the Claude messaging socket that the node host admits as the asker; "
+            "a Codex session has neither, so the hook writes only in an "
+            "interactive Claude Code session",
         },
         "actions": {
             "session-state-pre": {
@@ -182,16 +185,14 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "matcher": ".*",
                 "proof": {"session-state.sh": "session-state"},
             },
-            # Freestanding apply_patch reports tool_name "apply_patch" with the
-            # patch in tool_input.command (Codex hooks docs). The guards skip
-            # that payload (patch text is not a shell line); red-first reads its
-            # `*** Add|Update File:` headers. First deny wins, deny JSON + exit 2.
+            # Shell names only: patch text is not a shell line, so the guards
+            # have nothing to read in a freestanding apply_patch payload. First
+            # deny wins, deny JSON + exit 2.
             "pre-shell": {
                 "event": "PreToolUse",
-                "matcher": SHELL_MATCHER + "|apply_patch",
+                "matcher": SHELL_MATCHER,
                 "proof": {
                     "bash-guards.sh": "bash-guards",
-                    "red-first.sh": "red-first",
                     "two-misses.sh": "two-misses",
                 },
             },
@@ -220,7 +221,6 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "event": "PostToolUse",
                 "matcher": "Edit|Write|apply_patch|" + SHELL_MATCHER,
                 "proof": {
-                    "red-first.sh": "red-first-tested",
                     "two-misses.sh": "two-misses",
                     "secret-in-output.sh": "secret-output",
                 },
@@ -232,20 +232,21 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "SubagentStart": "Codex has no subagent events; the subagent law "
                 "reaches Claude subagents only",
                 "SubagentStop": "Codex has no subagent events; session-state.sh's "
-                "dead[] record hangs on SubagentStop",
+                "dead[] record and subagent-record.py's effort log hang on SubagentStop",
                 "TeammateIdle": "Codex has no teams and no TeammateIdle event",
                 "StopFailure": "Codex has no StopFailure event; a dead session "
                 "is not announced there",
-                "PostToolUseFailure": "Codex has no such event. Both Claude "
-                "handlers (secret-in-output's chain advisory, red-first's "
-                "`tested` record) ride post-edit on PostToolUse, which Codex "
-                "runs after a non-zero Bash exit too (measured 2026-09-14, #444)",
+                "PostToolUseFailure": "Codex has no such event. The Claude "
+                "handlers (secret-in-output's chain advisory, two-misses' "
+                "ledger) ride post-edit on PostToolUse, which Codex runs after "
+                "a non-zero Bash exit too (measured 2026-09-14, #444)",
             },
             "matchers": {
                 "ExitPlanMode": "Codex has no ExitPlanMode tool, so neither half "
                 "of the plan gate has an event to hang on",
             },
             "hooks": {
+                "background-wait.py": "requires Claude launch-result fields and actor ownership; Codex has no subagent stop protocol or measured continuation binding",
                 "law-contract.sh": "Claude runs it on PostToolUse "
                 "Write|Edit|MultiEdit; the Codex post-edit advisory names the "
                 "contract and does not run it",
@@ -260,8 +261,10 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "nspawn-pairing.sh": "reads a Claude payload shape and has no "
                 "codex-hook-runner.py action; Codex serves the event, the "
                 "handler is not projected",
+                "review-cap.py": "counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here",
                 "dispatch-tier.py": "binds the Claude Agent and Workflow tools, "
-                "which Codex does not have",
+                "which Codex does not have, and the nspawn_run_start tool, "
+                "which has no native binding here",
                 "artifact-copy.py": "binds the Claude Artifact tool, "
                 "which Codex does not have",
             },
@@ -323,10 +326,7 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "of the plan gate has an event to hang on",
             },
             "hooks": {
-                "red-first.sh": "both halves: its `tested` record needs the "
-                "command text after the run, and AGY's PostToolUse payload is "
-                "{stepIdx, error, ...common} (agy-customizations docs/hooks.md), "
-                "so the deny half would call a tested session untested",
+                "background-wait.py": "requires Claude launch-result fields and actor ownership; AGY has no subagent stop protocol or measured continuation binding",
                 "nmemory-anchor-queue.sh": "enqueues the EDITED path from a "
                 "Claude Write|Edit payload (tool_input.file_path); AGY's "
                 "PostToolUse payload is {stepIdx, error, ...common} with no "
@@ -335,8 +335,10 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "that AGY's PostToolUse does not carry",
                 "nspawn-pairing.sh": "reads a Claude MCP tool payload; AGY has "
                 "no agy-hook-runner.py action for it",
+                "review-cap.py": "counts Claude Agent and Task reviews and guards Claude review doors; no native binding exists here",
                 "dispatch-tier.py": "binds the Claude Agent and Workflow tools, "
-                "which AGY does not have",
+                "which AGY does not have, and the nspawn_run_start tool, "
+                "which has no native binding here",
                 "artifact-copy.py": "binds the Claude Artifact tool, "
                 "which AGY does not have",
                 "two-misses.sh": "its ledger fills from the command text after "
@@ -348,6 +350,8 @@ CLIENT_VIEWS: dict[str, ClientView] = {
                 "nMEMORY directive on the first invocation instead",
                 "nmemory-recall.py": "AGY has no UserPromptSubmit, the only "
                 "event the recall rides",
+                "prompt-capture.py": "AGY has no UserPromptSubmit, the only "
+                "event the capture rides",
                 "nmemory-main-only.py": "it denies a Claude subagent by the "
                 "agent_id of a Claude payload; AGY has no subagent events. nMEMORY "
                 "refuses an AGY nSPAWN child when its MCP server inherits "
@@ -532,14 +536,9 @@ def verify(root: Path) -> BundleManifest:
     ):
         raise Refusal("different content cannot retain the recorded version")
     runtime: RuntimeBinding = json.loads((root / ".nott-runtime.json").read_text())
-    if not isinstance(runtime, dict) or runtime.get("purpose") not in (
-        "current",
-        "historical-evaluation",
-    ):
+    if not isinstance(runtime, dict) or runtime.get("purpose") != "current":
         raise Refusal("unknown bundle purpose")
     fields = {"repository", "purpose", "packager_sha256"}
-    if runtime["purpose"] == "historical-evaluation":
-        fields |= {"source", "transforms"}
     if "source_commit" in runtime:
         if runtime["repository"] != "." or not re.fullmatch(
             r"[0-9a-f]{40}", runtime["source_commit"]
@@ -554,8 +553,6 @@ def verify(root: Path) -> BundleManifest:
             != runtime
         ):
             raise Refusal("client purpose or runtime binding differs")
-    if runtime["purpose"] == "historical-evaluation":
-        verify_historical(root, runtime)
     return manifest
 
 
@@ -595,11 +592,6 @@ def hook_handlers(declarations: Iterable[object]) -> set[str]:
 def admit_current(root: Path) -> BundleManifest:
     root = root.resolve(strict=True)
     manifest = verify(root)
-    runtime = json.loads((root / ".nott-runtime.json").read_text())
-    if runtime["purpose"] != "current":
-        raise Refusal(
-            "bundle purpose is not current; historical evaluation is not current admission"
-        )
     # Every client receives the same complete hook inventory. Resolve the union
     # from its actual native declarations, including generated Codex commands.
     handlers = hook_handlers(
@@ -1122,9 +1114,9 @@ ROOT_MEMBER = "apps/cli"
 def runtime_members(config: object) -> list[str]:
     """The workspace members the MCP registrations run from, as the source names them.
 
-    The source is the authority, not a constant here: a historical build replays
-    whatever member its own commit named (the body, or the pre-split harness member
-    before it). Each one must be a relative path that stays inside the runtime root.
+    The source is the authority, not a constant here: a build of an older commit
+    replays whatever member that commit named (the body, or the pre-split harness
+    member before it). Each one must be a relative path that stays inside the runtime root.
     A config that names none answers the harness CLI, the mark of a runtime root this
     packager can bind.
     """
@@ -1186,9 +1178,9 @@ def git(repository: Path, *args: str) -> bytes:
             timeout=30,
         )
     except subprocess.TimeoutExpired as error:
-        raise Refusal("historical Git provenance read timed out") from error
+        raise Refusal("Git read timed out") from error
     if result.returncode:
-        raise Refusal("historical Git commit/tree is unavailable or invalid")
+        raise Refusal("Git commit or checkout is unavailable or invalid")
     return result.stdout
 
 
@@ -1209,45 +1201,6 @@ def commit_time(repository: Path, commit: str, cure: str | None = None) -> int:
         raise Refusal(cure) from error
 
 
-def git_source(
-    repository: Path, commit: str, relative: str
-) -> tuple[dict[str, str], dict[str, dict[str, str]]]:
-    if (
-        not re.fullmatch(r"[a-f0-9]{40}|[a-f0-9]{64}", commit)
-        or not relative
-        or Path(relative).is_absolute()
-        or ".." in Path(relative).parts
-    ):
-        raise Refusal("invalid historical commit/path provenance")
-    if git(repository, "rev-parse", commit + "^{commit}").decode().strip() != commit:
-        raise Refusal("historical source identity is not an exact commit")
-    tree = git(repository, "rev-parse", commit + ":" + relative).decode().strip()
-    entries = {}
-    for line in git(repository, "ls-tree", "-r", "-z", commit, "--", relative).split(
-        b"\0"
-    ):
-        if not line:
-            continue
-        meta, name = line.decode().split("\t", 1)
-        mode, kind, oid = meta.split()
-        if not name.startswith(relative + "/"):
-            raise Refusal("historical source path is not a tracked directory")
-        name = name[len(relative) + 1 :]
-        if name == IDENTITY or any(part in EXCLUDE for part in Path(name).parts):
-            continue
-        if kind != "blob" or mode not in {"100644", "100755", "120000"}:
-            raise Refusal("historical source contains unsupported Git resources")
-        entries[name] = {"mode": mode, "blob": oid}
-    if not entries:
-        raise Refusal("historical source tree is empty")
-    return {
-        "commit": commit,
-        "tree": tree,
-        "path": relative,
-        "inventory_sha256": digest(entries),
-    }, entries
-
-
 def blob_identity(path: Path, wanted: Mapping[str, str]) -> dict[str, str]:
     if path.is_symlink():
         data, mode = os.fsencode(os.readlink(path)), "120000"
@@ -1255,7 +1208,7 @@ def blob_identity(path: Path, wanted: Mapping[str, str]) -> dict[str, str]:
         data = path.read_bytes()
         mode = "100755" if path.stat().st_mode & 0o111 else "100644"
     else:
-        raise Refusal("historical source resource is absent")
+        raise Refusal("blob resource is absent")
     algorithm = hashlib.sha1 if len(wanted["blob"]) == 40 else hashlib.sha256
     return {
         "mode": mode,
@@ -1263,92 +1216,6 @@ def blob_identity(path: Path, wanted: Mapping[str, str]) -> dict[str, str]:
             b"blob " + str(len(data)).encode() + b"\0" + data
         ).hexdigest(),
     }
-
-
-def historical_source(source: Path, runtime_root: Path) -> dict[str, str]:
-    repository = Path(
-        git(source, "rev-parse", "--show-toplevel").decode().strip()
-    ).resolve()
-    relative = source.relative_to(repository).as_posix()
-    if relative == "." or git(
-        repository, "status", "--porcelain=v1", "--untracked-files=all"
-    ):
-        raise Refusal("historical build requires a clean Git source subdirectory")
-    commit = git(repository, "rev-parse", "HEAD^{commit}").decode().strip()
-    metadata, entries = git_source(repository, commit, relative)
-    if set(inventory(source, EXCLUDE)) != set(entries) or any(
-        blob_identity(source / name, entry) != entry for name, entry in entries.items()
-    ):
-        raise Refusal("historical source bytes differ from the exact Git tree")
-    # The frozen artifact can outlive its source worktree. Verification reads the
-    # recorded objects from the existing runtime repository, never its live HEAD.
-    available, _ = git_source(runtime_root, commit, relative)
-    if available != metadata:
-        raise Refusal("runtime repository differs from historical source provenance")
-    return metadata
-
-
-def source_surface(name: str) -> bool:
-    return name in {"NOTT.md", "hooks.json"} or name.startswith(("skills/", "hooks/"))
-
-
-def verify_historical(root: Path, runtime: RuntimeBinding) -> None:
-    metadata = runtime.get("source")
-    if not isinstance(metadata, dict) or set(metadata) != {
-        "commit",
-        "tree",
-        "path",
-        "inventory_sha256",
-    }:
-        raise Refusal("historical commit provenance is missing")
-    repository = Path(runtime["repository"])
-    observed, entries = git_source(repository, metadata["commit"], metadata["path"])
-    if observed != metadata:
-        raise Refusal("historical commit/tree provenance differs")
-    transforms = []
-    expected_data = {}
-    for name in BINDINGS:
-        relative = "hooks/" + name
-        original = git(repository, "cat-file", "blob", entries[relative]["blob"])
-        bound = bound_hook(name, original, repository)
-        expected_data[relative] = bound
-        transforms.append(
-            {
-                "path": relative,
-                "source_sha256": hashlib.sha256(original).hexdigest(),
-                "bundle_sha256": hashlib.sha256(bound).hexdigest(),
-                "kind": "repository-binding",
-            }
-        )
-    if runtime.get("transforms") != transforms:
-        raise Refusal("historical runtime transforms differ from their source")
-    for client in (None, *CLIENTS):
-        directory = root if client is None else root / "clients" / client
-        selected = {
-            name: entry
-            for name, entry in entries.items()
-            if source_surface(name)
-            and not (client == "agy" and name == "hooks/hooks.json")
-            and not (client in {"claude", "codex"} and name == "hooks.json")
-        }
-        if {name for name in inventory(directory) if source_surface(name)} != set(
-            selected
-        ):
-            raise Refusal("historical source-owned surface inventory differs")
-        for name, entry in selected.items():
-            target = directory / name
-            if name in expected_data:
-                if (
-                    target.is_symlink()
-                    or target.read_bytes() != expected_data[name]
-                    or bool(target.stat().st_mode & 0o111)
-                    != (entry["mode"] == "100755")
-                ):
-                    raise Refusal("historical hook runtime binding differs")
-            elif blob_identity(target, entry) != entry:
-                raise Refusal(
-                    "historical law, skills or hooks differ from the recorded commit"
-                )
 
 
 def runner_actions(runner: Path) -> dict[object, set[str]]:
@@ -1503,10 +1370,12 @@ def node_runner(source: str) -> str:
 
     class Projection(ast.NodeTransformer):
         def visit_Assign(self, node: ast.Assign) -> ast.AST:
+            nonlocal projected
             if any(
                 isinstance(target, ast.Name) and target.id == "SHELL_GUARDS"
                 for target in node.targets
             ):
+                projected = True
                 guards = ast.literal_eval(node.value)
                 node.value = ast.Tuple(
                     elts=[
@@ -1518,28 +1387,6 @@ def node_runner(source: str) -> str:
                 )
             return self.generic_visit(node)
 
-        def visit_If(self, node: ast.If) -> ast.AST:
-            nonlocal projected
-            if (
-                isinstance(node.test, ast.Compare)
-                and isinstance(node.test.left, ast.Name)
-                and node.test.left.id == "action"
-                and isinstance(node.test.comparators[0], ast.Constant)
-                and node.test.comparators[0].value == "pre-shell"
-            ):
-                for index, statement in enumerate(node.body):
-                    if isinstance(statement, ast.Assign) and any(
-                        isinstance(target, ast.Name) and target.id == "freestanding"
-                        for target in statement.targets
-                    ):
-                        node.body = [
-                            *node.body[:index],
-                            ast.Return(value=ast.Constant(value=0)),
-                        ]
-                        projected = True
-                        break
-            return self.generic_visit(node)
-
         def visit_Expr(self, node: ast.Expr) -> ast.AST | None:
             call = node.value
             if (
@@ -1548,7 +1395,7 @@ def node_runner(source: str) -> str:
                 and call.func.id == "hook"
                 and call.args
                 and isinstance(call.args[0], ast.Constant)
-                and call.args[0].value in {"red-first.sh", "two-misses.sh"}
+                and call.args[0].value == "two-misses.sh"
             ):
                 return None
             return self.generic_visit(node)
@@ -1565,7 +1412,6 @@ def build(
     source: Path,
     output: Path,
     runtime_root: Path,
-    historical: bool = False,
     source_commit: str | None = None,
 ) -> BundleManifest:
     source = source.resolve(strict=True)
@@ -1574,8 +1420,6 @@ def build(
         "schema": 1
     }:
         raise Refusal("public plugin profile is unsupported")
-    if public and historical:
-        raise Refusal("public source cannot use a private historical runtime")
     if (
         public
         and source_commit is not None
@@ -1620,15 +1464,6 @@ def build(
         if not (runtime_root / member / "pyproject.toml").is_file():
             raise Refusal(f"runtime-root does not contain {member}/pyproject.toml")
     refuse_bound_exclusions(source)
-    source_runtime = source / ".nott-runtime.json"
-    if (
-        not historical
-        and source_runtime.exists()
-        and json.loads(source_runtime.read_text()).get("purpose")
-        == "historical-evaluation"
-    ):
-        raise Refusal("historical evaluation bundle cannot be rebuilt as current")
-    provenance = historical_source(source, runtime_root) if historical else None
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(
         prefix=".nott-build-", dir=output.parent
@@ -1686,28 +1521,14 @@ def build(
         write_json(stage / "mcp_config.json", config)
         runtime: RuntimeBinding = {
             "repository": "." if public else str(runtime_root),
-            "purpose": "historical-evaluation" if historical else "current",
+            "purpose": "current",
             "packager_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         }
         if public and source_commit is not None:
             runtime["source_commit"] = source_commit
-        if historical:
-            runtime["source"] = provenance
-            runtime["transforms"] = []
         for name in {} if public else BINDINGS:
             target = stage / "hooks" / name
-            original = target.read_bytes()
-            bound = bound_hook(name, original, runtime_root)
-            target.write_bytes(bound)
-            if historical:
-                runtime["transforms"].append(
-                    {
-                        "path": "hooks/" + name,
-                        "source_sha256": hashlib.sha256(original).hexdigest(),
-                        "bundle_sha256": hashlib.sha256(bound).hexdigest(),
-                        "kind": "repository-binding",
-                    }
-                )
+            target.write_bytes(bound_hook(name, target.read_bytes(), runtime_root))
         write_json(stage / ".nott-runtime.json", runtime)
         # Copies are generated from one semantic source. Native installers cache one
         # view, so links to a parent bundle would break after installation.
@@ -1737,10 +1558,8 @@ def build(
                     shutil.copy2(stage / name, view / name)
             if client == "claude" and (stage / "agents").is_dir():
                 # Claude Code loads plugin agents from agents/; the other clients have
-                # none, and a historical source older than the agents has no folder.
-                # The MIT notice of the vendored agents ships with every copy of them.
-                # A historical source from #1305 to #1662 has vendor/ecc.json but no notice.
-                if not historical and not (stage / "vendor/ECC-LICENSE.txt").is_file():
+                # none. The MIT notice of the vendored agents ships with every copy of them.
+                if not (stage / "vendor/ECC-LICENSE.txt").is_file():
                     raise Refusal(
                         "vendor/ECC-LICENSE.txt is missing. The vendored agents need "
                         "their license notice."
@@ -1770,8 +1589,6 @@ def build(
                 # entry routed through agy-hook-runner.py. Declared in
                 # CLIENT_VIEWS["agy"]; plugin/tests/agy-view-smoke.sh proves it.
                 shutil.copy2(stage / "hooks.json", view / "hooks.json")
-            elif historical:
-                shutil.copy2(stage / "hooks/hooks.json", view / "hooks/hooks.json")
             else:
                 hooks = json.loads((stage / "hooks/hooks.json").read_text())
                 if view_spec["verbatim"] is not None:
@@ -1803,10 +1620,19 @@ def build(
                                 "hooks": [
                                     {
                                         "type": "command",
-                                        "command": 'python3 "${CLAUDE_PLUGIN_ROOT}/hooks/'
+                                        "command": 'python3 -B "${CLAUDE_PLUGIN_ROOT}/hooks/'
                                         + runner
                                         + '" '
-                                        + action,
+                                        + action
+                                        # Codex sends the stderr of a Stop hook that exits 2
+                                        # back to the model as a prompt, and its reply fires
+                                        # Stop again. A Stop hook blocks only by JSON on exit 0,
+                                        # so a failure (a missing runner, a crash) exits 0.
+                                        + (
+                                            " || true"
+                                            if binding["event"] == "Stop"
+                                            else ""
+                                        ),
                                         "timeout": 10,
                                     }
                                 ],
@@ -1832,57 +1658,56 @@ def build(
                                 if hook.get("timeout", 600) > ceiling:
                                     hook["timeout"] = ceiling
                 write_json(view / "hooks/hooks.json", hooks)
-        if not historical:
-            for client in ("claude", "codex"):
-                view = stage / "clients" / (client + "-node")
-                shutil.copytree(stage / "clients" / client, view, symlinks=True)
-                stdio = {
-                    "mcpServers": {
-                        name: server
-                        for name, server in config["mcpServers"].items()
-                        if server.get("type") != "http" and name != "nott-node"
+        for client in ("claude", "codex"):
+            view = stage / "clients" / (client + "-node")
+            shutil.copytree(stage / "clients" / client, view, symlinks=True)
+            stdio = {
+                "mcpServers": {
+                    name: server
+                    for name, server in config["mcpServers"].items()
+                    if server.get("type") != "http" and name != "nott-node"
+                }
+            }
+            write_json(view / ".mcp.json", stdio)
+            write_json(view / "mcp_config.json", stdio)
+            if client == "claude":
+                hooks = json.loads((view / "hooks/hooks.json").read_text())
+                omitted = {
+                    hook_script(hook.get("command"))
+                    for groups in hooks["hooks"].values()
+                    for group in groups
+                    for hook in group["hooks"]
+                } - NODE_GUARDS
+                hooks = {
+                    "hooks": {
+                        event: kept
+                        for event, groups in hooks["hooks"].items()
+                        # final-state.sh also binds UserPromptSubmit; a node has none.
+                        if event != "UserPromptSubmit"
+                        and (kept := without_scripts(groups, omitted))
                     }
                 }
-                write_json(view / ".mcp.json", stdio)
-                write_json(view / "mcp_config.json", stdio)
-                if client == "claude":
-                    hooks = json.loads((view / "hooks/hooks.json").read_text())
-                    omitted = {
-                        hook_script(hook.get("command"))
-                        for groups in hooks["hooks"].values()
-                        for group in groups
-                        for hook in group["hooks"]
-                    } - NODE_GUARDS
-                    hooks = {
-                        "hooks": {
-                            event: kept
-                            for event, groups in hooks["hooks"].items()
-                            # final-state.sh also binds UserPromptSubmit; a node has none.
-                            if event != "UserPromptSubmit"
-                            and (kept := without_scripts(groups, omitted))
-                        }
-                    }
-                    # final-state.sh judges the voice alone here: a node has no statusline.
-                    for groups in hooks["hooks"].values():
-                        for group in groups:
-                            for hook in group["hooks"]:
-                                if hook_script(hook.get("command")) == "final-state.sh":
-                                    hook["command"] = (
-                                        "NOTT_HOOK_CLIENT=node " + hook["command"]
-                                    )
-                    write_json(view / "hooks/hooks.json", hooks)
-                else:
-                    hooks = json.loads((view / "hooks/hooks.json").read_text())
-                    hooks["hooks"] = {
-                        event: groups
-                        for event, groups in hooks["hooks"].items()
-                        if event in {"PreToolUse", "PostToolUse", "Stop"}
-                    }
-                    write_json(view / "hooks/hooks.json", hooks)
-                    runner_path = view / "hooks/codex-hook-runner.py"
-                    runner_path.write_text(node_runner(runner_path.read_text()))
-                    (view / ".agents").mkdir()
-                    (view / ".agents/skills").symlink_to("../skills")
+                # final-state.sh judges the voice alone here: a node has no statusline.
+                for groups in hooks["hooks"].values():
+                    for group in groups:
+                        for hook in group["hooks"]:
+                            if hook_script(hook.get("command")) == "final-state.sh":
+                                hook["command"] = (
+                                    "NOTT_HOOK_CLIENT=node " + hook["command"]
+                                )
+                write_json(view / "hooks/hooks.json", hooks)
+            else:
+                hooks = json.loads((view / "hooks/hooks.json").read_text())
+                hooks["hooks"] = {
+                    event: groups
+                    for event, groups in hooks["hooks"].items()
+                    if event in {"PreToolUse", "PostToolUse", "Stop"}
+                }
+                write_json(view / "hooks/hooks.json", hooks)
+                runner_path = view / "hooks/codex-hook-runner.py"
+                runner_path.write_text(node_runner(runner_path.read_text()))
+                (view / ".agents").mkdir()
+                (view / ".agents/skills").symlink_to("../skills")
         # One identity, three client shapes. Only the Codex view carried a version,
         # so the other two inherited whatever it happened to say — a silent pick, and
         # the three could name different products without anything noticing.
@@ -1913,14 +1738,11 @@ def build(
         # the order. The name order holds while the time has 10 digits (until 2286).
         # The time is the packaged commit's. The runtime root only decides where
         # the hooks point; a runtime checkout that never moves would stamp every
-        # release with its own time. A historical build names its commit, and so
-        # does an export (`--source-commit`, the commit it was archived from); the
-        # runtime root holds both. Otherwise the source sits at the top of its
-        # checkout and the commit is that checkout's HEAD.
+        # release with its own time. An export names its commit (`--source-commit`,
+        # the commit it was archived from); the runtime root holds it. Otherwise the
+        # source sits at the top of its checkout and the commit is that checkout's HEAD.
         if public:
             base_version = base["version"].split("+")[0]
-        elif provenance:
-            patch = commit_time(runtime_root, provenance["commit"])
         elif source_commit is not None:
             patch = commit_time(
                 runtime_root,
@@ -1954,9 +1776,7 @@ def build(
             "files": files,
         }
         write_json(stage / IDENTITY, bundle_manifest)
-        (verify if historical else admit_current)(stage)
-        if historical and historical_source(source, runtime_root) != provenance:
-            raise Refusal("historical source changed during packaging")
+        admit_current(stage)
         if output.exists():
             previous = verify(output)
             if previous != bundle_manifest:
@@ -1965,7 +1785,7 @@ def build(
                 )
         else:
             stage.rename(output)
-        (verify if historical else admit_current)(output)
+        admit_current(output)
         return bundle_manifest
 
 
@@ -1978,7 +1798,6 @@ def main(argv: list[str] | None = None) -> int:
     build_verb.add_argument("--source", type=Path)
     build_verb.add_argument("--output", type=Path)
     build_verb.add_argument("--runtime-root", type=Path)
-    build_verb.add_argument("--historical", action="store_true")
     build_verb.add_argument(
         "--source-commit", help="the commit an exported --source was archived from"
     )
@@ -2027,7 +1846,6 @@ def main(argv: list[str] | None = None) -> int:
                 args.source,
                 args.output,
                 args.runtime_root,
-                historical=args.historical,
                 source_commit=args.source_commit,
             )
         else:

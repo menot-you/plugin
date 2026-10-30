@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3 -B
 """PostToolUse: the pinned owner rules that name a dispatch, in that tool result.
 
 Recall on the owner's prompt

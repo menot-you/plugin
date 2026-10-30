@@ -1,7 +1,6 @@
-"""Check document paths, links, and source catalogs for each public root."""
+"""Check document paths, links, and contributor setup for each public root."""
 
 import ast
-import hashlib
 import importlib.util
 import json
 import os
@@ -59,22 +58,10 @@ SETUP_FILES = {
     "CLAUDE.md",
     "docs/SETUP.md",
     "docs/QUALITY.md",
-    "docs/setup-catalog.json",
     ".claude/context7.json",
     ".codex/config.toml",
 }
 TOOLKIT_REVISION = "de66fe371a49f5a4d3b521759e5c401f390b6424"
-TOOLKIT_DESTINATIONS = {
-    "PRODUCT.md",
-    "README.md",
-    "AGENTS.md",
-    "CLAUDE.md",
-    "docs/architecture.md",
-    "docs/design.md",
-    "docs/onboarding.md",
-    "docs/quality.md",
-    "docs/setup.md",
-}
 LINK = re.compile(
     r"(?<=\]\()(?P<inline><[^>\n]+>|[^\s)]+)"
     r"|(?m:^\s*\[[^]\n]+\]:\s*)(?P<reference><[^>\n]+>|[^\s]+)"
@@ -166,7 +153,7 @@ def test_public_document_links_resolve_inside_the_selected_source(
             assert (ROOT / name).is_file(), name
         check_local_links(ROOT, [ROOT / name for name in documents.values()])
         check_readme_navigation(ROOT)
-        check_contributor_setup(ROOT, component)
+        check_contributor_setup(ROOT)
         return
     primary = "plugin" if component == "plugin" else f"mcps/{component}"
     libraries = {
@@ -248,7 +235,7 @@ def test_public_document_links_resolve_inside_the_selected_source(
 
     check_local_links(tmp_path, list(tmp_path.rglob("*")))
     check_readme_navigation(tmp_path)
-    check_contributor_setup(tmp_path, component)
+    check_contributor_setup(tmp_path)
 
     # Use the owning exporter after the independent link oracle.
     spec = importlib.util.spec_from_file_location(
@@ -270,78 +257,18 @@ def test_public_document_links_resolve_inside_the_selected_source(
         name: (tmp_path / name).read_bytes() for name in documents.values()
     }
     check_local_links(tmp_path, list(tmp_path.rglob("*")))
-    check_contributor_setup(tmp_path, component)
+    check_contributor_setup(tmp_path)
     for name in DOCUMENTS:
         if name.endswith(".md") and name != "README.md":
             text = (tmp_path / name).read_text()
             assert not re.search(r"(?m)^.*(?:uv|python3|cd).*mcps/", text), name
 
 
-def check_contributor_setup(root: Path, component: str) -> None:
+def check_contributor_setup(root: Path) -> None:
     """Check the contributor contract at its emitted paths."""
     assert not (root / "AGENTS.md").exists()
     claude_doc = (root / "CLAUDE.md").read_text()
     assert "CONTRIBUTING.md" in claude_doc and "docs/SETUP.md" in claude_doc
-    catalog = json.loads((root / "docs/setup-catalog.json").read_text())
-    assert catalog["project"] == component
-    assert catalog["toolkit_revision"] == TOOLKIT_REVISION
-    assert set(catalog["document_map"]) == TOOLKIT_DESTINATIONS
-    for paths in catalog["document_map"].values():
-        assert paths
-        for path in paths:
-            assert (root / path).is_file(), path
-    decisions = catalog["decisions"]
-    assert len(decisions) == len({row["component"] for row in decisions}) == 161
-    assert {row["component"] for row in decisions} == set(catalog["components"])
-    assert hashlib.sha256(
-        "\n".join(sorted(catalog["components"])).encode()
-    ).hexdigest() == (
-        "298e709c6fe401255395ea729412c50859ad1179e01804d3b483142aa831f6cf"
-    )
-    assert len([name for name in catalog["components"] if name.startswith("T")]) == 23
-    assert (
-        len([name for name in catalog["components"] if name.startswith("prompt.")])
-        == 14
-    )
-    assert (
-        len([name for name in catalog["components"] if name.startswith("template.")])
-        == 46
-    )
-    assert (
-        len([name for name in catalog["components"] if name.startswith("machine.")])
-        == 15
-    )
-    for row in decisions:
-        assert row["project"] == component
-        for key in (
-            "need",
-            "observed_state",
-            "action_or_existing_equivalent",
-            "scope",
-            "dependencies",
-            "risk",
-            "validation",
-            "blocker",
-            "status",
-        ):
-            assert key in row, (row["component"], key)
-        assert row["status"] in {
-            "verified",
-            "configured without execution",
-            "reused equivalent",
-            "inapplicable",
-            "blocked",
-        }
-        assert set(row["observed_state"]) == {
-            "installed",
-            "configured",
-            "loaded",
-            "observed",
-        }
-        if row["status"] == "inapplicable":
-            assert row["blocker"] is None
-        if row["blocker"]:
-            assert row["blocker"]["cause"] and row["blocker"]["next_action"]
     setup = (root / "docs/SETUP.md").read_text()
     for number in range(1, 23):
         assert len(re.findall(rf"(?m)^\| {number:02d} \|", setup)) == 1
@@ -380,11 +307,7 @@ def test_contributor_sources_and_native_runtime_are_separate(
     assert documents.get(f"{member}/CLAUDE.md") == "CLAUDE.md"
     assert "AGENTS.md" not in documents.values()
     prefix = f"{member}/docs"
-    for name in (
-        "SETUP.md",
-        "QUALITY.md",
-        "setup-catalog.json",
-    ):
+    for name in ("SETUP.md", "QUALITY.md"):
         assert f"{prefix}/{name}" in documents
     for name in ("plugin/.mcp.json", "plugin/mcp_config.json"):
         assert "context7" not in json.loads((ROOT / name).read_text())["mcpServers"]

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3 -B
 """Bind documented Codex shell/apply_patch payloads to NOTT hooks.
 
 Source: https://learn.chatgpt.com/docs/hooks. Hooks cover only participating
@@ -7,13 +7,9 @@ local tools; a requested denial is not proof that a native host enforced it.
 
 import json
 import os
-import re
-import shutil
 import signal
 import subprocess
 import sys
-import tempfile
-import time
 from collections.abc import Mapping
 from pathlib import Path
 
@@ -23,8 +19,7 @@ STOPS = {signal.SIGINT, signal.SIGTERM, signal.SIGHUP, signal.SIGQUIT}
 # PreToolUse on a shell name, in Claude's order (hooks/hooks.json): first deny
 # wins. Each reads {tool_name:"Bash", tool_input:{command}} and answers with
 # the hookSpecificOutput deny + exit 2 that Codex documents, so nothing here
-# translates. A `tool_name: "apply_patch"` payload carries the PATCH TEXT as
-# its command and is not a shell line: only red-first reads it.
+# translates.
 SHELL_GUARDS = (
     "pynott-branch-lock.sh",
     # secret-in-argv, owned-process and trunk: one process, rows in bash-guards.tsv.
@@ -32,157 +27,10 @@ SHELL_GUARDS = (
     # two-misses reads session_id, which Codex documents in every payload
     # (codex-view-smoke.sh feeds it). Its ledger fills at post-edit, below.
     "two-misses.sh",
-    # One campaign, one PR: reads GitHub, bounded inside the hook; Codex's runner
-    # carries its refusal, not its NOT CHECKED context (README client matrix).
-    "campaign-pr-guard.py",
+    # Only the owner merges into public: reads GitHub, bounded inside the hook,
+    # and fails closed, so Codex's runner carries its refusal.
+    "release-guard.py",
 )
-# apply_patch's file headers, whichever route carried the patch: a heredoc into
-# the shell tool, the freestanding tool, or the printf spelling the archived
-# campaign recorded (test_package_plugin.py SHELL_WRITE), where every header
-# sits mid-line inside a quoted argument. A Delete is not a product edit.
-PATCH_FILE = re.compile(
-    r"""(?:^|['"])\*\*\* (?:Add|Update) File: ([^'"\n]+?)\s*(?:$|['"])""",
-    re.MULTILINE,
-)
-# ...and a SHELL line carries a patch only when one of its COMMANDS is apply_patch
-# (review 2026-10-01, twice: the reviewer's read-only Python heredocs quoting patch
-# headers and `apply_patch <<EOF` examples were denied). Words a command may lead with.
-COMMAND_PREFIXES = {"{", "}", "!", "then", "do", "else", "elif", "if", "while", "time"}
-ASSIGNMENT = re.compile(r"[A-Za-z_][A-Za-z0-9_]*=")
-SHELLS = {"bash", "sh", "zsh"}
-# Wrappers that run the next word as the command, and their options taking a value
-# (`env -u NAME`/`--unset NAME`, `env -C DIR`/`--chdir DIR`, `exec -a NAME`); for a
-# shell, `-o`/`-O` take one. A `--name=value` word carries its own value.
-WRAPPERS = {"exec", "command", "env"}
-VALUED = {"-u", "--unset", "-C", "--chdir", "-a", "-o", "+o", "-O", "+O"}
-
-
-def options_skipped(words: list[str]) -> tuple[list[str], list[str]]:
-    """Split leading option words (with their values) from the operands after them."""
-    flags: list[str] = []
-    while words and words[0][:1] in "-+" and len(words[0]) > 1 and words[0] != "--":
-        flags.append(words[0])
-        words = words[2:] if words[0] in VALUED else words[1:]
-    if words[:1] == ["--"]:
-        words = words[1:]
-    return flags, words
-
-
-def invokes_apply_patch(text: str, depth: int = 0) -> bool:
-    """Does any simple command of this shell text run apply_patch?
-
-    Read by command words, not substrings: commands split at `; | & ( )` and
-    newlines outside quotes; quotes are removed from words; a heredoc body is
-    data and is skipped whoever reads it; `#` starts a comment. A command
-    invokes apply_patch when its first word (after `{`, `then`, `NAME=value`,
-    `exec`/`command`/`env` and their options), stripped of its directory, is
-    `apply_patch`, or when it is `bash|sh|zsh` with `-c` among its leading
-    options (and no `-n`) whose command string does, read once.
-
-    ponytail: no `$(...)` nesting, `case` arms or aliases; an invocation hidden
-    there is not judged — red-first is a nag, so that costs a missed nag.
-    """
-    words: list[str] = []
-    word: str | None = None
-    heredocs: list[tuple[str, bool]] = []
-    found = False
-
-    def command_ends() -> None:
-        nonlocal found, words
-        rest = words
-        while rest and (rest[0] in COMMAND_PREFIXES or ASSIGNMENT.match(rest[0])):
-            rest = rest[1:]
-        while rest and rest[0] in WRAPPERS:
-            rest = options_skipped(rest[1:])[1]
-            while rest and ASSIGNMENT.match(rest[0]):
-                rest = rest[1:]
-        if rest:
-            name = rest[0].rsplit("/", 1)[-1]
-            if name == "apply_patch":
-                found = True
-            elif name in SHELLS and depth == 0:
-                # Only `-c` among the LEADING options makes the first operand the
-                # command string, and `-n` (syntax only) runs nothing.
-                flags, operands = options_skipped(rest[1:])
-                # Letters SET in a `-` cluster; `+n` unsets -n and `--x` is long.
-                letters = "".join(
-                    f[1:] for f in flags if f[:1] == "-" and not f.startswith("--")
-                )
-                if "c" in letters and "n" not in letters and operands:
-                    found = invokes_apply_patch(operands[0], 1)
-        words = []
-
-    i, n = 0, len(text)
-    while i < n and not found:
-        c = text[i]
-        if c == "'":
-            j = text.find("'", i + 1)
-            j = n if j < 0 else j
-            word = (word or "") + text[i + 1 : j]
-            i = j + 1
-        elif c == '"':
-            j, chunk = i + 1, []
-            while j < n and text[j] != '"':
-                if text[j] == "\\" and j + 1 < n and text[j + 1] in '"\\$`':
-                    j += 1
-                chunk.append(text[j])
-                j += 1
-            word = (word or "") + "".join(chunk)
-            i = j + 1
-        elif c == "\\" and i + 1 < n:
-            # A backslash-newline is a line continuation, not a word.
-            if text[i + 1] != "\n":
-                word = (word or "") + text[i + 1]
-            i += 2
-        elif c == "#" and word is None:
-            i = text.find("\n", i)
-            i = n if i < 0 else i
-        elif c in " \t":
-            if word is not None:
-                words.append(word)
-                word = None
-            i += 1
-        elif text.startswith("<<", i) and not text.startswith("<<<", i):
-            if word is not None:
-                words.append(word)
-                word = None
-            i += 2
-            dash = text.startswith("-", i)
-            i += dash
-            while i < n and text[i] in " \t":
-                i += 1
-            j = i
-            while j < n and text[j] not in " \t\n;|&()<>":
-                j += 1
-            heredocs.append((text[i:j].replace("'", "").replace('"', ""), dash))
-            i = j
-        elif c in ";|&()\n":
-            if word is not None:
-                words.append(word)
-                word = None
-            command_ends()
-            i += 1
-            if c == "\n":
-                # Every heredoc opened on that line: its body is data, skip it.
-                for delimiter, dash in heredocs:
-                    while i < n:
-                        j = text.find("\n", i)
-                        j = n if j < 0 else j
-                        line = text[i:j]
-                        i = j + 1
-                        if (line.lstrip("\t") if dash else line) == delimiter:
-                            break
-                heredocs = []
-        else:
-            word = (word or "") + c
-            i += 1
-    if word is not None:
-        words.append(word)
-    if not found:
-        command_ends()
-    return found
-
-
 # The names the PostToolUse matcher admits that are NOT a write by their own
 # name: codex gives the freestanding apply_patch tool to first-party models only,
 # so every other model writes by piping a patch into `apply_patch` from the shell
@@ -194,16 +42,6 @@ SHELL_TOOLS = {"Bash", "exec_command", "shell_command"}
 # from the command text: the refused attempt in the same turn says
 # "apply_patch verification failed" and is no edit at all.
 APPLY_PATCH_WROTE = "Success. Updated the following files:"
-# The packaged runner has 10 s per call (plugin/scripts/plugin/package.py, "timeout": 10).
-# red-first's whole stage for one patch — probes and real calls — shares ONE deadline
-# inside it; past that deadline red-first fails OPEN, as its own header says.
-# Accepted residual (review 2026-10-01): under sustained load a slow but honest
-# denial can be lost this way.
-RED_FIRST_BUDGET_S = 8.0
-# Ordering a patch's paths may spend at most this much of that deadline on probes.
-# ponytail: a patch whose first test path lies past the budget keeps its order and
-# the product ahead of it is denied — a nag, never a pass; raise it if that is measured.
-PROBE_BUDGET_S = 3.0
 
 
 def wrote(payload: Mapping[str, object]) -> bool:
@@ -257,7 +95,7 @@ def hook(
 
     Past its timeout, or when the runner itself is interrupted, the hook's whole
     process group dies, not the shell alone: its children kept writing state after
-    the kill, and the probe's throwaway directory then failed to clean up
+    the kill, and the caller's throwaway directory then failed to clean up
     (`Directory not empty`, Rail N 2026-10-02). The group is the hook's own, so a
     signal sent to the runner's group no longer reaches it: SIGINT, SIGTERM, SIGHUP
     and SIGQUIT are turned into an exit at the bottom of this file. SIGINT included,
@@ -319,40 +157,6 @@ def advisory_of(proc: subprocess.CompletedProcess[str]) -> str | None:
     return context if isinstance(context, str) and context else None
 
 
-def opens_red_first(payload: Mapping[str, object], deadline: float) -> bool:
-    """Would red-first count this write as a test? Asked of red-first itself.
-
-    It runs against throwaway state, so the probe neither opens the session's
-    gate nor spends one of its three refusals; red-first stays the only owner of
-    the product/test split. A probe past the deadline answers no.
-    """
-    state = tempfile.mkdtemp()
-    try:
-        hook(
-            "red-first.sh",
-            payload,
-            forward=False,
-            env={**os.environ, "XDG_STATE_HOME": state},
-            timeout=max(deadline - time.monotonic(), 0.05),
-        )
-        return any(Path(state).rglob("tested"))
-    except subprocess.TimeoutExpired:
-        return False
-    finally:
-        # A throwaway directory that will not clean up is no reason to refuse the call.
-        shutil.rmtree(state, ignore_errors=True)
-
-
-def red_first_open(payload: Mapping[str, object]) -> bool:
-    """Has this session already recorded its RED? red-first then passes every write.
-
-    The record's location is red-first.sh's own (`$state/tested`, its line 46).
-    """
-    sid = re.sub(r"[^a-zA-Z0-9-]", "", str(payload.get("session_id") or ""))
-    root = os.environ.get("XDG_STATE_HOME") or str(Path.home() / ".local/state")
-    return bool(sid) and (Path(root) / "nott/red-first" / sid / "tested").exists()
-
-
 def command_of(payload: Mapping[str, object]) -> tuple[dict[str, object], str]:
     args = payload.get("tool_input")
     if not isinstance(args, dict):
@@ -393,49 +197,17 @@ def main() -> int:
                 tool_input={"command": command},
                 cwd=cwd,
             )
-            if payload.get("tool_name") != "apply_patch":
-                for guard in SHELL_GUARDS:
-                    code = hook(guard, mapped).returncode
-                    if code:
-                        return code
-            # red-first decides per edited path; it owns the product/test split.
-            # One patch carrying the product and its failing check is how Codex
-            # writes (2026-10-01), so the patch's first test path is judged first,
-            # whatever order the headers came in. One accepted test opens the gate
-            # for the rest, so probing stops there, and an open gate ends the walk.
-            freestanding = payload.get("tool_name") == "apply_patch"
-            patched = freestanding or invokes_apply_patch(command)
-            writes = [
-                dict(mapped, tool_name="Write", tool_input={"file_path": path})
-                for path in (PATCH_FILE.findall(command) if patched else [])
-            ]
-            started = time.monotonic()
-            deadline = started + RED_FIRST_BUDGET_S
-            if len(writes) > 1 and not red_first_open(mapped):
-                probe_deadline = min(deadline, started + PROBE_BUDGET_S)
-                for index, write in enumerate(writes):
-                    if time.monotonic() >= probe_deadline:
-                        break
-                    if opens_red_first(write, probe_deadline):
-                        writes.insert(0, writes.pop(index))
-                        break
-            for write in writes:
-                remaining = deadline - time.monotonic()
-                if red_first_open(mapped) or remaining <= 0:
-                    break
-                try:
-                    code = hook("red-first.sh", write, timeout=remaining).returncode
-                except subprocess.TimeoutExpired:
-                    break
+            for guard in SHELL_GUARDS:
+                code = hook(guard, mapped).returncode
                 if code:
                     return code
             return 0
         if action == "post-edit":
             advisories = []
             if payload.get("tool_name") in SHELL_TOOLS:
-                # red-first's `tested` record and secret-in-output's chain
-                # advisory. Codex runs PostToolUse after a non-zero Bash exit
-                # too (measured 2026-09-14, #444), so a RED run and a chain cut
+                # two-misses' ledger and secret-in-output's chain advisory.
+                # Codex runs PostToolUse after a non-zero Bash exit too
+                # (measured 2026-09-14, #444), so a failed run and a chain cut
                 # by an exit-3 gate both land here without a PostToolUseFailure
                 # event. Both hooks are silent by contract; their channels are
                 # not forwarded ahead of the single advisory JSON.
@@ -456,7 +228,6 @@ def main() -> int:
                         if isinstance(response, str)
                         else json.dumps(response),
                     )
-                    hook("red-first.sh", mapped, forward=False)
                     # two-misses counts a FAIL only when the flattened output
                     # text carries `"exit_code": N` (N != 0) or an "Exit code N"
                     # line; Codex documents the output without a fixed shape,
@@ -498,7 +269,14 @@ def main() -> int:
                 env={**os.environ, "NOTT_HOOK_CLIENT": "codex"},
             )
             try:
-                if hook("nmemory-capture-gate.py", stop_payload).stdout.strip():
+                # At most ONE continuation per turn end: the capture gate is the only
+                # check here that blocks, and its one reason names the whole capture.
+                # Codex marks each later Stop with stop_hook_active, and a block there
+                # re-fired Stop without end (2026-10-22).
+                if (
+                    payload.get("stop_hook_active") is not True
+                    and hook("nmemory-capture-gate.py", stop_payload).stdout.strip()
+                ):
                     return 0
             except (OSError, subprocess.TimeoutExpired) as error:
                 print(

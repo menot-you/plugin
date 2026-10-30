@@ -170,11 +170,25 @@ marca_turno() {
   mkdir -p "$(dirname "$auditoria")" 2>/dev/null \
     && jq -cn --arg s "$sid_canal" '{at: (now|todate), sid: $s, miss: "no state line"}' >> "$auditoria" 2>/dev/null
 }
+# claim_checked <line>: the line the claim rule of state.sh lets this hook write for a line found
+# in the reply (retro cures slice 2, U1). `check` keeps it (0), or gives its refusal line (2 with a
+# line). Any other result, or no state.sh, gives the marker: a check that cannot run never keeps
+# a claim. The hook stays silent: the stderr of `check` is dropped.
+claim_checked() {
+  local saida rc
+  saida=$(bash "${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}/scripts/state.sh" check "$1" 2>/dev/null)
+  rc=$?
+  if [ "$rc" = 0 ]; then printf '%s' "$1"
+  elif [ "$rc" = 2 ] && [ -n "$saida" ]; then printf '%s' "$saida"
+  else printf '%s' "$marcador"; fi
+}
 # THE RETRY OF A STOP another hook blocked: a line it wrote in its own text replaces what the
 # channel holds; with no line it is marked, unless an earlier Stop of this turn already left a
 # line or the marker.
 if [ "$reentrada" = 1 ]; then
   linha_propria=$(grep -m1 -E "$MARCADOR_ESTADO" <<<"$texto_proprio")
+  # A line equal to the fresh channel line came from `state.sh set`, which judged it already.
+  [ -z "$linha_propria" ] || [ "$linha_propria" = "${linha_canal:-}" ] || linha_propria=$(claim_checked "$linha_propria")
   if [ -n "$linha_propria" ]; then canal_escreve "$linha_propria"
   elif [ -z "$linha_estado" ] && [ "$canal_marcado" = 0 ]; then marca_turno; fi
   finish
@@ -184,6 +198,7 @@ fi
 if [ -z "$linha_estado" ]; then
   marca_turno
 elif [ "$linha_estado" != "${linha_canal:-}" ]; then
+  linha_estado=$(claim_checked "$linha_estado")
   canal_escreve "$linha_estado"
 fi
 finish

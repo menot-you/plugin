@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3 -B
 """PostToolUse on Artifact (Claude Code only): keep a copy of each published page.
 
 Owner order (2026-10-20): the hook copies each artifact that a session publishes

@@ -26,6 +26,7 @@ Expose progress in terms of the requested outcome: implemented, verified
 locally, observed at the consumer, qualified. Do not turn completed subtasks,
 lines, elapsed time or test counts into a percentage of delivery, and never
 invent a duration: when how long it will take is unknown, name the next
-observable event and who emits it. During long work the state line carries
+observable event and who emits it. For a dispatched unit, ../../workflow/SKILL.md
+(watch) sets the deadline and the progress. During long work the state line carries
 progress; the screen gets only a new blocker. When no authorized action can change the decision, give the
 exact blocker and a concrete recommendation.

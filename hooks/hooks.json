@@ -12,18 +12,6 @@
         "matcher": "permission_prompt"
       }
     ],
-    "PostCompact": [
-      {
-        "hooks": [
-          {
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-snapshot.sh\"",
-            "timeout": 15,
-            "type": "command"
-          }
-        ],
-        "matcher": "manual|auto"
-      }
-    ],
     "PostToolUse": [
       {
         "hooks": [
@@ -68,11 +56,6 @@
             "type": "command"
           },
           {
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/red-first.sh\"",
-            "timeout": 10,
-            "type": "command"
-          },
-          {
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/two-misses.sh\"",
             "timeout": 10,
             "type": "command"
@@ -105,6 +88,16 @@
           }
         ],
         "matcher": "^Artifact$"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/background-wait.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(Bash|Monitor|StructuredOutput)$"
       }
     ],
     "PostToolUseFailure": [
@@ -112,11 +105,6 @@
         "hooks": [
           {
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/secret-in-output.sh\"",
-            "timeout": 10,
-            "type": "command"
-          },
-          {
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/red-first.sh\"",
             "timeout": 10,
             "type": "command"
           },
@@ -139,18 +127,6 @@
         "matcher": "Bash|Agent|Monitor|Workflow|AskUserQuestion|ExitPlanMode|mcp__.*"
       }
     ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-snapshot.sh\"",
-            "timeout": 15,
-            "type": "command"
-          }
-        ],
-        "matcher": "manual|auto"
-      }
-    ],
     "PreToolUse": [
       {
         "hooks": [
@@ -170,7 +146,7 @@
             "type": "command"
           },
           {
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/campaign-pr-guard.py\"",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/release-guard.py\"",
             "timeout": 10,
             "type": "command"
           }
@@ -195,7 +171,17 @@
             "type": "command"
           }
         ],
-        "matcher": "Agent|Workflow"
+        "matcher": "^(Agent|Workflow|mcp__(plugin_nott_)?nspawn__nspawn_run_start)$"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/review-cap.py\"",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(Agent|Task|SendMessage|Workflow|mcp__(plugin_nott_)?nspawn__nspawn_(review|run|batch)_start)$"
       },
       {
         "hooks": [
@@ -206,16 +192,6 @@
           }
         ],
         "matcher": "^mcp__(plugin_nott_)?nmemory(-http)?__"
-      },
-      {
-        "hooks": [
-          {
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/red-first.sh\"",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "Edit|Write|MultiEdit"
       },
       {
         "hooks": [
@@ -322,6 +298,11 @@
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-capture-gate.py\"",
             "timeout": 5,
             "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/background-wait.py\"",
+            "timeout": 5,
+            "type": "command"
           }
         ]
       }
@@ -353,6 +334,16 @@
         "hooks": [
           {
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-state.sh\"",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/subagent-record.py\"",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/background-wait.py\"",
             "timeout": 5,
             "type": "command"
           }
@@ -408,6 +399,15 @@
         "hooks": [
           {
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/nmemory-act.py\"",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/prompt-capture.py\"",
             "timeout": 5,
             "type": "command"
           }

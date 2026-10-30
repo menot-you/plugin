@@ -31,16 +31,23 @@ Before a behavior edit, run the smallest permanent regression check and observe
 the intended RED. Setup failure is not RED. Apply the change and observe the same
 check GREEN, then run the broader checks the actual consequence requires.
 
+<!-- nott:execute:self-review -->
+Before a writer reports DONE, it reviews its own diff with the checklist of
+../review/SKILL.md (checks) and ../review/references/checks.md. It checks scope,
+callers, transitions, trust boundaries, generated state, rollback and each
+invariant and failure mode that its brief lists. It fixes what it finds and runs
+the affected checks again. Its report lists what it checked and what it fixed.
+A self-review does not replace the independent review.
+
 <!-- nott:execute:scope -->
 <!-- nott:execute:proof -->
-Review the diff for scope, trust boundaries, generated state and rollback.
 A finding blocks this task only as ../review/SKILL.md defines blocking
 (<!-- nott:review:blocking -->); a falsified input or a required proof gap stops it
 too. Record unrelated debt without adopting it as new work.
 Verification stops when the accepted consumer observations and required checks pass;
 do not repeat them without changed inputs, failures or an unresolved proof gap.
 
-A review or fix loop this task runs, by hand or by workflow script, follows
+A review or fix loop this task runs follows
 ../workflow/SKILL.md (<!-- nott:workflow:review-loop -->).
 
 <!-- nott:execute:workflow -->
@@ -115,11 +122,16 @@ agent control runtime. Optional CLI/canvas integrations do not block unrelated w
 
 For long work, use an owned detached process and a run-bound completion sentinel.
 The fork's exit is not the work's completion and is never read as the result. Bind
-a tracked waiter to that sentinel so completion re-invokes the session; a detached
-run nothing waits on leaves the owner watching a state line that never resolves.
+a tracked waiter to that sentinel so completion re-invokes the main session; a
+detached run nothing waits on leaves the owner watching a state line that never
+resolves.
 Read EXIT= from the sentinel created after this run started; an absent or stale
 sentinel proves no completion. Use the host's equivalent completion evidence where
 those shell primitives do not exist.
+
+A subagent or an nSPAWN child receives no such wake-up. No notice reaches it after
+its turn ends. It waits for its own background work in the foreground, or stops
+that work, before its final report (../../agents/worker.md, rule 11).
 
 Redirect the whole output and cut it only on read; never put tail or head inside
 the background pipeline. Kill only the owned PID, never pkill -f. Never put a

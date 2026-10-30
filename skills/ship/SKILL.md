@@ -22,8 +22,9 @@ tag and release acts retain their reserved authority. Never infer a broader next
 act from permission for the current one.
 
 <!-- nott:ship:workflow -->
-A campaign's merge waits for the approver stage of ../workflow/SKILL.md. On
-ESCALATE nothing merges before `/nott:accept <PR>` (../accept/SKILL.md).
+A campaign's merge waits for the reader's SHIP in ../workflow/SKILL.md
+(merge). An open blocker stops the merge. Only the owner's own
+`/nott:accept <PR>` permits a merge with an open blocker (../accept/SKILL.md).
 
 <!-- nott:ship:rollback -->
 Read and establish a reachable rollback before high-impact mutation. Name an
@@ -55,6 +56,11 @@ merge in a separate call; an empty conclusion is a running check. Merge with
 `--match-head-commit` and read back the merged state. Use `--admin` only when
 the forge refuses the merge for the missing human approval alone.
 
+Before merge, the PR body's `Review:` line names the reader, SHIP and the
+full sha pinned by `--match-head-commit`. Use a full 40-hex sha, not an
+abbreviation. The guard requires that exact reviewed head and a
+`Regression delta:` line.
+
 This route's prerequisites, a reviewed candidate and a merge before deployment
 included, bind the merge to the trunk and the installed delivery of the merged
 result. Installing a candidate for the owner's first look follows
@@ -62,10 +68,9 @@ result. Installing a candidate for the owner's first look follows
 
 <!-- nott:ship:closed-targets -->
 <!-- nott:ship:empty-targets -->
-Deploy only named authorized targets. If this repository's plan uses a deployment
-manifest, read its targets and use `tools/body/manifest.py authorize` for those operations.
-An explicit targets = [] means no deployment; an absent target declaration does
-not authorize one. Do not demand that schema for a merge-only task.
+Deploy only named authorized targets. An explicit targets = [] means no
+deployment; an absent target declaration does not authorize one. Do not demand
+a target declaration for a merge-only task.
 
 <!-- nott:ship:main-green -->
 After merge, establish that required proof covers the actual merged bytes.
@@ -82,8 +87,9 @@ mandatory additional document.
 A merge is completion only when the authorized result ends at the merge.
 
 <!-- nott:procedure:shipping:start -->
-One campaign has one PR; a stack connects separate campaigns only for a real result
-dependency. Never push directly to trunk, force-push or delete branches without
+A campaign lands as small, well-scoped PRs. Each PR is one coherent result that a
+reviewer can judge alone. A stack connects PRs only for a real result dependency.
+Never push directly to trunk, force-push or delete branches without
 the exact owner grant.
 
 Open the PR early as a draft, keep publishing the candidate and obtain the required
@@ -98,8 +104,8 @@ merge is `gh pr merge` with `--squash --match-head-commit` at that head, read
 back as state=MERGED.
 
 The trunk advances independently. Absorb only for a real conflict, semantic
-dependency or the merge itself, preserving both ends and revalidating the affected
-proof. Do not repin and restart because unrelated work landed.
+dependency or integration need, preserving both ends and revalidating the affected
+proof. Never repin and restart because peers delivered unrelated work.
 
 <!-- nott:ship:record -->
 Close only with delivered proof, the exact blocker, or an execution-ready handoff.

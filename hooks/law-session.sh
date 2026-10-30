@@ -26,7 +26,7 @@ set -uo pipefail
 root=${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}
 law=$root/NOTT.md
 [ -r "$law" ] || exit 0
-exec python3 - "$law" "${1:-0}" <<'PY'
+exec python3 -B - "$law" "${1:-0}" <<'PY'
 import re, sys
 
 LIMIT = 10_000  # per hook output, counted as the host counts: UTF-16 units

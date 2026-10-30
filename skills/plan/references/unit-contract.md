@@ -5,7 +5,8 @@ deliverable with enough authority, inputs and proof to finish it safely.
 
 ## Contract
 
-Carry the result and consumers, acceptance observations and falsifiers, inputs and
+Carry the result and consumers, acceptance observations and falsifiers, the
+invariants and failure modes that ../SKILL.md (invariants) requires, inputs and
 outputs, ownership/write-set, executor role, dependencies, risk, rollback and STOP
 boundary. Include exact paths and commands where the receiver needs them; a
 principal may discover technical details inside an observed bounded subsystem.
@@ -21,6 +22,10 @@ A missing protected input or authority blocks its dependent act; a discoverable
 technical fact does not remove a principal's engineering responsibility.
 
 ## Proof and witness
+
+A host-proved acceptance item is one shell command, with its host and an optional
+threshold. Split a procedure with owner acts into the acts that the run asks for
+and the commands that check them.
 
 Acceptance is the observable consumer result, not an artifact count or a green
 suite over an unreachable mechanism. Name the integrated judge and the relevant

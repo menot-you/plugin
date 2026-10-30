@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3 -B
 """AGY native envelopes. PostToolUse feedback is deferred to PreInvocation.
 
 PostToolUse supplies no guaranteed tool arguments and accepts only {}. Feedback
@@ -216,15 +216,11 @@ def run(action: str, payload: object) -> dict[str, object]:
         # Claude's PreToolUse Bash guards in hooks/hooks.json order; the first
         # deny wins. A deny is exit 2 + its reason on stderr, which hook() turns
         # into a Refusal and main() into {"decision":"deny","reason"}.
-        # red-first is NOT here: its `tested` record needs the command text at
-        # PostToolUse, and AGY's PostToolUse carries {stepIdx, error} only, so
-        # its deny would call a tested session untested. Declared in the packager.
         for guard in (
             "pynott-branch-lock.sh",
             "bash-guards.sh",
-            # Its refusal reaches AGY; an allow answers {"decision":"allow"} and
-            # drops the NOT CHECKED context (README client matrix).
-            "campaign-pr-guard.py",
+            # Its refusal of a merge into public reaches AGY.
+            "release-guard.py",
         ):
             hook(
                 guard,

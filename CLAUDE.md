@@ -14,7 +14,7 @@ It connects grounded memory (`nMEMORY`), isolated multi-provider execution (`nSP
 | Engineering law | [NOTT.md](NOTT.md) | Authority boundaries, devil's-advocate premise testing, change sequence, D18 verdicts (`0/1/2/3`), and Opus + Haiku fanout discipline |
 | Task routes | [skills/execute](skills/execute/SKILL.md), [skills/review](skills/review/SKILL.md) | 17 on-demand engineering routes (`security`, `readback`, `feedback`, `debug`, `quality`, `brainstorm`, `ratify`, `plan`, `fanout`, `execute`, `review`, `release`, `ship`, `reconcile`, `handoff`, `goal`, `board`, `upscale`) |
 | Specialized reviewers | [review route](skills/review/SKILL.md) | Read-only witness agents (`python-reviewer`, `security-reviewer`, `silent-failure-hunter`, `pr-test-analyzer`) |
-| Runtime hooks | [hooks.json](hooks/hooks.json), [system1.py](hooks/system1.py) | Client event guards (`red-first.sh`, `law-contract.sh`, `final-state.sh`, `nmemory-capture-gate.py`) and the System1 upscale hook (`system1-suggest.py`) |
+| Runtime hooks | [hooks.json](hooks/hooks.json), [system1.py](hooks/system1.py) | Client event guards (`law-contract.sh`, `final-state.sh`, `nmemory-capture-gate.py`) and the System1 upscale hook (`system1-suggest.py`) |
 | Builder and installer | [plugin.py](scripts/plugin.py), [package.py](scripts/plugin/package.py), [install.py](scripts/plugin/install.py), [export.py](scripts/plugin/export.py) | Content-addressed bundle compilation (`clients/claude`, `clients/codex`, `clients/agy`), receipt-bound installation, rollback, and public export |
 | Bundled workspace packages | [nmemory](packages/nmemory/README.md), [nspawn](packages/nspawn/README.md), [nbrowser](packages/nbrowser/README.md), [system1](packages/system1/nott_system1/__init__.py) | The three MCP services, shared SQLite/socket/netdoor/System1 libraries, and deterministic memory evaluations |
 
@@ -60,7 +60,7 @@ Never point a test at `~/.nott/state/database` or overwrite an active client con
 | Client views and service boundaries | [Architecture](docs/ARCHITECTURE.md) |
 | Build, activation, backup, and rollback | [Runbook](docs/RUNBOOK.md) |
 | Packaging CLI and bundled MCP reference | [Reference](docs/REFERENCE.md) |
-| Developer toolkit and Context7/RTK setup | [Setup](docs/SETUP.md) and [setup-catalog.json](docs/setup-catalog.json) |
+| Developer toolkit and Context7/RTK setup | [Setup](docs/SETUP.md) |
 | Quality gates and security review | [Quality](docs/QUALITY.md) |
 | Bundled service rules | [nMEMORY rulebook](packages/nmemory/RULEBOOK.md) and [nSPAWN rulebook](packages/nspawn/RULEBOOK.md) |
 | Source installation and prerequisites | [Installation](docs/INSTALLATION.md) |

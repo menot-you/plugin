@@ -5,13 +5,15 @@
 # Owner complaint (measured 2026-09-15, 655 transcripts): half of everything the
 # owner typed was «ping?» / «status?» after a median 18 min of silence, because
 # nothing on screen said whether a tool was running, what was open in the
-# background, or that an agent had died. This hook writes that state; nothing
-# here renders or enforces cadence.
+# background, or that an agent had died. This hook writes that state.
+# It also refuses an agent Bash call that sets the main session state line.
+# It does not render the statusline or enforce cadence.
 #
 # Bound in hooks.json to PreToolUse/PostToolUse/PostToolUseFailure (long
-# tools), UserPromptSubmit, SubagentStop, TeammateIdle, Stop, StopFailure.
-# Only the MAIN THREAD writes the phase: inside an Agent the tool events carry
-# `agent_id` (prova 0c, 2026-09-15) and this hook exits 0 without writing.
+# tools), UserPromptSubmit, SubagentStop, TeammateIdle, Stop, StopFailure and
+# SessionStart. Only the main thread writes the phase. Agent tool events carry
+# agent_id. This hook refuses a state-line set call before it skips those events.
+# Other agent tool calls exit 0 without a state write.
 # Does NOT exit early on `stop_hook_active`: the second Stop must record idle.
 #
 # File: ${XDG_RUNTIME_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}}/nott/session-state/<sid>.json
@@ -19,10 +21,18 @@
 #   native          {provider, session_id, home}, the CLI identity, not its model backend
 #   event           the latest hook event, so a resume cannot reuse an old active phase
 #   waiting         a native permission prompt, cleared when the session continues
-#   tool            {name, summary, since}   summary = description or command, <= 60 chars;
+#   tool            {name, summary, since}   summary = description or command, <= 60 chars.
 #                   `<command with secret>` when secret-shapes.sh matches the command
 #   turn_started_at UserPromptSubmit with source user (2.1.272 sends no `source`:
 #                   absent counts as user)
+#   owner_prompts   the last 8 owner prompts that prompt-capture.py owes a spool line, each
+#                   {id, at}: the payload's prompt_id ("" when it has none) and the epoch ms. The
+#                   gate is the capture hook's: an interactive Claude Code session with a messaging
+#                   socket and an absolute XDG_RUNTIME_DIR, no nSPAWN child, no subagent, no message for someone
+#                   else and no idle-handoff prompt. A queued one mid-turn counts. `state.sh judge`
+#                   looks for the spool line with each prompt_id, and a prompt with no line is red.
+#                   The clock of the previous hook (`owner_prompt_at`) becomes the first prompt,
+#                   with no id, at the next owner prompt
 #   stopped_at, final (at Stop: the turn's state line, cleaned, <= 80 — a fresh channel line before
 #                   the reply's, the reply's first on a retry; with no line in either, the no-line
 #                   marker, or empty when the reply and the channel are both empty)
@@ -30,15 +40,17 @@
 #                   {kind, label, description}
 #   units[]         {unit, since} for `systemd-run --user --unit=X` seen in PostToolUse Bash
 #   dead[]          a SubagentStop with an empty report or a rate-limit shape, or a
-#                   StopFailure; cleared on the next owner prompt. An agent death carries
+#                   StopFailure. The next owner prompt clears it. An agent death carries
 #                   {kind, id, name, label, transcript, reason, at}: `label` is the
 #                   dispatcher's task (six same-typed agents told apart), `transcript` is
 #                   agent_transcript_path (what it did before dying). A session death
 #                   carries `resets_at` when its 429 names the window.
-#   teammate_idle[] {name, at} from TeammateIdle; cleared with dead[]
-#   route           {provider, endpoint, model, account, at} written at SessionStart from the
-#                   configuration the session was GIVEN — never from a credential, and the
-#                   endpoint is the host alone. A session death copies it into its dead[]
+#   teammate_idle[] {name, at} from TeammateIdle. It clears with dead[].
+#   route           {provider, endpoint, model, account, at} written at SessionStart except
+#                   at compact. It keeps the start model until the next start, resume or clear.
+#                   A start with no source also writes it. It comes from the configuration
+#                   the session was given, never from a credential.
+#                   The endpoint is the host alone. A session death copies it into its dead[]
 #                   entry, so the 429 that names only a window still says WHO died.
 # Minimum CLI 2.1.272: below it there is no background_tasks and open[] stays empty.
 # Fail-OPEN: garbage payload, no session_id, unwritable directory -> exit 0, no output.
@@ -53,6 +65,20 @@ payload=$(cat)
   < <(printf '%s' "$payload" | jq -j '[(.hook_event_name? // ""), (.session_id? // ""), (.agent_id? // ""),
         (.tool_name? // ""), (.tool_input.description? // ""), (.tool_input.command? // "")]
       | map(tostring | gsub("\u0000"; "") + "\u0000") | add' 2>/dev/null) || exit 0
+
+# This rule stops an agent that follows the main session's state-line rule.
+# It is not a boundary against hidden calls through eval or env. A matching
+# segment in a heredoc body or quoted text also matches.
+if [ "$event" = PreToolUse ] && [ "$tool_name" = Bash ] && [ -n "$agent" ]; then
+  state_write_re=$'(^|[\n;&|({!])[[:blank:]]*((then|do|else)[[:blank:]]+)?((bash|sh)[[:blank:]]+)?[^[:space:]]*state\\.sh["\']?[[:blank:]]+set([[:blank:]]|$)'
+  if [[ $cmd =~ $state_write_re ]]; then
+    reason='session-state: REFUSED — an agent cannot write the state line of the main session. Put your state in your report to your parent.'
+    printf '%s\n' "$reason" >&2
+    jq -cn --arg r "$reason" \
+      '{hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"deny",permissionDecisionReason:$r}}'
+    exit 2
+  fi
+fi
 sid=${sid//[!a-zA-Z0-9-]/}
 [ -n "$sid" ] || exit 0
 case "$event" in
@@ -196,8 +222,39 @@ nott_tint() { # <cor>
 # `idle` with no line and `dead` are RED. A session that stopped without saying what
 # was left open is a stopped session, not a delivery --- painting green there would
 # tell the owner he can close the laptop over a state nobody wrote.
-nott_cor_da_fase() { # <phase> <tool name> <final>, printed by the state program
-  local fase=$1 ferramenta=$2 final=$3 verbo
+#
+# THE HOST SAYS DONE, NOT THE AGENT (live-plan-0). As soon as the session has a place under
+# $XDG_RUNTIME_DIR/nott/requests/ (the spool of prompt-capture.py or the node host's
+# <sid>.json), the agent's line colours nothing: `state.sh judge` reads it, red wins over every
+# phase (a red alarm, a spool the host has not read 75 s after its first line, a host that has
+# not written for 2 min, an input it could not read, an owner prompt with no spool line), and
+# an idle window takes the neutral colour. NOTHING PAINTS GREEN THERE IN THIS SLICE, neither
+# the host file nor the agent's DELIVERED: every entry closed does not prove that no run the
+# host has not read yet is working. A judge that cannot run is neutral, never the agent's green. Each hook event takes
+# a fresh snapshot. The neutral colour is a fourth one, and only the requests place calls for it.
+# A session that keeps owner prompts is judged as soon as the requests directory is there, also
+# with no spool and no host file: a capture hook that cannot write the spool leaves neither. With
+# no lost prompt there, the judge says nothing and the agent's line colours, as before.
+nott_cor_da_fase() { # <phase> <tool name> <final> <owner prompts kept>, printed by the state program
+  local fase=$1 ferramenta=$2 final=$3 prompts=$4 verbo pedido= lugar= rc
+  [ "${NOTT_TTY_COLOR:-1}" != 0 ] || return 0
+  if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
+    if [ -e "$XDG_RUNTIME_DIR/nott/requests/$sid.json" ] \
+        || [ -e "$XDG_RUNTIME_DIR/nott/requests/$sid.prompts.jsonl" ]; then
+      lugar=session
+    elif [ -n "$prompts" ] && [ -d "$XDG_RUNTIME_DIR/nott/requests" ]; then
+      lugar=directory
+    fi
+  fi
+  if [ -n "$lugar" ]; then
+    pedido=$(bash "${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}/scripts/state.sh" judge "$sid" 2>/dev/null)
+    rc=$?
+    [ "$pedido" != red ] || { nott_tint "${NOTT_TTY_COLOR_STOP:-#2d1414}"; return 0; }
+    # Whatever else the judge says, or a judge that cannot run, is neutral. Only the directory
+    # alone, judged with nothing to say, leaves the colour to the agent's line.
+    if [ "$lugar" = directory ] && [ "$rc" -eq 0 ] && [ -z "$pedido" ]; then pedido=
+    else pedido=neutral; fi
+  fi
   # A QUESTION IS NOT WORK IN MOTION. Owner request 2026-09-22: the window stayed
   # AMBER while he was the one awaited, because asking is a tool call like any other and
   # the phase says `tool`. Amber answered «something is moving» to someone looking at an
@@ -212,6 +269,7 @@ nott_cor_da_fase() { # <phase> <tool name> <final>, printed by the state program
     thinking|tool) nott_tint "${NOTT_TTY_COLOR_RUN:-#2d2410}"; return 0;;
     dead)          nott_tint "${NOTT_TTY_COLOR_STOP:-#2d1414}"; return 0;;
   esac
+  [ "$pedido" != neutral ] || { nott_tint "${NOTT_TTY_COLOR_NEUTRAL:-#1a1a1a}"; return 0; }
   verbo=${final#"${final%%[A-Za-z]*}"}
   case $verbo in
     ENTREGUE*|DELIVERED*) nott_tint "${NOTT_TTY_COLOR_OK:-#0f1a0f}";;
@@ -223,6 +281,17 @@ dir="${XDG_RUNTIME_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}}/nott/session-stat
 mkdir -p -m 700 "$dir" 2>/dev/null && [ -w "$dir" ] || exit 0
 file=$dir/$sid.json
 now=${EPOCHSECONDS:-$(date +%s)}
+# The gate of prompt-capture.py, main() and the environment half of owner_prompt in
+# system1-suggest.py: only there is an owner prompt owed a spool line. An nSPAWN child is not.
+owed=false
+if [ "${CLAUDE_CODE_ENTRYPOINT:-}" = cli ] && [ -n "${CLAUDE_CODE_MESSAGING_SOCKET:-}" ] \
+    && [ -z "${NOTT_NSPAWN_RUN_ID:-}" ]; then
+  case ${XDG_RUNTIME_DIR:-} in /*) owed=true ;; esac
+fi
+# The owner prompt clock is in ms, as the spool's `at`: the two hooks of one prompt land
+# within a second of each other. It comes from jq's `now`, the one millisecond clock of the
+# plugin's scripts (plugin/scripts/state.sh, requests_read): BSD date has no %N, and bash 3.2
+# has no EPOCHREALTIME.
 # Native identity differs from the model backend. The Codex view supplies its client name.
 native_provider=${NOTT_HOOK_CLIENT:-claude}
 [ "$native_provider" != codex ] || NOTT_TTY_COLOR=0
@@ -280,6 +349,14 @@ fi
 # holds the session: the hook proceeds unlocked rather than delay a tool call.
 # The lock is the state file itself (opened for append, never truncating): no second
 # artifact appears in the state dir, which the contract checks stays empty.
+# A STATE WRITE THAT FAILS IS SAID, never left as the last state (a DELIVERED green
+# included): `<sid>.error` makes `state.sh show` open the line red with the hook error, and
+# the window turns red. The next write that works removes it.
+failed() { # <what failed>
+  printf '%s %s\n' "$now" "$1" > "$dir/$sid.error" 2>/dev/null
+  nott_tint "${NOTT_TTY_COLOR_STOP:-#2d1414}"
+  exit 0
+}
 {
   flock -w 2 9 2>/dev/null || true
 
@@ -394,6 +471,9 @@ fi
   # The same literal as final-state.sh (pinned by final-state-contract.sh): a turn whose reply
   # carries no state line shows it, whichever Stop hook runs first.
   marcador_sem_linha='STOPPED: this turn wrote no state line · next action: read the last reply'
+  # The first raw line of a fresh channel, never the marker: a Stop pick equal to it came from
+  # `state.sh set`, and any other pick goes through `state.sh check` below.
+  canal=''
   # Only at Stop: the channel is the main turn's reply, and added to an agent's empty report it
   # hid that agent's death (review 7f0ea209).
   if [ "$event" = Stop ] && [ -f "$dir/$sid.final" ]; then
@@ -415,6 +495,7 @@ fi
     # first and the channel only stands in when it wrote none, as final-state.sh reads that retry.
     if [ -n "$inicio" ] && [ "$escrito_s" -ge "$inicio_s" ] \
        && [ "$(head -n1 "$dir/$sid.final" 2>/dev/null)" != "$marcador_sem_linha" ]; then
+      canal=$(head -n1 "$dir/$sid.final" 2>/dev/null)
       payload=$(printf '%s' "$payload" | jq -c --rawfile c "$dir/$sid.final" \
         '($c | rtrimstr("\n")) as $c | (.last_assistant_message // "") as $m
          | .last_assistant_message = (if .stop_hook_active == true then $m + "\n" + $c else $c + "\n" + $m end)' 2>/dev/null || printf '%s' "$payload")
@@ -428,7 +509,7 @@ fi
   out=$(jq -nr --rawfile prevraw "$file" --arg ev "$event" --argjson now "$now" --arg summary "$summary" \
     --arg unit "$unit" --argjson route "$route" --argjson devolveu "$devolveu" \
     --arg provider "$native_provider" --arg home "$native_home" \
-    --arg sem_linha "$marcador_sem_linha" \
+    --arg sem_linha "$marcador_sem_linha" --arg canal "$canal" --argjson owed "$owed" \
     --slurpfile pp <(printf '%s' "$payload") '
     # The payload comes in through a file, never argv: one argv string stops at 128 KB, and a
     # 1 MB command or final message made jq fail and the update vanish (review, 2026-09-30).
@@ -468,13 +549,29 @@ fi
       | sub("^[[:space:]]+"; "") | sub("[[:space:]]+$"; "");
     def base: {phase:"thinking", tool:null, turn_started_at:null, stopped_at:null, final:null,
                open:[], units:[], dead:[], teammate_idle:[]};
+    # The gate of prompt-capture.py: owner_prompt of system1-suggest.py (no subagent, no
+    # NOT_OWNER envelope) and kind_of (no idle-handoff prompt of idle-handoff.ts). The contract
+    # drives both hooks with the same payloads, so the copies cannot drift apart unseen.
+    def owner_prompt:
+      ($p.prompt // "" | tostring) as $q
+      | ($q | sub("^\\s+"; "") | sub("\\s+$"; "") | split("\n")) as $lines
+      | (($p.agent_id // null) | . == null or . == false or . == "" or . == 0)
+        and (["<task-notification>", "<cross-session-message ", "<teammate-message ", "<agent-message "]
+             | any(. as $o | $q | startswith($o)) | not)
+        and (($lines[0] == "The session has been idle and the prompt cache is about to expire."
+              and ($lines[-1] | test("^HANDOFF-DONE [0-9a-f-]{36}$"))) | not);
     def open_of: [ ($p.background_tasks // [])[]
       | select(((.ambient // false) | not) and (.type // "") != "monitor")
       | {kind:(.type // ""), label:((.command // .agent_type // .id // "") | clip(60)),
          description:((.description // "") | clip(60))} ];
-    def state_line: ($p.last_assistant_message // "") | split("\n") | map(select(length > 0))
+    # picked: [the first state line, raw or null, the non-empty lines it was picked from].
+    def picked: ($p.last_assistant_message // "") | split("\n") | map(select(length > 0))
       | (map(select(test("^[[:space:]]*(([*_#>`-]|[0-9]+\\.|[^[:alnum:][:space:]]{1,4})[[:space:]]*)*(A CORRER|PARADO|ENTREGUE|RUNNING|STOPPED|DELIVERED)[*_`]*[[:space:]]*(:|—|-)"))) | first) as $l
+      | [$l, .];
+    def state_line: picked as [$l, $lines] | $lines
       | if $l != null then $l | demark | clipw(80) elif length > 0 then $sem_linha else "" end;
+    # The raw Stop pick that is not the channel line, for `state.sh check`; "" for any other.
+    def reply_pick: if $ev == "Stop" then picked[0] | if . != null and . != $canal then . else "" end else "" end;
     (base + .) | .native = $native | .event = $ev
     | if $ev == "Notification" then
         if $p.notification_type == "permission_prompt" then .waiting = true else . end
@@ -493,6 +590,14 @@ fi
         (if ($p.source // "user") == "user" and (.phase == "idle" or .phase == "dead" or .turn_started_at == null)
          then .turn_started_at = $now else . end)
         | .phase = "thinking" | .tool = null | .final = null
+        # Each owner prompt that the capture hook owes a line, with its own prompt_id: two prompts
+        # close in time are two prompts, and the line of one is never the line of the other.
+        | if $owed and owner_prompt then
+            ((.owner_prompts | arrays)
+             // (.owner_prompt_at | numbers | [{id: null, at: .}]) // []) as $kept
+            | .owner_prompts = ($kept + [{id: ($p.prompt_id | strings // ""), at: (now * 1000 | floor)}] | .[-8:])
+            | del(.owner_prompt_at)
+          else . end
         # ponytail: 2.1.272 sends no `source`; the completed-task wakeup is a prompt that
         # starts with <task-notification> and must not erase the death it announces.
         | if (($p.prompt // "") | startswith("<task-notification>")) then . else .dead = [] | .teammate_idle = [] end
@@ -567,20 +672,42 @@ fi
         # Startup does not touch the phase: a compaction, or a start that names no source, may be
         # in the middle of a turn. A new process (startup, resume, clear) runs no turn, so its
         # clock goes and the next prompt opens one (review 32a1a902).
-        .route = $route
+        # A compact source keeps the route. An agent can share the main session ID.
+        if $p.source != "compact" then .route = $route else . end
         | if ($p.source == "startup" or $p.source == "resume" or $p.source == "clear") then .turn_started_at = null else . end
       elif $ev == "TeammateIdle" then
         .teammate_idle = ((((.teammate_idle // []) | map(select(.name != ($p.teammate_name // ""))))
                            + [{name:($p.teammate_name // ""), at:$now}]) | .[-8:])
       else . end
     | .updated_at = $now
-    | tojson, ([.phase // "", .tool.name // "", .final // ""] | map(tostring) | join("\u001f"))' 2>/dev/null) || exit 0
+    | tojson, ([.phase // "", .tool.name // "", .final // "",
+                (if ((.owner_prompts | arrays | length) // 0) > 0 then "1" else "" end), reply_pick] | map(tostring) | join("\u001f"))' 2>/dev/null) \
+    || failed "jq could not build the $event state"
   next=${out%%$'\n'*}
-  [ -n "$next" ] || exit 0
+  [ -n "$next" ] || failed "the $event state came out empty"
   # A unit separator, not a tab: IFS whitespace would merge the empty tool name away.
-  IFS=$'\x1f' read -r fase_cor ferramenta_cor final_cor <<<"${out#*$'\n'}"
-  tmp=$(mktemp "$dir/.$sid.XXXXXX" 2>/dev/null) || exit 0
-  printf '%s\n' "$next" > "$tmp" && mv -f "$tmp" "$file" 2>/dev/null || rm -f "$tmp"
-  nott_cor_da_fase "$fase_cor" "$ferramenta_cor" "$final_cor"
+  # The pick comes last, so a unit separator inside it stays in it.
+  IFS=$'\x1f' read -r fase_cor ferramenta_cor final_cor prompts_cor escolha <<<"${out#*$'\n'}"
+  # A STOP PICK FROM THE REPLY GOES THROUGH THE CLAIM RULE (retro cures slice 2, U1), as in
+  # final-state.sh: `check` keeps it (0) or gives its refusal line (2 with a line), and any other
+  # result, or no state.sh, stores the marker. The stderr of `check` is dropped.
+  if [ -n "$escolha" ]; then
+    novo=$(bash "${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}/scripts/state.sh" check "$escolha" 2>/dev/null)
+    case $? in
+      0) novo= ;;
+      2) [ -n "$novo" ] || novo=$marcador_sem_linha ;;
+      *) novo=$marcador_sem_linha ;;
+    esac
+    if [ -n "$novo" ]; then
+      next=$(printf '%s' "$next" | jq -c --arg f "$novo" '.final = $f' 2>/dev/null) && [ -n "$next" ] \
+        || failed "the claim check result was not stored"
+      final_cor=$novo
+    fi
+  fi
+  tmp=$(mktemp "$dir/.$sid.XXXXXX" 2>/dev/null) || failed "no temporary file in the state dir"
+  printf '%s\n' "$next" > "$tmp" && mv -f "$tmp" "$file" 2>/dev/null \
+    || { rm -f "$tmp"; failed "the $event state was not written"; }
+  rm -f "$dir/$sid.error"
+  nott_cor_da_fase "$fase_cor" "$ferramenta_cor" "$final_cor" "$prompts_cor"
 } 9>>"$file"
 exit 0

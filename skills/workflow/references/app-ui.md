@@ -9,6 +9,8 @@ reference, and check each claim against that source.
 Each rule has a check that a person can do on a screenshot or in the code. A
 rule that you cannot check is not in this file.
 
+For candidate installation, capture and restore, follow SKILL.md (screen-qa).
+
 ## Owner rules
 
 These rules come from the owner.

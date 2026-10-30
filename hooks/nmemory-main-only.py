@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3 -B
 """PreToolUse on the nMEMORY tools: only the main session calls them.
 
 An inherited session gets memory only from the brief of

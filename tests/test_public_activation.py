@@ -558,6 +558,73 @@ def test_public_bundle_cannot_use_private_instruction_activation(
         )
 
 
+@pytest.mark.parametrize("client", ["claude", "codex"])
+def test_public_view_startup_note_names_tools_and_grants_nothing(
+    installer: ModuleType,
+    public_bundle: tuple[Path, Path],
+    tmp_path: Path,
+    client: str,
+) -> None:
+    """The public law grants nothing, so the bound view's note grants nothing."""
+    bundle, runtime = public_bundle
+    view = tmp_path / "view"
+    shutil.copytree(bundle / "clients" / client, view, symlinks=True)
+    launcher = tmp_path / "launcher"
+    launcher.write_text("#!/bin/sh\nexit 0\n")
+    launcher.chmod(0o700)
+    memory = {
+        "launcher": str(launcher),
+        "python": os.path.abspath(os.sys.executable),
+        "project": "example",
+    }
+    installer.bind_view(view, runtime, memory, client=client)
+    environment = {
+        "HOME": str(tmp_path / "home"),
+        "XDG_STATE_HOME": str(tmp_path / "state"),
+        "PATH": os.environ["PATH"],
+        "TMPDIR": str(tmp_path),
+    }
+    hooks = json.loads((view / "hooks/hooks.json").read_text())["hooks"]
+    commands = {
+        event: [
+            hook["command"]
+            for group in groups
+            for hook in group["hooks"]
+            if "nmemory-session.sh" in hook["command"]
+        ]
+        for event, groups in hooks.items()
+    }
+    if client == "claude":
+        # The bootstrap launcher runs the same bytes, with no CLAUDE_PLUGIN_ROOT.
+        assert not any(commands.values())
+        command = ["bash", str(view / "hooks/nmemory-session.sh")]
+        environment["NOTT_NMEMORY_BIN"] = str(launcher)
+    else:
+        assert len(commands.get("SessionStart", [])) == 1
+        command = ["sh", "-c", commands["SessionStart"][0]]
+        environment["CLAUDE_PLUGIN_ROOT"] = str(view)
+    result = subprocess.run(
+        command,
+        input='{"session_id":"absent","source":"startup"}',
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=60,
+    )
+    assert result.returncode == 0, result.stderr
+    for text in ("Standing grant", "2026-09-14", "plugin:nott:", "NOTT plugin"):
+        assert text not in result.stdout, f"the note prints {text!r}"
+    line = (
+        "Memory for this session is the nMEMORY MCP server, under the name that this "
+        "install registers (tools nmemory_context_show, nmemory_capsule_ingest, "
+        "nmemory_outcome_record, nmemory_session_start, nmemory_session_finish). If "
+        "they arrive deferred, load them with ToolSearch by those names; do not guess "
+        "other names."
+    )
+    assert result.stdout.count(line) == 1, result.stdout
+
+
 def test_native_cli_uses_a_private_home(
     installer: ModuleType,
     tmp_path: Path,

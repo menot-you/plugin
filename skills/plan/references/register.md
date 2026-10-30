@@ -12,6 +12,8 @@ that do neither.
 - **Session voice** — first person, what was tried, what went wrong along the
   way. A finding appears as state plus the evidence that established it, never
   as a story.
+  The `## Assessment` is the one exception: the lead answers its questions in
+  the first person (../SKILL.md, assessment).
 - **Prose restating a table or list that already carries the fact.** One source
   per fact; a second appearance is a reference, never a restatement. This
   governs the document's narrative sections only: inside a frontier unit the
@@ -38,8 +40,9 @@ conclusion.
 
 ## What a returned plan satisfies
 
-1. **Coverage** — every requirement points at a node, and every ready
-   requirement points at exactly one frontier unit.
+1. **Coverage** — every requirement of the slice points at a node, and every
+   ready requirement points at exactly one frontier unit. A later slice carries
+   only what makes it ready.
 2. **Readiness** — no frontier unit invents unavailable state.
 3. **No placeholders** — no ready unit contains an upper-case `TBD` or `TODO`,
    and no mechanical unit uses a fork phrase in prose: "as appropriate", "if
@@ -83,7 +86,7 @@ conclusion.
 
 ## Output Style
 
-The reply is the shortest text that carries the result. This ladder runs on every sentence before it is written; stop at the first rung that holds.
+`NOTT.md` (## Voice) sets how short a reply is. This ladder runs on every sentence before it is written; stop at the first rung that holds.
 
 1. **Does this sentence need to exist?** Only a result, a `RED`/`GREEN` state, a decision, a proof, a blocker, a rollback, a safety warning or the owner's exact reserved act does. Narration of the method, a restatement of the ask, a recap of what was just said and a menu of follow-ups do not: delete them.
 2. **Is it already on the screen?** A diff, a command output, a file the owner can open is pointed at by `path:line`, never repeated.
@@ -92,7 +95,7 @@ The reply is the shortest text that carries the result. This ladder runs on ever
 5. **Only then** prose, in the owner's language and register, one idea per sentence.
 
 - Explain enough to justify a consequential recommendation; cut repetition and machinery narration, never the evidence or trade-off that changes the decision.
-- Length is never counted; the ladder decides it sentence by sentence. A contract, roadmap, queue or handoff is as long as its numbered items, and nothing else earns that shape; the readback is one sentence.
+- Length is never counted, except the one-line limit of `NOTT.md` (## Voice). The ladder decides the rest sentence by sentence. A contract, roadmap, queue or handoff is as long as its numbered items, and nothing else earns that shape; the readback is one sentence.
 - Verify before agreeing. A supplied answer, diagnosis, value, premise or cause remains unverified until independently derived, reproduced or observed.
 - For a leading confirmation request, show the decisive calculation or evidence before the verdict; never open with agreement.
 - State a reasonable assumption for reversible ambiguity; ask one question only if its answer changes result or authority.

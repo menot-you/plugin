@@ -310,10 +310,14 @@ judge() {
 # the lock stops accidents (the threat model above).
 cd_re='(^|[[:space:];&])cd[[:space:]]+([^[:space:];&|)]+)'
 # A global option before the verb moves HEAD all the same: `git -c k=v checkout`, `git --no-pager switch`.
-opt='(-c[[:space:]]+[^[:space:];&|]+|--?[[:alpha:]][^[:space:];&|]*)[[:space:]]+'
+# The prefix keeps every `-C <path>`, `--git-dir <path>` and `--work-tree <path>` in order:
+# git applies each `-C` as it reads it, so the repository is resolved from the whole prefix.
+# Groups: 1 prefix, 2 one option, 3 its words, 4 the path option name, 5 the verb, 6 its arguments.
+opt_path='[^[:space:];&|]+'
+prefix_re='(((-c[[:space:]]+'"$opt_path"'|(-C|--git-dir|--work-tree)[[:space:]]+'"$opt_path"'|--?[[:alpha:]][^[:space:];&|]*)[[:space:]]+)*)'
 # The arguments run to a separator; `2>&1`, `>&2` and `&>` are redirections, not separators.
 # A backtick does not end them: a ref computed by `git rev-parse` reads as a ref that is not the pin.
-verb_re='git[[:space:]]+('"$opt"')*(-C[[:space:]]+([^[:space:];&|]+)[[:space:]]+)?('"$opt"')*(checkout|switch|reset|rebase|symbolic-ref|update-ref|bisect)(([^;&|)'$'\n'']|[<>]&|&>)*)'
+verb_re='git[[:space:]]+'"$prefix_re"'(checkout|switch|reset|rebase|symbolic-ref|update-ref|bisect)(([^;&|)'$'\n'']|[<>]&|&>)*)'
 step_re="$cd_re|$verb_re"
 # awk finds the steps line by line, one step per output line: a bash
 # `${rest#*"$step"}` cut is quadratic, and a 400 KB heredoc outran the hook's
@@ -324,6 +328,39 @@ steps=$(step_re=$step_re LC_ALL=C awk '{
       st = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
       sub(/^[[:space:];&]+/, "", st); print st
     } }' <<<"$text") || deny "REFUSED — awk could not read the branch command text."
+# The directory and repository a verb acts on, from its prefix words. Git reads the
+# prefix left to right: each `-C <path>` moves its directory at once, a relative one
+# from the one before it; `--git-dir` and `--work-tree` are read from the last
+# directory. Sets `acts_primary` when the verb acts on the primary.
+resolve_verb() {  # $1: the directory before the verb, $2: the prefix words
+  local dir=$1 gd='' wt='' w i words
+  acts_primary=''
+  read -ra words <<<"$2"
+  for ((i = 0; i < ${#words[@]}; i++)); do
+    w=${words[i]}
+    case $w in
+      -C)
+        i=$((i + 1)); w=${words[i]-}
+        dir=$(at "$dir" "$w") ;;
+      --git-dir) i=$((i + 1)); gd=${words[i]-} ;;
+      --git-dir=*) gd=${w#*=} ;;
+      --work-tree) i=$((i + 1)); wt=${words[i]-} ;;
+      --work-tree=*) wt=${w#*=} ;;
+      -c) i=$((i + 1)) ;;
+    esac
+  done
+  # The primary's own git directory moves its HEAD. Git also writes the files of the
+  # work tree it uses: --work-tree, else the last directory, even beside another
+  # --git-dir. With no --git-dir, git finds the repository from the last directory.
+  if [ -n "$gd" ]; then
+    [ "$(at "$dir" "$gd")" = "$TREE/.git" ] && acts_primary=1
+  else
+    primary "$dir" && acts_primary=1
+  fi
+  if [ -n "$wt" ]; then dir=$(at "$dir" "$wt"); fi
+  if primary "$dir"; then acts_primary=1; fi
+  return 0
+}
 here=$(at / "$cwd") prev=$here hit='' verbs=() verb_args=()
 while IFS= read -r step; do
   # A `cd` step needs no regex: bash compiles one per test, and that cost adds up.
@@ -336,10 +373,9 @@ while IFS= read -r step; do
     continue
   fi
   [[ $step =~ $verb_re ]] || continue
-  git_c=${BASH_REMATCH[4]} verb=${BASH_REMATCH[7]} args=${BASH_REMATCH[8]}
-  target=$here
-  [ -z "$git_c" ] || target=$(at "$here" "$git_c")
-  primary "$target" && hit=1
+  verb=${BASH_REMATCH[5]} args=${BASH_REMATCH[6]}
+  resolve_verb "$here" "${BASH_REMATCH[1]}"
+  [ -z "$acts_primary" ] || hit=1
   verbs+=("$verb") verb_args+=("$args")
 done <<<"$steps"
 [ -n "$hit" ] || allow

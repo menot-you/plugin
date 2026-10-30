@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 hooks/agy-hook-runner.py pre-tool-run-command",
+            "command": "python3 -B hooks/agy-hook-runner.py pre-tool-run-command",
             "timeout": 10
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 hooks/agy-hook-runner.py post-tool-write",
+            "command": "python3 -B hooks/agy-hook-runner.py post-tool-write",
             "timeout": 15
           }
         ]
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 hooks/agy-hook-runner.py post-tool-run-command",
+            "command": "python3 -B hooks/agy-hook-runner.py post-tool-run-command",
             "timeout": 10
           }
         ]
@@ -37,14 +37,14 @@
     "PreInvocation": [
       {
         "type": "command",
-        "command": "python3 hooks/agy-hook-runner.py pre-invocation",
+        "command": "python3 -B hooks/agy-hook-runner.py pre-invocation",
         "timeout": 15
       }
     ],
     "Stop": [
       {
         "type": "command",
-        "command": "python3 hooks/agy-hook-runner.py stop",
+        "command": "python3 -B hooks/agy-hook-runner.py stop",
         "timeout": 15
       }
     ]
